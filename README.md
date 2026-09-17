@@ -130,6 +130,24 @@ echo "sdk.dir=/path/to/android-sdk" > local.properties
 ./gradlew :app:installDebug         # install on a connected device
 ```
 
+For a release build, put a `keystore.properties` in the repository root:
+
+```properties
+storeFile=/absolute/path/to/my-release.jks
+storePassword=...
+keyAlias=...
+keyPassword=...
+```
+
+then `./gradlew :app:assembleRelease`. R8 shrinking takes the APK from ~63 MB to
+~3.5 MB. Both the properties file and `*.jks` are gitignored - a signing key does
+not belong in the repository. Without the file the release build is unsigned and
+only `assembleDebug` is usable.
+
+Keep the keystore: Android only allows an update to install over an existing app
+if it is signed with the same key. Losing it means uninstalling first, and since
+all data is local, uninstalling means losing your history.
+
 Health Connect is part of the OS on Android 14+; on Android 13 and below install the
 Health Connect app from the Play Store. Without it the app still works — every automatic
 tracker just becomes a manual one.
