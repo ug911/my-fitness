@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Fitness</string>
+    <string name="health_rationale">My Fitness reads steps, workouts, sleep and heart rate from Health Connect so you do not have to type them in. Data stays on this device unless you explicitly run a weekly AI review.</string>
+</resources>
