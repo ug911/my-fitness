@@ -5,8 +5,9 @@ import com.ug911.myfitness.analysis.PlanProgress
 import com.ug911.myfitness.analysis.TrackerStat
 import com.ug911.myfitness.data.model.Aggregation
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.TrackerCategory
+import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.data.model.TrackerType
+import com.ug911.myfitness.data.model.formatMinuteOfDay
 import com.ug911.myfitness.data.model.formatNumber
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -36,16 +37,16 @@ class AiContextBuilder(
 
     fun build(current: PeriodData, previous: PeriodData? = null): JsonObject {
         val stats = PeriodStats.computeAll(current.trackers, current.entries, current.start, current.end)
-        val byCategory = stats.groupBy { it.tracker.category }
+        val bySection = stats.groupBy { it.tracker.section }
 
         return buildJsonObject {
             put("period", "${current.start}/${current.end}")
             put("days", PeriodStats.dayCount(current.start, current.end))
 
-            TrackerCategory.entries.forEach { category ->
-                val categoryStats = byCategory[category].orEmpty().filter { it.isReportable() }
-                if (categoryStats.isNotEmpty()) {
-                    put(snapshotKey(category), categoryObject(categoryStats))
+            DaySection.entries.forEach { section ->
+                val sectionStats = bySection[section].orEmpty().filter { it.isReportable() }
+                if (sectionStats.isNotEmpty()) {
+                    put(snapshotKey(section), sectionObject(sectionStats))
                 }
             }
 
@@ -64,13 +65,10 @@ class AiContextBuilder(
         }
     }
 
-    /** Category names as they appear in a snapshot; journal ratings read better as "subjective". */
-    private fun snapshotKey(category: TrackerCategory): String = when (category) {
-        TrackerCategory.JOURNAL -> "subjective"
-        else -> category.key
-    }
+    /** Sections appear in a snapshot under their own names, in day order. */
+    private fun snapshotKey(section: DaySection): String = section.key
 
-    private fun categoryObject(stats: List<TrackerStat>): JsonObject = buildJsonObject {
+    private fun sectionObject(stats: List<TrackerStat>): JsonObject = buildJsonObject {
         stats.forEach { stat ->
             val tracker = stat.tracker
             when {
@@ -82,6 +80,10 @@ class AiContextBuilder(
                 tracker.aggregation == Aggregation.SUM ->
                     put(tracker.key, JsonPrimitive(stat.sum ?: 0.0))
 
+                // A time reads as a time; 05:12 is legible where "312.0" is not.
+                tracker.type == TrackerType.TIME ->
+                    put(tracker.key, JsonPrimitive(stat.average?.let(::formatMinuteOfDay) ?: "no data"))
+
                 tracker.aggregation == Aggregation.AVERAGE ->
                     put(tracker.key, JsonPrimitive(PeriodStats.round1(stat.average ?: 0.0)))
 
@@ -89,6 +91,9 @@ class AiContextBuilder(
                     put(tracker.key, JsonPrimitive(stat.latest ?: 0.0))
 
                 else -> put(tracker.key, JsonPrimitive(stat.summary()))
+            }
+            if (tracker.type == TrackerType.MULTI_SELECT && stat.daysLogged > 0) {
+                put("${tracker.key}_items_per_day", PeriodStats.round1(stat.average ?: 0.0))
             }
             if (stat.optionCounts.isNotEmpty()) {
                 put(
@@ -155,11 +160,11 @@ class AiContextBuilder(
 
     private fun previousObject(prior: PeriodData, stats: List<TrackerStat>): JsonObject = buildJsonObject {
         put("period", "${prior.start}/${prior.end}")
-        stats.groupBy { it.tracker.category }.forEach { (category, categoryStats) ->
-            val reportable = categoryStats.filter { it.isReportable() && it.daysLogged > 0 }
+        stats.groupBy { it.tracker.section }.forEach { (section, sectionStats) ->
+            val reportable = sectionStats.filter { it.isReportable() && it.daysLogged > 0 }
             if (reportable.isNotEmpty()) {
                 put(
-                    snapshotKey(category),
+                    snapshotKey(section),
                     buildJsonObject {
                         reportable.forEach { stat ->
                             put(stat.tracker.key, JsonPrimitive(stat.summary()))

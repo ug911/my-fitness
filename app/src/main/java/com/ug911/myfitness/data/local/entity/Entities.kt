@@ -1,17 +1,18 @@
 package com.ug911.myfitness.data.local.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.ug911.myfitness.data.model.Aggregation
+import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.data.model.Direction
 import com.ug911.myfitness.data.model.Entry
 import com.ug911.myfitness.data.model.EntrySource
 import com.ug911.myfitness.data.model.HealthMetric
 import com.ug911.myfitness.data.model.JournalEntry
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.TrackerCategory
 import com.ug911.myfitness.data.model.TrackerType
 import com.ug911.myfitness.data.model.TrackerValue
 import java.time.LocalDate
@@ -20,7 +21,8 @@ import java.time.LocalDate
 data class TrackerEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
-    val category: TrackerCategory,
+    /** The column keeps its original name so the day-section change needed no table rebuild. */
+    @ColumnInfo(name = "category") val section: DaySection,
     val type: TrackerType,
     val unit: String?,
     val active: Boolean,
@@ -30,11 +32,12 @@ data class TrackerEntity(
     val healthMetric: HealthMetric?,
     val direction: Direction,
     val aggregation: Aggregation,
+    val targetValue: Double?,
 ) {
     fun toModel() = Tracker(
         id = id,
         name = name,
-        category = category,
+        section = section,
         type = type,
         unit = unit,
         active = active,
@@ -44,13 +47,14 @@ data class TrackerEntity(
         healthMetric = healthMetric,
         direction = direction,
         aggregation = aggregation,
+        targetValue = targetValue,
     )
 }
 
 fun Tracker.toEntity() = TrackerEntity(
     id = id,
     name = name,
-    category = category,
+    section = section,
     type = type,
     unit = unit,
     active = active,
@@ -60,6 +64,7 @@ fun Tracker.toEntity() = TrackerEntity(
     healthMetric = healthMetric,
     direction = direction,
     aggregation = aggregation,
+    targetValue = targetValue,
 )
 
 @Entity(

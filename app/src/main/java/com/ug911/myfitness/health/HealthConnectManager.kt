@@ -13,9 +13,12 @@ import androidx.health.connect.client.records.WeightRecord
 import androidx.health.connect.client.request.AggregateRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 
 /**
  * Everything that talks to Health Connect. Read-only: the app never writes health
@@ -89,6 +92,14 @@ class HealthConnectManager(private val context: Context) {
             client.aggregate(AggregateRequest(setOf(SleepSessionRecord.SLEEP_DURATION_TOTAL), sleepFilter))
         }.getOrNull()
 
+        // The night's main sleep: the longest session in the window, so a short nap or a
+        // mid-night wake-up does not become "the time I went to bed".
+        val mainSleep = runCatching {
+            client.readRecords(ReadRecordsRequest(SleepSessionRecord::class, sleepFilter))
+                .records
+                .maxByOrNull { it.endTime.epochSecond - it.startTime.epochSecond }
+        }.getOrNull()
+
         val sessions = runCatching {
             client.readRecords(ReadRecordsRequest(ExerciseSessionRecord::class, dayFilter)).records.size
         }.getOrDefault(0)
@@ -102,8 +113,20 @@ class HealthConnectManager(private val context: Context) {
             restingHeartRate = dayTotals?.get(RestingHeartRateRecord.BPM_AVG)?.toDouble(),
             activeCalories = dayTotals?.get(ActiveCaloriesBurnedRecord.ACTIVE_CALORIES_TOTAL)?.inKilocalories,
             weightKg = dayTotals?.get(WeightRecord.WEIGHT_AVG)?.inKilograms,
+            sleepStartMinuteOfDay = mainSleep?.startTime?.let { minuteOfDay(it, mainSleep.startZoneOffset) },
+            sleepEndMinuteOfDay = mainSleep?.endTime?.let { minuteOfDay(it, mainSleep.endZoneOffset) },
         )
     }
+}
+
+/** Health Connect stores an instant plus the offset it was recorded at; use that offset. */
+private fun minuteOfDay(instant: Instant, offset: ZoneOffset?): Int {
+    val local = if (offset != null) {
+        instant.atOffset(offset).toLocalTime()
+    } else {
+        instant.atZone(ZoneId.systemDefault()).toLocalTime()
+    }
+    return local.hour * 60 + local.minute
 }
 
 enum class HealthAvailability {
@@ -121,4 +144,7 @@ data class DailyHealthData(
     val restingHeartRate: Double?,
     val activeCalories: Double?,
     val weightKg: Double?,
+    /** Minutes past midnight, in the zone the record was written in. */
+    val sleepStartMinuteOfDay: Int? = null,
+    val sleepEndMinuteOfDay: Int? = null,
 )

@@ -17,7 +17,6 @@ import com.ug911.myfitness.data.local.entity.JournalEntryEntity
 import com.ug911.myfitness.data.local.entity.PlanEntity
 import com.ug911.myfitness.data.local.entity.PlanTargetEntity
 import com.ug911.myfitness.data.local.entity.TrackerEntity
-import com.ug911.myfitness.data.local.entity.toEntity
 
 @Database(
     entities = [
@@ -28,7 +27,7 @@ import com.ug911.myfitness.data.local.entity.toEntity
         PlanTargetEntity::class,
         AiAnalysisEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -44,35 +43,17 @@ abstract class MyFitnessDatabase : RoomDatabase() {
 
         fun build(context: Context): MyFitnessDatabase =
             Room.databaseBuilder(context, MyFitnessDatabase::class.java, NAME)
+                .addMigrations(MIGRATION_1_2)
                 .addCallback(SeedCallback)
                 .build()
 
         /**
-         * Seeds the default tracker set on first run. Trackers are data, so the starter
-         * set is a list of rows rather than anything baked into the schema.
+         * Seeds the personal day on first run. Trackers are data, so the starter set is
+         * a list of rows rather than anything baked into the schema.
          */
         private object SeedCallback : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
-                val converters = Converters()
-                DefaultTrackers.all().map { it.toEntity() }.forEach { tracker ->
-                    db.execSQL(
-                        "INSERT INTO trackers (name, category, type, unit, active, sortOrder, options, " +
-                            "ratingMax, healthMetric, direction, aggregation) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                        arrayOf(
-                            tracker.name,
-                            tracker.category.name,
-                            tracker.type.name,
-                            tracker.unit,
-                            if (tracker.active) 1 else 0,
-                            tracker.sortOrder,
-                            converters.listToString(tracker.options),
-                            tracker.ratingMax,
-                            tracker.healthMetric?.name,
-                            tracker.direction.name,
-                            tracker.aggregation.name,
-                        ),
-                    )
-                }
+                TrackerSeed.seedFresh { sql, args -> db.execSQL(sql, args) }
             }
         }
     }

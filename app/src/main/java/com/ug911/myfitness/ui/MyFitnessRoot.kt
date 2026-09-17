@@ -11,8 +11,11 @@ import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -27,7 +30,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.di.AppContainer
+import com.ug911.myfitness.ui.theme.accent
+import com.ug911.myfitness.ui.theme.cardSurface
+import com.ug911.myfitness.ui.theme.onAccentInk
 import com.ug911.myfitness.ui.history.HistoryScreen
 import com.ug911.myfitness.ui.history.HistoryViewModel
 import com.ug911.myfitness.ui.insights.InsightsScreen
@@ -42,11 +49,17 @@ import com.ug911.myfitness.ui.trackers.TrackerEditorScreen
 import com.ug911.myfitness.ui.trackers.TrackersScreen
 import com.ug911.myfitness.ui.trackers.TrackersViewModel
 
-private enum class Destination(val route: String, val label: String, val icon: ImageVector) {
-    TODAY("today", "Today", Icons.Filled.CheckCircle),
-    HISTORY("history", "History", Icons.Filled.CalendarMonth),
-    INSIGHTS("insights", "Insights", Icons.Filled.Insights),
-    PLAN("plan", "Plan", Icons.Filled.Flag),
+private enum class Destination(
+    val route: String,
+    val label: String,
+    val icon: ImageVector,
+    /** Which section's hue this tab borrows, so the bar carries the same identity. */
+    val section: DaySection,
+) {
+    TODAY("today", "Today", Icons.Filled.CheckCircle, DaySection.MORNING),
+    HISTORY("history", "History", Icons.Filled.CalendarMonth, DaySection.NIGHT),
+    INSIGHTS("insights", "Insights", Icons.Filled.Insights, DaySection.EVENING),
+    PLAN("plan", "Plan", Icons.Filled.Flag, DaySection.OFFICE),
 }
 
 private const val ROUTE_TRACKERS = "trackers"
@@ -63,7 +76,13 @@ fun MyFitnessRoot(container: AppContainer) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(Destination.entries.firstOrNull { it.route == currentRoute }?.label ?: "My Fitness") },
+                title = {
+                    Text(
+                        text = Destination.entries.firstOrNull { it.route == currentRoute }?.label ?: "My Fitness",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
                 actions = {
                     IconButton(onClick = { navController.navigate(ROUTE_TRACKERS) }) {
                         Icon(Icons.Filled.Tune, contentDescription = "Trackers")
@@ -75,8 +94,9 @@ fun MyFitnessRoot(container: AppContainer) {
             )
         },
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = cardSurface()) {
                 Destination.entries.forEach { destination ->
+                    val accent = destination.section.accent()
                     NavigationBarItem(
                         selected = currentRoute == destination.route,
                         onClick = {
@@ -87,6 +107,11 @@ fun MyFitnessRoot(container: AppContainer) {
                         },
                         icon = { Icon(destination.icon, contentDescription = destination.label) },
                         label = { Text(destination.label) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = onAccentInk(),
+                            selectedTextColor = accent,
+                            indicatorColor = accent,
+                        ),
                     )
                 }
             }

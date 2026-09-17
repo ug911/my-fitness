@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class TrackersViewModel(private val trackers: TrackerRepository) : ViewModel() {
 
     val state: StateFlow<List<Tracker>> = trackers.observeAll()
-        .map { list -> list.sortedWith(compareBy({ it.category.ordinal }, { it.sortOrder }, { it.name })) }
+        .map { list -> list.sortedWith(compareBy({ it.section.ordinal }, { it.sortOrder }, { it.name })) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     fun setActive(tracker: Tracker, active: Boolean) {

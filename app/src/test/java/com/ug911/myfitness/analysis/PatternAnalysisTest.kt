@@ -3,7 +3,7 @@ package com.ug911.myfitness.analysis
 import com.ug911.myfitness.TestData
 import com.ug911.myfitness.data.model.Direction
 import com.ug911.myfitness.data.model.Entry
-import com.ug911.myfitness.data.model.TrackerCategory
+import com.ug911.myfitness.data.model.DaySection
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -15,7 +15,7 @@ class PatternAnalysisTest {
     private val lateEating = TestData.habit(
         id = 1,
         name = "Late-night eating",
-        category = TrackerCategory.NUTRITION,
+        section = DaySection.BREAKFAST,
         direction = Direction.DOWN,
     )
     private val energy = TestData.rating(2, "Energy")
@@ -81,6 +81,35 @@ class PatternAnalysisTest {
     @Test
     fun `comparing a tracker with itself is refused`() {
         assertNull(PatternAnalysis.compare(lateEating, lateEating, entries(lagged = false)))
+    }
+
+    @Test
+    fun `a bedtime outcome is compared around the clock, not across it`() {
+        val gym = TestData.habit(7, "Gym")
+        val sleptAt = TestData.clock(8, "Slept at", targetMinutes = 23 * 60.0)
+        val days = TestData.week()
+        // Gym days: bed at 23:40, 23:50, 23:30. Rest days: 00:20, 00:40, 00:10 - later,
+        // even though the raw minute numbers are far smaller.
+        val entries = listOf(
+            TestData.flag(gym, days[0]), TestData.flag(gym, days[1]), TestData.flag(gym, days[2]),
+            TestData.flag(gym, days[3], false), TestData.flag(gym, days[4], false),
+            TestData.flag(gym, days[5], false),
+            TestData.at(sleptAt, days[0], 23, 40),
+            TestData.at(sleptAt, days[1], 23, 50),
+            TestData.at(sleptAt, days[2], 23, 30),
+            TestData.at(sleptAt, days[3], 0, 20),
+            TestData.at(sleptAt, days[4], 0, 40),
+            TestData.at(sleptAt, days[5], 0, 10),
+        )
+
+        val split = PatternAnalysis.compare(gym, sleptAt, entries)!!
+
+        assertTrue(split.isClockTime)
+        assertEquals("23:40", split.formatWhenDone())
+        assertEquals("00:23", split.formatWhenNotDone())
+        // 43 minutes earlier, not 23 hours later.
+        assertEquals(-43.0, split.difference, 1.0)
+        assertTrue(split.describe().contains("earlier"))
     }
 
     @Test

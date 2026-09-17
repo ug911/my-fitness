@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
@@ -26,21 +26,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.TrackerCategory
-import com.ug911.myfitness.ui.common.SectionCard
+import com.ug911.myfitness.ui.common.AccentCard
+import com.ug911.myfitness.ui.common.Pill
+import com.ug911.myfitness.ui.common.ProgressRing
 import com.ug911.myfitness.ui.common.SectionHeader
 import com.ug911.myfitness.ui.common.TrackerInputRow
+import com.ug911.myfitness.ui.icon
+import com.ug911.myfitness.ui.theme.accent
+import com.ug911.myfitness.ui.theme.mutedInkColor
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 private val HEADER_FORMAT = DateTimeFormatter.ofPattern("EEEE d MMM")
 
 /**
- * The screen the app exists for. Everything is on one scroll, grouped by category,
- * with no dialogs in the way: logging a day should take well under a minute.
+ * The screen the app exists for: the day in the order it happens, from waking up to
+ * going to sleep. One scroll, no dialogs, and most rows are a single tap.
  */
 @Composable
 fun TodayScreen(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
@@ -55,28 +59,40 @@ fun TodayScreen(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         item {
-            DateHeader(
+            DayHeader(
                 date = state.date,
                 isToday = state.isToday,
-                loggedCount = state.loggedCount,
+                logged = state.loggedCount,
+                total = state.trackers.size,
                 onShift = viewModel::shiftDate,
                 onToday = { viewModel.selectDate(LocalDate.now()) },
             )
         }
 
-        TrackerCategory.entries.forEach { category ->
-            val categoryTrackers = state.trackers.filter { it.category == category }
-            if (categoryTrackers.isNotEmpty()) {
-                item(key = "header-${category.name}") {
-                    SectionHeader(title = category.label, subtitle = categorySubtitle(category))
+        DaySection.entries.forEach { section ->
+            val sectionTrackers = state.trackers.filter { it.section == section }
+            if (sectionTrackers.isNotEmpty()) {
+                val done = sectionTrackers.count { state.dayLog?.entries?.containsKey(it.id) == true }
+                item(key = "header-${section.name}") {
+                    SectionHeader(
+                        title = section.label,
+                        accent = section.accent(),
+                        icon = section.icon,
+                        subtitle = section.subtitle,
+                        trailing = {
+                            if (done > 0) {
+                                Pill(text = "$done/${sectionTrackers.size}", accent = section.accent())
+                            }
+                        },
+                    )
                 }
-                item(key = "card-${category.name}") {
-                    SectionCard {
-                        categoryTrackers.forEach { tracker ->
-                            TrackerRowFor(tracker = tracker, state = state, viewModel = viewModel)
+                item(key = "card-${section.name}") {
+                    AccentCard(accent = section.accent()) {
+                        sectionTrackers.forEach { tracker ->
+                            TrackerRowFor(tracker, state, section, viewModel)
                         }
                     }
                 }
@@ -84,7 +100,11 @@ fun TodayScreen(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
         }
 
         item {
-            SectionHeader(title = "Note", subtitle = "Anything worth remembering about today")
+            SectionHeader(
+                title = "Anything else",
+                accent = mutedInkColor(),
+                subtitle = "One line about the day",
+            )
         }
         item {
             OutlinedTextField(
@@ -92,6 +112,7 @@ fun TodayScreen(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
                 onValueChange = { journalDraft = it },
                 placeholder = { Text("Slept badly, long walk after lunch, knee felt fine...") },
                 minLines = 3,
+                shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -104,55 +125,68 @@ fun TodayScreen(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun TrackerRowFor(tracker: Tracker, state: TodayUiState, viewModel: TodayViewModel) {
+private fun TrackerRowFor(
+    tracker: Tracker,
+    state: TodayUiState,
+    section: DaySection,
+    viewModel: TodayViewModel,
+) {
     val entry = state.dayLog?.entries?.get(tracker.id)
     TrackerInputRow(
         tracker = tracker,
         value = entry?.value,
         notes = entry?.notes,
         source = entry?.source,
+        accent = section.accent(),
         onValueChange = { viewModel.setValue(tracker, it) },
         onNotesChange = { viewModel.setNotes(tracker, it) },
     )
 }
 
 @Composable
-private fun DateHeader(
+private fun DayHeader(
     date: LocalDate,
     isToday: Boolean,
-    loggedCount: Int,
+    logged: Int,
+    total: Int,
     onShift: (Long) -> Unit,
     onToday: () -> Unit,
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+    val accent = DaySection.MORNING.accent()
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
+    ) {
         IconButton(onClick = { onShift(-1) }) {
             Icon(Icons.Filled.ChevronLeft, contentDescription = "Previous day")
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = if (isToday) "Today" else date.format(HEADER_FORMAT),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.headlineLarge,
             )
             Text(
-                text = if (isToday) date.format(HEADER_FORMAT) else "$loggedCount logged",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
+                text = if (isToday) date.format(HEADER_FORMAT) else "$logged logged",
+                style = MaterialTheme.typography.bodyMedium,
+                color = mutedInkColor(),
             )
         }
         if (!isToday) {
             TextButton(onClick = onToday) { Text("Today") }
         }
+        ProgressRing(
+            fraction = if (total == 0) 0f else logged.toFloat() / total,
+            accent = accent,
+            modifier = Modifier.size(54.dp),
+        ) {
+            Text(
+                text = "$logged",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
         IconButton(onClick = { onShift(1) }, enabled = !isToday) {
             Icon(Icons.Filled.ChevronRight, contentDescription = "Next day")
         }
     }
-}
-
-private fun categorySubtitle(category: TrackerCategory): String? = when (category) {
-    TrackerCategory.EXERCISE -> "What you did"
-    TrackerCategory.NUTRITION -> "What you ate"
-    TrackerCategory.BEHAVIOUR -> "Habits"
-    TrackerCategory.JOURNAL -> "How it felt"
-    TrackerCategory.HEALTH -> "Only if you want them"
 }

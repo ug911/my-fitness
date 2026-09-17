@@ -19,9 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.TrackerCategory
-import com.ug911.myfitness.ui.common.SectionCard
+import com.ug911.myfitness.data.model.DaySection
+import com.ug911.myfitness.ui.common.PlainCard
 import com.ug911.myfitness.ui.common.SectionHeader
+import com.ug911.myfitness.ui.icon
+import com.ug911.myfitness.ui.theme.accent
+import com.ug911.myfitness.ui.theme.mutedInkColor
 
 @Composable
 fun TrackersScreen(
@@ -43,6 +46,7 @@ fun TrackersScreen(
             ) {
                 SectionHeader(
                     title = "Trackers",
+                    accent = DaySection.BODY.accent(),
                     subtitle = "Switch off what you do not care about; add anything you do",
                     modifier = Modifier.weight(1f),
                 )
@@ -50,12 +54,19 @@ fun TrackersScreen(
             }
         }
 
-        TrackerCategory.entries.forEach { category ->
-            val group = trackers.filter { it.category == category }
+        DaySection.entries.forEach { section ->
+            val group = trackers.filter { it.section == section }
             if (group.isNotEmpty()) {
-                item(key = "h-${category.name}") { SectionHeader(title = category.label) }
-                item(key = "c-${category.name}") {
-                    SectionCard {
+                item(key = "h-${section.name}") {
+                    SectionHeader(
+                        title = section.label,
+                        accent = section.accent(),
+                        icon = section.icon,
+                        subtitle = section.subtitle,
+                    )
+                }
+                item(key = "c-${section.name}") {
+                    PlainCard {
                         group.forEach { tracker ->
                             TrackerConfigRow(
                                 tracker = tracker,
@@ -88,7 +99,7 @@ private fun TrackerConfigRow(tracker: Tracker, onToggle: (Boolean) -> Unit, onCl
                     if (tracker.isAutomatic) append(" - from Health Connect")
                 },
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
+                color = mutedInkColor(),
             )
         }
         Switch(checked = tracker.active, onCheckedChange = onToggle)

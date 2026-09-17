@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ug911.myfitness.data.model.Entry
 import com.ug911.myfitness.data.model.JournalEntry
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.isCompleted
 import com.ug911.myfitness.data.repository.LogRepository
 import com.ug911.myfitness.data.repository.TrackerRepository
 import com.ug911.myfitness.di.AppContainer
@@ -19,7 +18,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.format.TextStyle
+import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAdjusters
+import java.util.Locale
 
 class HistoryViewModel(
     trackers: TrackerRepository,
@@ -71,34 +73,50 @@ data class HistoryUiState(
 ) {
     private val trackersById = trackers.associateBy { it.id }
 
-    /**
-     * How "complete" a day looks in the heatmap: the share of that day's logged
-     * trackers that counted as done. A day with nothing logged is empty, which is
-     * itself information.
-     */
-    fun intensity(date: LocalDate): DayIntensity {
-        val entries = entriesByDate[date].orEmpty()
-        if (entries.isEmpty()) return DayIntensity.NONE
-        val completed = entries.count { entry ->
-            trackersById[entry.trackerId]?.let { entry.value.isCompleted(it) } == true
+    /** Active trackers are the denominator: switched-off ones are not owed a value. */
+    private val expectedPerDay: Int = trackers.count { it.active }.coerceAtLeast(1)
+
+    val totalDays: Int = (ChronoUnit.DAYS.between(rangeStart, rangeEnd) + 1).toInt()
+
+    val daysLogged: Int = entriesByDate.count { it.value.isNotEmpty() }
+
+    /** Consecutive days with something logged, counting back from today. */
+    val currentStreak: Int = run {
+        var streak = 0
+        var day = rangeEnd
+        while (!day.isBefore(rangeStart) && entriesByDate[day].orEmpty().isNotEmpty()) {
+            streak++
+            day = day.minusDays(1)
         }
-        val ratio = completed.toFloat() / entries.size
+        streak
+    }
+
+    val bestDayLabel: String = entriesByDate
+        .maxByOrNull { it.value.size }
+        ?.let { (date, entries) ->
+            if (entries.isEmpty()) "-" else date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        }
+        ?: "-"
+
+    /**
+     * Heat level for a day: 0 means nothing logged, 1-4 step up the sequential ramp by
+     * how much of the day was filled in. Four bins, because past about seven classes
+     * adjacent shades stop being distinguishable.
+     */
+    fun level(date: LocalDate): Int {
+        val entries = entriesByDate[date].orEmpty()
+        if (entries.isEmpty()) return 0
+        val share = entries.size.toFloat() / expectedPerDay
         return when {
-            ratio >= 0.8f -> DayIntensity.FULL
-            ratio >= 0.5f -> DayIntensity.GOOD
-            else -> DayIntensity.PARTIAL
+            share >= 0.75f -> 4
+            share >= 0.5f -> 3
+            share >= 0.25f -> 2
+            else -> 1
         }
     }
 
     fun entriesFor(date: LocalDate): List<Pair<Tracker, Entry>> =
         entriesByDate[date].orEmpty().mapNotNull { entry ->
             trackersById[entry.trackerId]?.let { it to entry }
-        }.sortedWith(compareBy({ it.first.category.ordinal }, { it.first.sortOrder }))
-}
-
-enum class DayIntensity {
-    NONE,
-    PARTIAL,
-    GOOD,
-    FULL,
+        }.sortedWith(compareBy({ it.first.section.ordinal }, { it.first.sortOrder }))
 }

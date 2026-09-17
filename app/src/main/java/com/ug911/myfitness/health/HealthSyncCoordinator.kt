@@ -47,6 +47,8 @@ class HealthSyncCoordinator(
     /** Maps a Health Connect reading onto the tracker's own type. */
     private fun valueFor(tracker: Tracker, data: DailyHealthData): TrackerValue? {
         val raw: Double = when (tracker.healthMetric) {
+            HealthMetric.SLEEP_START -> data.sleepStartMinuteOfDay?.toDouble()
+            HealthMetric.SLEEP_END -> data.sleepEndMinuteOfDay?.toDouble()
             HealthMetric.STEPS -> data.steps?.toDouble()
             HealthMetric.EXERCISE_MINUTES -> data.exerciseMinutes?.toDouble()
             HealthMetric.EXERCISE_SESSIONS -> data.exerciseSessions.takeIf { it > 0 }?.toDouble()
@@ -62,8 +64,10 @@ class HealthSyncCoordinator(
             TrackerType.DURATION -> TrackerValue.Duration(raw.toInt())
             TrackerType.BOOLEAN -> TrackerValue.Flag(raw > 0)
             TrackerType.RATING -> TrackerValue.Rating(raw.toInt().coerceIn(0, tracker.ratingMax))
+            TrackerType.TIME -> TrackerValue.Time(raw.toInt().coerceIn(0, TrackerValue.MINUTES_PER_DAY - 1))
             TrackerType.TEXT -> TrackerValue.Text(round1(raw).toString())
-            TrackerType.SELECT -> null
+            // Nothing in Health Connect maps onto a hand-made checklist or a pick-one.
+            TrackerType.SELECT, TrackerType.MULTI_SELECT -> null
         }
     }
 

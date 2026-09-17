@@ -5,11 +5,16 @@ import com.ug911.myfitness.data.model.Entry
 import com.ug911.myfitness.data.model.Tracker
 import com.ug911.myfitness.data.model.TrackerType
 import com.ug911.myfitness.data.model.TrackerValue
+import com.ug911.myfitness.data.model.formatMinuteOfDay
 import com.ug911.myfitness.data.model.formatNumber
 import com.ug911.myfitness.data.model.isCompleted
 import com.ug911.myfitness.data.model.numeric
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import kotlin.math.abs
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 /** One tracker collapsed over one window of days. Pure data, no Android dependencies. */
 data class TrackerStat(
@@ -35,7 +40,12 @@ data class TrackerStat(
         }
 
     /** Short human/AI-readable rendering: "5/7 days", "185 min", "3.4". */
-    fun summary(): String = when (tracker.aggregation) {
+    fun summary(): String = when {
+        tracker.type == TrackerType.TIME -> average?.let(::formatMinuteOfDay) ?: "no data"
+        else -> summaryByAggregation()
+    }
+
+    private fun summaryByAggregation(): String = when (tracker.aggregation) {
         Aggregation.DAYS_COMPLETED -> "$daysCompleted/$days days"
         Aggregation.SUM -> sum?.let { formatNumber(it) + unitSuffix() } ?: "no data"
         Aggregation.AVERAGE -> average?.let { formatNumber(PeriodStats.round1(it)) + unitSuffix() } ?: "no data"
@@ -65,12 +75,18 @@ object PeriodStats {
     fun compute(tracker: Tracker, entries: List<Entry>, days: Int): TrackerStat {
         val numbers = entries.mapNotNull { it.value.numeric() }
         val completed = entries.count { it.value.isCompleted(tracker) }
-        val options = if (tracker.type == TrackerType.SELECT) {
-            entries.mapNotNull { (it.value as? TrackerValue.Choice)?.option }
+        val options = when (tracker.type) {
+            TrackerType.SELECT -> entries.mapNotNull { (it.value as? TrackerValue.Choice)?.option }
                 .groupingBy { it }
                 .eachCount()
-        } else {
-            emptyMap()
+
+            // For a checklist, how often each item was ticked is the interesting part:
+            // it answers "which exercises do I actually do?".
+            TrackerType.MULTI_SELECT -> entries.flatMap { (it.value as? TrackerValue.Choices)?.selected.orEmpty() }
+                .groupingBy { it }
+                .eachCount()
+
+            else -> emptyMap()
         }
         return TrackerStat(
             tracker = tracker,
@@ -78,7 +94,13 @@ object PeriodStats {
             daysLogged = entries.size,
             daysCompleted = completed,
             sum = numbers.takeIf { it.isNotEmpty() }?.sum(),
-            average = numbers.takeIf { it.isNotEmpty() }?.average(),
+            average = when {
+                numbers.isEmpty() -> null
+                // Clock times live on a circle: averaging 23:50 and 00:10 arithmetically
+                // gives noon, which is worse than useless for a bedtime.
+                tracker.type == TrackerType.TIME -> circularMeanMinutes(numbers)
+                else -> numbers.average()
+            },
             min = numbers.minOrNull(),
             max = numbers.maxOrNull(),
             latest = entries.maxByOrNull { it.date }?.value?.numeric(),
@@ -106,6 +128,20 @@ object PeriodStats {
     }
 
     fun round1(value: Double): Double = Math.round(value * 10.0) / 10.0
+
+    /**
+     * Mean of clock times, taken around the 24-hour circle so times either side of
+     * midnight average to midnight rather than to the middle of the day.
+     */
+    fun circularMeanMinutes(minutes: List<Double>): Double {
+        val radiansPerMinute = 2 * Math.PI / TrackerValue.MINUTES_PER_DAY
+        val x = minutes.sumOf { cos(it * radiansPerMinute) } / minutes.size
+        val y = minutes.sumOf { sin(it * radiansPerMinute) } / minutes.size
+        if (abs(x) < 1e-9 && abs(y) < 1e-9) return minutes.first()
+        val angle = atan2(y, x)
+        val result = angle / radiansPerMinute
+        return (result + TrackerValue.MINUTES_PER_DAY) % TrackerValue.MINUTES_PER_DAY
+    }
 }
 
 data class SeriesPoint(

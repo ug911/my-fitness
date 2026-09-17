@@ -26,9 +26,12 @@ import androidx.compose.ui.unit.dp
 import com.ug911.myfitness.data.model.PlanSource
 import com.ug911.myfitness.ui.common.EmptyState
 import com.ug911.myfitness.ui.common.ProgressRow
-import com.ug911.myfitness.ui.common.SectionCard
+import com.ug911.myfitness.ui.common.PlainCard
 import com.ug911.myfitness.ui.common.SectionHeader
-import com.ug911.myfitness.ui.theme.TrackingColors
+import com.ug911.myfitness.data.model.DaySection
+import com.ug911.myfitness.ui.theme.Palette
+import com.ug911.myfitness.ui.theme.accent
+import com.ug911.myfitness.ui.theme.mutedInkColor
 
 @Composable
 fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
@@ -43,6 +46,7 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
         item {
             SectionHeader(
                 title = "This week",
+                accent = DaySection.OFFICE.accent(),
                 subtitle = active?.let { "${it.plan.startDate} to ${it.plan.endDate}" }
                     ?: "No plan approved for this week",
             )
@@ -57,7 +61,7 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
             }
         } else {
             item {
-                SectionCard {
+                PlainCard {
                     active.plan.note?.let {
                         Text(
                             it,
@@ -91,7 +95,7 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
                             label = row.tracker.name,
                             detail = detail,
                             fraction = row.fraction,
-                            color = if (row.met) TrackingColors.full else MaterialTheme.colorScheme.primary,
+                            accent = if (row.met) Palette.Good else row.tracker.section.accent(),
                         )
                     }
                     Text(
@@ -101,7 +105,7 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
                             "Set by you"
                         },
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.outline,
+                        color = mutedInkColor(),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     )
                 }
@@ -113,11 +117,12 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
             item {
                 SectionHeader(
                     title = "Proposed plan",
+                    accent = DaySection.NIGHT.accent(),
                     subtitle = "${proposed.plan.startDate} to ${proposed.plan.endDate} - waiting for your approval",
                 )
             }
             item {
-                SectionCard {
+                PlainCard {
                     proposed.plan.note?.let {
                         Text(
                             it,
@@ -135,13 +140,13 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
                                 Text(
                                     item.describe(),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.outline,
+                                    color = mutedInkColor(),
                                 )
                                 item.target.note?.let {
                                     Text(
                                         it,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.outline,
+                                        color = mutedInkColor(),
                                     )
                                 }
                             }
@@ -166,7 +171,7 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
                         "Nothing here counts as a goal until you accept it, and accepting never " +
                             "changes anything you have already logged.",
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.outline,
+                        color = mutedInkColor(),
                         modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 12.dp),
                     )
                 }
@@ -178,7 +183,7 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
                 "Plans and history are separate records. A plan says what you intended; " +
                     "your entries say what happened.",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
+                color = mutedInkColor(),
                 fontWeight = FontWeight.Normal,
                 modifier = Modifier.padding(16.dp),
             )

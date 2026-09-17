@@ -30,8 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.health.connect.client.PermissionController
 import com.ug911.myfitness.health.HealthAvailability
 import com.ug911.myfitness.settings.AiProvider
-import com.ug911.myfitness.ui.common.SectionCard
+import com.ug911.myfitness.ui.common.PlainCard
 import com.ug911.myfitness.ui.common.SectionHeader
+import com.ug911.myfitness.data.model.DaySection
+import com.ug911.myfitness.ui.theme.accent
+import com.ug911.myfitness.ui.theme.mutedInkColor
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -54,9 +57,13 @@ fun SettingsScreen(viewModel: SettingsViewModel, modifier: Modifier = Modifier) 
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        item { SectionHeader(title = "Health Connect", subtitle = "Steps, workouts, sleep and heart rate") }
+        item { SectionHeader(
+                title = "Health Connect",
+                accent = DaySection.BODY.accent(),
+                subtitle = "Steps, workouts, sleep and heart rate",
+            ) }
         item {
-            SectionCard {
+            PlainCard {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         when (state.healthAvailability) {
@@ -84,7 +91,7 @@ fun SettingsScreen(viewModel: SettingsViewModel, modifier: Modifier = Modifier) 
                                 Instant.ofEpochMilli(state.settings.lastSyncMillis).atZone(ZoneId.systemDefault()),
                             ),
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.outline,
+                            color = mutedInkColor(),
                         )
                     }
                     state.syncMessage?.let {
@@ -103,9 +110,13 @@ fun SettingsScreen(viewModel: SettingsViewModel, modifier: Modifier = Modifier) 
             }
         }
 
-        item { SectionHeader(title = "AI review", subtitle = "Used only when you press Review my week") }
+        item { SectionHeader(
+                title = "AI review",
+                accent = DaySection.NIGHT.accent(),
+                subtitle = "Used only when you press Review my week",
+            ) }
         item {
-            SectionCard {
+            PlainCard {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         AiProvider.entries.forEach { provider ->
@@ -145,15 +156,15 @@ fun SettingsScreen(viewModel: SettingsViewModel, modifier: Modifier = Modifier) 
                         "The key is kept in this app's private storage and is only sent to the provider " +
                             "you picked. Reviews send aggregates and your own notes, never the database file.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.outline,
+                        color = mutedInkColor(),
                     )
                 }
             }
         }
 
-        item { SectionHeader(title = "About") }
+        item { SectionHeader(title = "About", accent = DaySection.EVENING.accent()) }
         item {
-            SectionCard {
+            PlainCard {
                 Text(
                     "A personal health experiment journal: log in under a minute a day, then look for " +
                         "patterns over weeks. Everything lives on this device in a local database.",

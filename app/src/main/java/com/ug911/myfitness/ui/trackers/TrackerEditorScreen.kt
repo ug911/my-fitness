@@ -29,10 +29,12 @@ import com.ug911.myfitness.data.model.Aggregation
 import com.ug911.myfitness.data.model.Direction
 import com.ug911.myfitness.data.model.HealthMetric
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.TrackerCategory
+import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.data.model.TrackerType
-import com.ug911.myfitness.ui.common.SectionCard
+import com.ug911.myfitness.ui.common.PlainCard
 import com.ug911.myfitness.ui.common.SectionHeader
+import com.ug911.myfitness.ui.theme.accent
+import com.ug911.myfitness.ui.theme.mutedInkColor
 
 /** Add or change a tracker. This is the app's extensibility story, so it is a real form. */
 @OptIn(ExperimentalLayoutApi::class)
@@ -47,7 +49,7 @@ fun TrackerEditorScreen(
     val existing = trackers.firstOrNull { it.id == trackerId }
 
     var name by remember(existing?.id) { mutableStateOf(existing?.name.orEmpty()) }
-    var category by remember(existing?.id) { mutableStateOf(existing?.category ?: TrackerCategory.BEHAVIOUR) }
+    var section by remember(existing?.id) { mutableStateOf(existing?.section ?: DaySection.EVENING) }
     var type by remember(existing?.id) { mutableStateOf(existing?.type ?: TrackerType.BOOLEAN) }
     var unit by remember(existing?.id) { mutableStateOf(existing?.unit.orEmpty()) }
     var options by remember(existing?.id) { mutableStateOf(existing?.options?.joinToString(", ").orEmpty()) }
@@ -64,7 +66,12 @@ fun TrackerEditorScreen(
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        item { SectionHeader(title = if (existing == null) "New tracker" else "Edit tracker") }
+        item {
+            SectionHeader(
+                title = if (existing == null) "New tracker" else "Edit tracker",
+                accent = section.accent(),
+            )
+        }
 
         item {
             OutlinedTextField(
@@ -76,7 +83,7 @@ fun TrackerEditorScreen(
             )
         }
 
-        item { ChipPicker("Category", TrackerCategory.entries, category, { it.label }) { category = it } }
+        item { ChipPicker("Part of the day", DaySection.entries, section, { it.label }) { section = it } }
         item {
             ChipPicker("Type", TrackerType.entries, type, { it.name.lowercase() }) {
                 type = it
@@ -96,7 +103,7 @@ fun TrackerEditorScreen(
             }
         }
 
-        if (type == TrackerType.SELECT) {
+        if (type == TrackerType.SELECT || type == TrackerType.MULTI_SELECT) {
             item {
                 OutlinedTextField(
                     value = options,
@@ -125,7 +132,7 @@ fun TrackerEditorScreen(
         }
 
         item {
-            SectionCard {
+            PlainCard {
                 Column(Modifier.padding(12.dp)) {
                     Text("Fill from Health Connect", style = MaterialTheme.typography.labelLarge)
                     FlowRow(
@@ -166,7 +173,7 @@ fun TrackerEditorScreen(
                             Tracker(
                                 id = existing?.id ?: 0,
                                 name = name.trim(),
-                                category = category,
+                                section = section,
                                 type = type,
                                 unit = unit.trim().takeIf { it.isNotBlank() },
                                 active = active,
@@ -202,7 +209,7 @@ fun TrackerEditorScreen(
                 "Deleting a tracker also deletes its history. Switching it off keeps everything " +
                     "and just hides it from Today.",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
+                color = mutedInkColor(),
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
             )
         }

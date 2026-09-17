@@ -6,7 +6,7 @@ import com.ug911.myfitness.data.model.TrackerValue
 import com.ug911.myfitness.data.model.isCompleted
 import com.ug911.myfitness.data.model.Entry
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.TrackerCategory
+import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.data.model.TrackerType
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -34,7 +34,7 @@ class PeriodStatsTest {
         assertEquals(4, stat.daysLogged)
         assertEquals(3, stat.daysCompleted)
         assertEquals("3/7 days", stat.summary())
-        assertEquals(3.0, stat.headline)
+        assertEquals(3.0, stat.headline!!, 0.001)
     }
 
     @Test
@@ -77,24 +77,24 @@ class PeriodStatsTest {
     fun `select values count as done unless they are the first option`() {
         val alcohol = Tracker(
             id = 9,
-            name = "Alcohol",
-            category = TrackerCategory.NUTRITION,
+            name = "Coffee",
+            section = DaySection.BREAKFAST,
             type = TrackerType.SELECT,
-            options = listOf("None", "1", "2", "3+"),
+            options = listOf("None", "Hot", "Cold"),
             aggregation = Aggregation.DAYS_COMPLETED,
         )
         assertFalse(TrackerValue.Choice("None").isCompleted(alcohol))
-        assertTrue(TrackerValue.Choice("2").isCompleted(alcohol))
+        assertTrue(TrackerValue.Choice("Cold").isCompleted(alcohol))
 
         val entries = listOf(
             Entry(trackerId = alcohol.id, date = TestData.monday, value = TrackerValue.Choice("None")),
-            Entry(trackerId = alcohol.id, date = TestData.monday.plusDays(1), value = TrackerValue.Choice("2")),
-            Entry(trackerId = alcohol.id, date = TestData.monday.plusDays(2), value = TrackerValue.Choice("1")),
+            Entry(trackerId = alcohol.id, date = TestData.monday.plusDays(1), value = TrackerValue.Choice("Cold")),
+            Entry(trackerId = alcohol.id, date = TestData.monday.plusDays(2), value = TrackerValue.Choice("Hot")),
         )
         val stat = PeriodStats.compute(alcohol, entries, days = 7)
 
         assertEquals(2, stat.daysCompleted)
-        assertEquals(mapOf("None" to 1, "2" to 1, "1" to 1), stat.optionCounts)
+        assertEquals(mapOf("None" to 1, "Cold" to 1, "Hot" to 1), stat.optionCounts)
     }
 
     @Test

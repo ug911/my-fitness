@@ -10,7 +10,7 @@ import com.ug911.myfitness.data.model.PlanStatus
 import com.ug911.myfitness.data.model.PlanTarget
 import com.ug911.myfitness.data.model.PlanWithTargets
 import com.ug911.myfitness.data.model.Tracker
-import com.ug911.myfitness.data.model.TrackerCategory
+import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.data.model.TrackerType
 import com.ug911.myfitness.data.model.TrackerValue
 import kotlinx.serialization.json.jsonArray
@@ -29,18 +29,18 @@ class AiContextBuilderTest {
     private val steps = Tracker(
         id = 3,
         name = "Steps",
-        category = TrackerCategory.EXERCISE,
+        section = DaySection.MORNING,
         type = TrackerType.NUMBER,
         unit = "steps",
         aggregation = Aggregation.AVERAGE,
     )
     private val exerciseMinutes = TestData.duration(4, "Exercise duration")
-    private val protein = TestData.habit(5, "Protein target", TrackerCategory.NUTRITION)
+    private val protein = TestData.habit(5, "Protein target", DaySection.BREAKFAST)
     private val energy = TestData.rating(6, "Energy")
     private val mealNote = Tracker(
         id = 7,
         name = "Meal note",
-        category = TrackerCategory.NUTRITION,
+        section = DaySection.BREAKFAST,
         type = TrackerType.TEXT,
         aggregation = Aggregation.NONE,
     )
@@ -89,26 +89,26 @@ class AiContextBuilderTest {
         assertEquals("2026-09-07/2026-09-13", snapshot["period"]!!.jsonPrimitive.content)
         assertEquals(7, snapshot["days"]!!.jsonPrimitive.content.toInt())
 
-        val exercise = snapshot["exercise"]!!.jsonObject
+        val exercise = snapshot["morning"]!!.jsonObject
         assertEquals("3/7 days", exercise["strength_training"]!!.jsonPrimitive.content)
         assertEquals("1/7 days", exercise["cardio"]!!.jsonPrimitive.content)
         assertEquals(7120.0, exercise["steps"]!!.jsonPrimitive.content.toDouble(), 0.001)
         assertEquals(185.0, exercise["exercise_duration"]!!.jsonPrimitive.content.toDouble(), 0.001)
 
-        val nutrition = snapshot["nutrition"]!!.jsonObject
+        val nutrition = snapshot["breakfast"]!!.jsonObject
         assertEquals("5/7 days", nutrition["protein_target"]!!.jsonPrimitive.content)
 
-        val subjective = snapshot["subjective"]!!.jsonObject
+        val subjective = snapshot["night"]!!.jsonObject
         assertEquals(3.3, subjective["energy"]!!.jsonPrimitive.content.toDouble(), 0.001)
         // Averages over partial weeks carry the number of days they are based on.
         assertEquals(3, subjective["energy_days_logged"]!!.jsonPrimitive.content.toInt())
     }
 
     @Test
-    fun `free text lands in notes and journal, never in the category aggregates`() {
+    fun `free text lands in notes and journal, never in the section aggregates`() {
         val snapshot = AiContextBuilder().build(week())
 
-        assertNull(snapshot["nutrition"]!!.jsonObject["meal_note"])
+        assertNull(snapshot["breakfast"]!!.jsonObject["meal_note"])
         val notes = snapshot["notes"]!!.jsonArray.map { it.jsonPrimitive.content }
         assertTrue(notes.any { it.contains("big pasta dinner") })
 
@@ -160,7 +160,7 @@ class AiContextBuilderTest {
 
         val prior = snapshot["previous_period"]!!.jsonObject
         assertEquals("2026-08-31/2026-09-06", prior["period"]!!.jsonPrimitive.content)
-        assertEquals("2/7 days", prior["exercise"]!!.jsonObject["strength_training"]!!.jsonPrimitive.content)
+        assertEquals("2/7 days", prior["morning"]!!.jsonObject["strength_training"]!!.jsonPrimitive.content)
     }
 
     @Test
@@ -174,7 +174,7 @@ class AiContextBuilderTest {
         )
         val snapshot = AiContextBuilder().build(empty)
 
-        assertEquals("no data", snapshot["exercise"]!!.jsonObject["steps"]!!.jsonPrimitive.content)
+        assertEquals("no data", snapshot["morning"]!!.jsonObject["steps"]!!.jsonPrimitive.content)
         assertEquals(0, snapshot["journal"]!!.jsonArray.size)
     }
 

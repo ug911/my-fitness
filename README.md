@@ -9,16 +9,28 @@ analysis can be as sophisticated as you like later.**
 
 ## What it does
 
+The home screen is the day in the order it happens, not a set of abstract categories:
+
+| Section | What it holds |
+| --- | --- |
+| **Morning** | Woke up (aiming at 05:00), gym, treadmill, and the exercise checklist |
+| **School run** | Dropped Vihaan, left for school, back home |
+| **Breakfast** | Chicken / eggs / dosa / bohara, coffee hot or cold, before or after the drop |
+| **Office** | Reached, left, ate at the office, glasses of water (aiming at 8) |
+| **Evening** | Played with Vihaan, dinner, late meetings, Instagram (after the drop / after office / late night) |
+| **Night** | Slept at (aiming at 23:00), then energy, mood and stress for the day |
+| **Body** | Weight, steps, sleep duration - mostly filled in by Health Connect |
+
 | Screen | What it is for |
 | --- | --- |
-| **Today** | Every active tracker on one scroll, grouped by Exercise / Food / Behaviour / Journal / Health, plus a free-text note. The screen you use 90% of the time. |
-| **History** | Calendar heatmap of the last 18 weeks. Tap a day to see everything logged, including which values came from Health Connect. |
-| **Insights** | 7 / 30 / 90-day trends, local "when I do X, what happens to Y?" splits, and the **Review my week** button. |
-| **Plan** | This week's approved targets with live progress, and any AI-proposed plan waiting for your approval. |
+| **Today** | Every section on one scroll. Habits are one tap, times are one tap on a suggested chip, the gym list is a tap per exercise. |
+| **History** | Calendar heatmap of the last 18 weeks with a streak, plus any day broken down by section. |
+| **Insights** | 7 / 30 / 90-day trends per section, local "when I do X, what happens to Y?" splits, and **Review my week**. |
+| **Plan** | This week's approved targets with progress, and any AI-proposed plan waiting for approval. |
 
-Steps, workout minutes, sleep, resting heart rate, active calories and weight come from
-**Health Connect** so you do not type them in. A manual entry always beats a synced one:
-if you corrected a value by hand, no later sync overwrites it.
+Two of the times fill themselves in: if anything writes sleep to Health Connect, the
+start and end of the night become "Slept at" and "Woke up". A value you type always
+wins - a sync never overwrites a manual entry.
 
 ## Trackers, not fields
 
@@ -26,21 +38,21 @@ Nothing loggable is hardcoded. A tracker is a row with a type:
 
 | Type | Example |
 | --- | --- |
-| `BOOLEAN` | Strength training: yes/no |
-| `NUMBER` | Weight: 74.2 kg |
-| `DURATION` | Exercise: 45 min |
+| `BOOLEAN` | Gym: yes/no |
+| `NUMBER` | Water at office: 8 glasses |
+| `DURATION` | Gym minutes: 45 |
 | `RATING` | Energy: 4/5 |
-| `TEXT` | Meal note |
-| `SELECT` | Alcohol: None / 1 / 2 / 3+ |
+| `TEXT` | A note |
+| `SELECT` | Coffee: None / Hot / Cold |
+| `TIME` | Woke up: 05:10 |
+| `MULTI_SELECT` | Exercises: shoulders, biceps, abs... |
 
-Each tracker also carries a category, a direction (`more is better`, `less is better`,
-`just observe`) and an aggregation (`days done`, `total`, `average`, `latest`), which is
-how the app knows that "Junk food 3/7 days" is a worse week than "1/7" without anything
-being special-cased. Add, edit, reorder or switch off trackers from the Trackers screen;
-the database never changes.
-
-The app ships with a sensible starter set (see `DefaultTrackers.kt`) and all of it is
-editable.
+Each tracker also carries the part of the day it belongs to, a direction (`more is
+better`, `less is better`, `just observe`), an aggregation (`days done`, `total`,
+`average`, `latest`) and an optional standing target - which is how the app knows that
+waking at 04:50 beats a 05:00 target while a 00:20 bedtime *misses* an 23:00 one.
+Add, edit, reorder or switch off trackers from the Trackers screen; the database does
+not change.
 
 ## The AI loop
 
@@ -52,13 +64,21 @@ sent:
 {
   "period": "2026-09-07/2026-09-13",
   "days": 7,
-  "exercise": { "strength_training": "3/7 days", "cardio": "1/7 days", "steps": 7120, "exercise_duration": 185 },
-  "nutrition": { "protein_target": "5/7 days", "vegetables": "6/7 days", "junk_food": "3/7 days" },
-  "behaviour": { "bed_before_11_30": "3/7 days", "meditation": "4/7 days" },
-  "subjective": { "energy": 3.4, "hunger": 2.8, "stress": 3.1 },
-  "journal": ["Mon 07 Sep: Good session, slept well"],
-  "plan": { "targets": [{ "tracker": "Strength training", "target_frequency": 4, "actual_days": 3, "met": false }] },
-  "previous_period": { "exercise": { "strength_training": "2/7 days" } }
+  "morning": {
+    "woke_up": "05:24",
+    "gym": "4/7 days",
+    "exercises": "4/7 days",
+    "exercises_items_per_day": 3.2,
+    "exercises_breakdown": { "abs": 4, "shoulders": 2, "lats": 1 }
+  },
+  "school_run": { "dropped_vihaan_at_school": "5/7 days" },
+  "breakfast": { "breakfast": "6/7 days", "coffee": "5/7 days" },
+  "office": { "reached_office": "09:40", "water_at_office": 6.4, "ate_at_office": "3/7 days" },
+  "evening": { "played_with_vihaan": "5/7 days", "dinner": "7/7 days", "late_meetings": "2/7 days" },
+  "night": { "slept_at": "23:35", "energy": 3.4, "stress": 3.1 },
+  "journal": ["Mon 07 Sep: Good session, Vihaan slept early"],
+  "plan": { "targets": [{ "tracker": "Gym", "target_frequency": 5, "actual_days": 4, "met": false }] },
+  "previous_period": { "morning": { "gym": "3/7 days" } }
 }
 ```
 

@@ -38,8 +38,8 @@ android {
         applicationId = "com.ug911.myfitness"
         minSdk = 28
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -110,4 +110,6 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    // Lets the migration SQL run against a real SQLite engine on the JVM.
+    testImplementation(libs.sqlite.jdbc)
 }

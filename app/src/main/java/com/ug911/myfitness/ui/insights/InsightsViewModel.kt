@@ -63,7 +63,8 @@ class InsightsViewModel(
 
         InsightsUiState(
             window = selectedWindow,
-            stats = stats.sortedWith(compareBy({ it.tracker.category.ordinal }, { it.tracker.sortOrder })),
+            headlines = headlineStats(stats),
+            stats = stats.sortedWith(compareBy({ it.tracker.section.ordinal }, { it.tracker.sortOrder })),
             series = stats.filter { it.tracker.aggregation != Aggregation.NONE }.associate { stat ->
                 stat.tracker.id to PeriodStats.weeklySeries(
                     tracker = stat.tracker,
@@ -128,7 +129,16 @@ class InsightsViewModel(
 
     private fun Tracker.isOutcomeLike(): Boolean =
         type == TrackerType.RATING || (type == TrackerType.NUMBER && aggregation == Aggregation.AVERAGE) ||
-            type == TrackerType.DURATION
+            type == TrackerType.DURATION || type == TrackerType.TIME
+
+    /**
+     * The three numbers worth putting at the top: the ones with a standing target,
+     * since those are the habits being aimed at.
+     */
+    private fun headlineStats(stats: List<TrackerStat>): List<TrackerStat> {
+        val withTargets = stats.filter { it.tracker.targetValue != null && it.daysLogged > 0 }
+        return withTargets.take(3).ifEmpty { stats.filter { it.daysLogged > 0 }.take(3) }
+    }
 
     companion object {
         fun factory(container: AppContainer): ViewModelProvider.Factory = viewModelFactory {
@@ -154,6 +164,7 @@ enum class InsightsWindow(val days: Int, val label: String) {
 
 data class InsightsUiState(
     val window: InsightsWindow = InsightsWindow.WEEK,
+    val headlines: List<TrackerStat> = emptyList(),
     val stats: List<TrackerStat> = emptyList(),
     val series: Map<Long, List<SeriesPoint>> = emptyMap(),
     val sameDayPatterns: List<OutcomeSplit> = emptyList(),
