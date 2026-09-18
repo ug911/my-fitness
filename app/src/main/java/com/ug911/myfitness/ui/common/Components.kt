@@ -4,8 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,7 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,11 +28,55 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ug911.myfitness.ui.theme.cardSurface
 import com.ug911.myfitness.ui.theme.gridLine
 import com.ug911.myfitness.ui.theme.mutedInkColor
 import com.ug911.myfitness.ui.theme.onAccentInk
+
+/**
+ * The top of a screen: one title, an optional subtitle, and the screen's actions on the
+ * same line. There is no app bar above this - a second copy of the title was the worst
+ * thing on the old header.
+ */
+@Composable
+fun ScreenHeader(
+    title: String,
+    modifier: Modifier = Modifier,
+    subtitle: String? = null,
+    onBack: (() -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
+) {
+    Row(
+        modifier = modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp, top = 10.dp, bottom = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (onBack != null) {
+            IconButton(onClick = onBack, modifier = Modifier.padding(end = 2.dp)) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            subtitle?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = mutedInkColor(),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+        actions()
+    }
+}
 
 /** A section of the day: accent icon, name, and the part of the day it covers. */
 @Composable
@@ -114,6 +162,11 @@ fun PlainCard(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
  * A headline number with its label. The value wears ink, not the accent - a coloured
  * dot beside it carries the identity instead.
  */
+/**
+ * A headline number with its label. The value wears ink, not the accent - a coloured
+ * dot beside it carries the identity instead. Every line is single-line and the tile
+ * fills its row's height, so a row of tiles is one clean band rather than a ragged one.
+ */
 @Composable
 fun StatTile(
     label: String,
@@ -127,27 +180,47 @@ fun StatTile(
         shape = MaterialTheme.shapes.small,
         color = cardSurface(),
     ) {
-        Column(Modifier.padding(14.dp)) {
+        Column(Modifier.padding(horizontal = 12.dp, vertical = 11.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier.size(8.dp).clip(RoundedCornerShape(3.dp)).background(accent))
+                Box(Modifier.size(7.dp).clip(RoundedCornerShape(2.dp)).background(accent))
                 Text(
                     text = label.uppercase(),
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelSmall,
                     color = mutedInkColor(),
-                    modifier = Modifier.padding(start = 6.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(start = 5.dp),
                 )
             }
             Text(
                 text = value,
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(top = 4.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(top = 3.dp),
             )
             hint?.let {
-                Text(it, style = MaterialTheme.typography.bodySmall, color = mutedInkColor())
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = mutedInkColor(),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
         }
     }
+}
+
+/** A row of equal-sized tiles: same width by weight, same height by intrinsic sizing. */
+@Composable
+fun StatTileRow(modifier: Modifier = Modifier, content: @Composable RowScope.() -> Unit) {
+    Row(
+        modifier = modifier.fillMaxWidth().height(IntrinsicSize.Min),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        content = content,
+    )
 }
 
 /** A labelled bar for plan progress: one hue, rounded ends, hairline track. */

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import com.ug911.myfitness.data.model.PlanSource
 import com.ug911.myfitness.ui.common.EmptyState
 import com.ug911.myfitness.ui.common.ProgressRow
 import com.ug911.myfitness.ui.common.PlainCard
+import com.ug911.myfitness.ui.common.ScreenHeader
 import com.ug911.myfitness.ui.common.SectionHeader
 import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.ui.theme.Palette
@@ -34,7 +36,11 @@ import com.ug911.myfitness.ui.theme.accent
 import com.ug911.myfitness.ui.theme.mutedInkColor
 
 @Composable
-fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
+fun PlanScreen(
+    viewModel: PlanViewModel,
+    actions: @Composable RowScope.() -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
     val state by viewModel.state.collectAsState()
 
     LazyColumn(
@@ -44,11 +50,11 @@ fun PlanScreen(viewModel: PlanViewModel, modifier: Modifier = Modifier) {
     ) {
         val active = state.activePlan
         item {
-            SectionHeader(
-                title = "This week",
-                accent = DaySection.OFFICE.accent(),
+            ScreenHeader(
+                title = "Plan",
                 subtitle = active?.let { "${it.plan.startDate} to ${it.plan.endDate}" }
                     ?: "No plan approved for this week",
+                actions = actions,
             )
         }
 

@@ -14,10 +14,10 @@ The home screen is the day in the order it happens, not a set of abstract catego
 | Section | What it holds |
 | --- | --- |
 | **Morning** | Woke up (aiming at 05:00), gym, treadmill, and the exercise checklist |
-| **School run** | Dropped Vihaan, left for school, back home |
-| **Breakfast** | Chicken / eggs / dosa / bohara, coffee hot or cold, before or after the drop |
-| **Office** | Reached, left, ate at the office, glasses of water (aiming at 8) |
-| **Evening** | Played with Vihaan, dinner, late meetings, Instagram (after the drop / after office / late night) |
+| **School run** | Dropped Vihaan at school |
+| **Breakfast** | Chicken / eggs / dosa / poha, coffee hot or cold, before or after the drop |
+| **Office** | Reached, left, ate at the office, glasses of water (aiming at 8), lunch |
+| **Evening** | Played with Vihaan, dinner, dinner food, late meetings, Instagram (after the drop / after office / late night) |
 | **Night** | Slept at (aiming at 23:00), then energy, mood and stress for the day |
 | **Body** | Weight, steps, sleep duration - mostly filled in by Health Connect |
 
@@ -46,6 +46,10 @@ Nothing loggable is hardcoded. A tracker is a row with a type:
 | `SELECT` | Coffee: None / Hot / Cold |
 | `TIME` | Woke up: 05:10 |
 | `MULTI_SELECT` | Exercises: shoulders, biceps, abs... |
+
+The tick-lists - the food at each meal, the exercises - are editable in the app:
+**Settings > Food and checklists**. Adding an item there is all it takes for it to show
+up on Today, and removing one leaves the days you already logged it untouched.
 
 Each tracker also carries the part of the day it belongs to, a direction (`more is
 better`, `less is better`, `just observe`), an aggregation (`days done`, `total`,

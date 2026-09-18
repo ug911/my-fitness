@@ -4,14 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -23,15 +27,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.data.model.EntrySource
 import com.ug911.myfitness.data.model.display
 import com.ug911.myfitness.ui.common.EmptyState
 import com.ug911.myfitness.ui.common.PlainCard
+import com.ug911.myfitness.ui.common.ScreenHeader
 import com.ug911.myfitness.ui.common.SectionHeader
 import com.ug911.myfitness.ui.common.StatTile
+import com.ug911.myfitness.ui.common.StatTileRow
 import com.ug911.myfitness.ui.common.Swatch
 import com.ug911.myfitness.ui.icon
 import com.ug911.myfitness.ui.theme.accent
@@ -50,7 +59,11 @@ private val DAY_FORMAT = DateTimeFormatter.ofPattern("EEEE d MMM yyyy")
 private val MONTH_FORMAT = DateTimeFormatter.ofPattern("MMM")
 
 @Composable
-fun HistoryScreen(viewModel: HistoryViewModel, modifier: Modifier = Modifier) {
+fun HistoryScreen(
+    viewModel: HistoryViewModel,
+    actions: @Composable RowScope.() -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
     val state by viewModel.state.collectAsState()
 
     LazyColumn(
@@ -59,35 +72,35 @@ fun HistoryScreen(viewModel: HistoryViewModel, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         item {
-            Text(
-                text = "History",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(start = 4.dp, top = 6.dp),
+            ScreenHeader(
+                title = "History",
+                subtitle = "${state.daysLogged} of ${state.totalDays} days logged",
+                actions = actions,
             )
         }
 
         item {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+            StatTileRow {
                 StatTile(
                     label = "Streak",
                     value = "${state.currentStreak}",
                     accent = DaySection.MORNING.accent(),
-                    hint = if (state.currentStreak == 1) "day logged" else "days in a row",
-                    modifier = Modifier.weight(1f),
+                    hint = if (state.currentStreak == 1) "day" else "days in a row",
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                 )
                 StatTile(
-                    label = "Days logged",
+                    label = "Logged",
                     value = "${state.daysLogged}",
                     accent = DaySection.NIGHT.accent(),
                     hint = "of ${state.totalDays}",
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                 )
                 StatTile(
                     label = "Best day",
                     value = state.bestDayLabel,
                     accent = DaySection.EVENING.accent(),
-                    hint = "most complete",
-                    modifier = Modifier.weight(1f),
+                    hint = "most done",
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                 )
             }
         }
@@ -193,55 +206,101 @@ fun HistoryScreen(viewModel: HistoryViewModel, modifier: Modifier = Modifier) {
 }
 
 /**
- * Week-per-column heatmap, oldest week on the left. Magnitude is how complete the day
- * was, so it uses the single-hue sequential ramp; a day with nothing logged is a
- * neutral square outside the ramp, which is itself information.
+ * Week-per-column heatmap, oldest week on the left.
+ *
+ * Cells are sized from the width actually available so the whole range fits instead of
+ * running off the edge, and months are separated by a hairline with the month name
+ * beside it - the old fixed-width labels wrapped into "Ma/y".
+ *
+ * Magnitude is how complete the day was, so it uses the single-hue sequential ramp; a
+ * day with nothing logged is a neutral square outside the ramp, which is itself
+ * information.
  */
 @Composable
 private fun Heatmap(state: HistoryUiState, onSelect: (LocalDate) -> Unit) {
     val firstMonday = state.rangeStart
-    val weeks = (ChronoUnit.WEEKS.between(firstMonday, state.rangeEnd) + 1).toInt()
+    val weeks = (ChronoUnit.WEEKS.between(firstMonday, state.rangeEnd) + 1).toInt().coerceAtLeast(1)
+    val divider = MaterialTheme.colorScheme.outlineVariant
 
-    Column {
-        Row(modifier = Modifier.padding(start = 26.dp, bottom = 3.dp)) {
-            (0 until weeks).forEach { weekIndex ->
-                val weekStart = firstMonday.plusWeeks(weekIndex.toLong())
-                val isMonthStart = weekIndex == 0 || weekStart.month != weekStart.minusWeeks(1).month
-                Box(modifier = Modifier.width(19.dp)) {
-                    if (isMonthStart) {
-                        Text(
-                            text = weekStart.format(MONTH_FORMAT),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = mutedInkColor(),
-                        )
+    BoxWithConstraints {
+        val labelWidth = 20.dp
+        val gap = 3.dp
+        // Fit every week: the cell shrinks to whatever the screen can give it.
+        val pitch = ((maxWidth - labelWidth) / weeks).coerceIn(12.dp, 20.dp)
+        val cell = pitch - gap
+
+        Column {
+            Row(modifier = Modifier.padding(start = labelWidth, bottom = 4.dp)) {
+                (0 until weeks).forEach { weekIndex ->
+                    val weekStart = firstMonday.plusWeeks(weekIndex.toLong())
+                    val startsMonth = weekIndex == 0 || weekStart.month != weekStart.minusWeeks(1).month
+                    Box(modifier = Modifier.width(pitch)) {
+                        if (startsMonth) {
+                            Text(
+                                text = weekStart.format(MONTH_FORMAT),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                maxLines = 1,
+                                softWrap = false,
+                                // Allowed to overflow its column: the label names the
+                                // month that starts here, it is not a column heading.
+                                modifier = Modifier.wrapContentWidth(align = Alignment.Start, unbounded = true),
+                            )
+                        }
                     }
                 }
             }
-        }
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(verticalArrangement = Arrangement.spacedBy(3.dp), modifier = Modifier.width(26.dp)) {
-                DayOfWeek.entries.forEach { day ->
-                    Text(
-                        text = day.getDisplayName(TextStyle.NARROW, Locale.getDefault()),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = mutedInkColor(),
-                        modifier = Modifier.size(width = 22.dp, height = 19.dp),
-                    )
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.width(labelWidth)) {
+                    DayOfWeek.entries.forEach { day ->
+                        Box(
+                            modifier = Modifier.height(pitch),
+                            contentAlignment = Alignment.CenterStart,
+                        ) {
+                            Text(
+                                text = day.getDisplayName(TextStyle.NARROW, Locale.getDefault()),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = mutedInkColor(),
+                            )
+                        }
+                    }
                 }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-                (0 until weeks).forEach { weekIndex ->
-                    Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                        (0..6).forEach { dayIndex ->
-                            val date = firstMonday.plusWeeks(weekIndex.toLong()).plusDays(dayIndex.toLong())
-                            if (date.isAfter(state.rangeEnd)) {
-                                Spacer(Modifier.size(16.dp))
-                            } else {
-                                DayCell(
-                                    level = state.level(date),
-                                    selected = state.selectedDate == date,
-                                    onClick = { onSelect(date) },
-                                )
+                Row {
+                    (0 until weeks).forEach { weekIndex ->
+                        val weekStart = firstMonday.plusWeeks(weekIndex.toLong())
+                        val startsMonth = weekIndex > 0 && weekStart.month != weekStart.minusWeeks(1).month
+                        Column(
+                            modifier = Modifier
+                                .width(pitch)
+                                .drawBehind {
+                                    if (startsMonth) {
+                                        // Hairline at the month boundary: solid, one shade
+                                        // off the surface, never dashed.
+                                        drawLine(
+                                            color = divider,
+                                            start = Offset(0f, 0f),
+                                            end = Offset(0f, size.height),
+                                            strokeWidth = 1.dp.toPx(),
+                                        )
+                                    }
+                                },
+                        ) {
+                            (0..6).forEach { dayIndex ->
+                                val date = weekStart.plusDays(dayIndex.toLong())
+                                Box(
+                                    modifier = Modifier.height(pitch).width(pitch),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    if (!date.isAfter(state.rangeEnd)) {
+                                        DayCell(
+                                            level = state.level(date),
+                                            selected = state.selectedDate == date,
+                                            size = cell,
+                                            onClick = { onSelect(date) },
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -252,12 +311,12 @@ private fun Heatmap(state: HistoryUiState, onSelect: (LocalDate) -> Unit) {
 }
 
 @Composable
-private fun DayCell(level: Int, selected: Boolean, onClick: () -> Unit) {
+private fun DayCell(level: Int, selected: Boolean, size: Dp, onClick: () -> Unit) {
     val fill = if (level <= 0) emptyCell() else rampStep(level - 1)
     Box(
         modifier = Modifier
-            .size(16.dp)
-            .clip(RoundedCornerShape(5.dp))
+            .size(size)
+            .clip(RoundedCornerShape(4.dp))
             .background(if (selected) MaterialTheme.colorScheme.onBackground else fill)
             .clickable { onClick() },
         contentAlignment = Alignment.Center,
@@ -265,8 +324,8 @@ private fun DayCell(level: Int, selected: Boolean, onClick: () -> Unit) {
         if (selected) {
             Box(
                 modifier = Modifier
-                    .size(11.dp)
-                    .clip(RoundedCornerShape(3.dp))
+                    .size(size - 5.dp)
+                    .clip(RoundedCornerShape(2.dp))
                     .background(fill),
             )
         }
@@ -277,12 +336,12 @@ private fun DayCell(level: Int, selected: Boolean, onClick: () -> Unit) {
 private fun Legend() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
-        modifier = Modifier.padding(start = 26.dp, top = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.padding(start = 20.dp, top = 12.dp),
     ) {
         Text("nothing", style = MaterialTheme.typography.labelSmall, color = mutedInkColor())
-        Swatch(emptyCell())
-        rampSteps().forEach { Swatch(it) }
+        Swatch(emptyCell(), size = 11)
+        rampSteps().forEach { Swatch(it, size = 11) }
         Text("full day", style = MaterialTheme.typography.labelSmall, color = mutedInkColor())
     }
 }

@@ -27,7 +27,7 @@ import com.ug911.myfitness.data.local.entity.TrackerEntity
         PlanTargetEntity::class,
         AiAnalysisEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -43,7 +43,7 @@ abstract class MyFitnessDatabase : RoomDatabase() {
 
         fun build(context: Context): MyFitnessDatabase =
             Room.databaseBuilder(context, MyFitnessDatabase::class.java, NAME)
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .addCallback(SeedCallback)
                 .build()
 

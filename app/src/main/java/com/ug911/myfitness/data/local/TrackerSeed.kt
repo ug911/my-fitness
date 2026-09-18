@@ -94,6 +94,56 @@ object TrackerSeed {
         }
     }
 
+    /**
+     * Inserts trackers that are not there yet and leaves existing rows alone - used by
+     * later migrations, so adding a tracker never silently switches a retired one back on
+     * or overwrites options the person has edited.
+     */
+    fun insertMissing(executor: Executor, trackers: List<Tracker>, converters: Converters = Converters()) {
+        trackers.forEach { tracker ->
+            executor.exec(
+                INSERT_IF_MISSING,
+                arrayOf(
+                    tracker.name,
+                    tracker.section.name,
+                    tracker.type.name,
+                    tracker.unit,
+                    if (tracker.active) 1 else 0,
+                    tracker.sortOrder,
+                    converters.listToString(tracker.options),
+                    tracker.ratingMax,
+                    tracker.healthMetric?.name,
+                    tracker.direction.name,
+                    tracker.aggregation.name,
+                    tracker.targetValue,
+                    tracker.name,
+                ),
+            )
+        }
+    }
+
+    /** Switches one tracker off by name, keeping it and its entries. */
+    fun retire(executor: Executor, name: String) =
+        executor.exec("UPDATE trackers SET active = 0 WHERE name = ?", arrayOf(name))
+
+    /**
+     * Renames a checklist option everywhere it appears: in the tracker's own option list
+     * and in every day already logged against it, since an entry stores the option text.
+     */
+    fun renameOption(executor: Executor, from: String, to: String) {
+        executor.exec(
+            "UPDATE trackers SET options = replace(options, ?, ?) WHERE options LIKE ?",
+            arrayOf(quoted(from), quoted(to), "%" + quoted(from) + "%"),
+        )
+        executor.exec(
+            "UPDATE entries SET value = replace(value, ?, ?) WHERE value LIKE ?",
+            arrayOf(quoted(from), quoted(to), "%" + quoted(from) + "%"),
+        )
+    }
+
+    /** Options are stored inside a JSON array, so matching includes the quotes. */
+    private fun quoted(value: String) = "\"" + value + "\""
+
     /** Fresh install: just the personal day. */
     fun seedFresh(executor: Executor) = upsert(executor, PersonalDay.trackers())
 

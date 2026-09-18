@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,9 +19,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ug911.myfitness.data.model.Tracker
 import com.ug911.myfitness.data.model.DaySection
+import com.ug911.myfitness.data.model.Tracker
 import com.ug911.myfitness.ui.common.PlainCard
+import com.ug911.myfitness.ui.common.ScreenHeader
 import com.ug911.myfitness.ui.common.SectionHeader
 import com.ug911.myfitness.ui.icon
 import com.ug911.myfitness.ui.theme.accent
@@ -30,6 +32,7 @@ import com.ug911.myfitness.ui.theme.mutedInkColor
 fun TrackersScreen(
     viewModel: TrackersViewModel,
     onEdit: (Long) -> Unit,
+    onBack: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val trackers by viewModel.state.collectAsState()
@@ -40,18 +43,12 @@ fun TrackersScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                SectionHeader(
-                    title = "Trackers",
-                    accent = DaySection.BODY.accent(),
-                    subtitle = "Switch off what you do not care about; add anything you do",
-                    modifier = Modifier.weight(1f),
-                )
-                TextButton(onClick = { onEdit(0L) }) { Text("New") }
-            }
+            ScreenHeader(
+                title = "Trackers",
+                subtitle = "Switch off what you do not need; add anything you do",
+                onBack = onBack,
+                actions = { TextButton(onClick = { onEdit(0L) }) { Text("New") } },
+            )
         }
 
         DaySection.entries.forEach { section ->

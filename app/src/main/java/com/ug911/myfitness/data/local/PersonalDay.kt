@@ -32,7 +32,12 @@ object PersonalDay {
         "Jumping jacks",
     )
 
-    val BREAKFAST_ITEMS = listOf("Chicken", "Eggs", "Dosa", "Bohara")
+    val BREAKFAST_ITEMS = listOf("Chicken", "Eggs", "Dosa", "Poha")
+
+    /** Starter lists only - add to them from Settings > Food and checklists. */
+    val LUNCH_ITEMS = listOf("Rice", "Roti", "Dal", "Sabzi", "Salad", "Chicken")
+
+    val DINNER_ITEMS = listOf("Rice", "Roti", "Dal", "Sabzi", "Salad", "Chicken")
 
     fun trackers(): List<Tracker> = buildList {
         addAll(morning())
@@ -77,20 +82,6 @@ object PersonalDay {
 
     private fun schoolRun() = listOf(
         bool("Dropped Vihaan at school", DaySection.SCHOOL_RUN, 0),
-        Tracker(
-            name = "Left for school",
-            section = DaySection.SCHOOL_RUN,
-            type = TrackerType.TIME,
-            sortOrder = 1,
-            direction = Direction.NEUTRAL,
-        ),
-        Tracker(
-            name = "Back from school",
-            section = DaySection.SCHOOL_RUN,
-            type = TrackerType.TIME,
-            sortOrder = 2,
-            direction = Direction.NEUTRAL,
-        ),
     )
 
     private fun breakfast() = listOf(
@@ -145,17 +136,33 @@ object PersonalDay {
             aggregation = Aggregation.AVERAGE,
             targetValue = 8.0,
         ),
+        Tracker(
+            name = "Lunch",
+            section = DaySection.OFFICE,
+            type = TrackerType.MULTI_SELECT,
+            sortOrder = 4,
+            options = LUNCH_ITEMS,
+            direction = Direction.NEUTRAL,
+        ),
     )
 
     private fun evening() = listOf(
         bool("Played with Vihaan", DaySection.EVENING, 0),
         bool("Dinner", DaySection.EVENING, 1),
-        bool("Late meetings", DaySection.EVENING, 2, Direction.DOWN),
+        Tracker(
+            name = "Dinner food",
+            section = DaySection.EVENING,
+            type = TrackerType.MULTI_SELECT,
+            sortOrder = 2,
+            options = DINNER_ITEMS,
+            direction = Direction.NEUTRAL,
+        ),
+        bool("Late meetings", DaySection.EVENING, 3, Direction.DOWN),
         Tracker(
             name = "Instagram",
             section = DaySection.EVENING,
             type = TrackerType.MULTI_SELECT,
-            sortOrder = 3,
+            sortOrder = 4,
             options = listOf("After school drop", "After office", "Late night"),
             direction = Direction.DOWN,
         ),

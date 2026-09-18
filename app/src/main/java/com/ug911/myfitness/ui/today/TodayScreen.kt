@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +34,7 @@ import com.ug911.myfitness.data.model.Tracker
 import com.ug911.myfitness.ui.common.AccentCard
 import com.ug911.myfitness.ui.common.Pill
 import com.ug911.myfitness.ui.common.ProgressRing
+import com.ug911.myfitness.ui.common.ScreenHeader
 import com.ug911.myfitness.ui.common.SectionHeader
 import com.ug911.myfitness.ui.common.TrackerInputRow
 import com.ug911.myfitness.ui.icon
@@ -40,14 +43,19 @@ import com.ug911.myfitness.ui.theme.mutedInkColor
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-private val HEADER_FORMAT = DateTimeFormatter.ofPattern("EEEE d MMM")
+/** Short on purpose: "Wed 16 Sept" fits on one line where the long form wrapped to three. */
+private val DATE_FORMAT = DateTimeFormatter.ofPattern("EEE d MMM")
 
 /**
  * The screen the app exists for: the day in the order it happens, from waking up to
  * going to sleep. One scroll, no dialogs, and most rows are a single tap.
  */
 @Composable
-fun TodayScreen(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
+fun TodayScreen(
+    viewModel: TodayViewModel,
+    actions: @Composable RowScope.() -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
     val state by viewModel.state.collectAsState()
     var journalDraft by remember(state.date) { mutableStateOf(state.dayLog?.journal?.text.orEmpty()) }
 
@@ -69,6 +77,7 @@ fun TodayScreen(viewModel: TodayViewModel, modifier: Modifier = Modifier) {
                 total = state.trackers.size,
                 onShift = viewModel::shiftDate,
                 onToday = { viewModel.selectDate(LocalDate.now()) },
+                actions = actions,
             )
         }
 
@@ -143,6 +152,10 @@ private fun TrackerRowFor(
     )
 }
 
+/**
+ * Title line with the screen's actions, then a compact day strip: arrows, the date, and
+ * the ring showing how much of the day is filled in.
+ */
 @Composable
 private fun DayHeader(
     date: LocalDate,
@@ -151,42 +164,49 @@ private fun DayHeader(
     total: Int,
     onShift: (Long) -> Unit,
     onToday: () -> Unit,
+    actions: @Composable RowScope.() -> Unit,
 ) {
     val accent = DaySection.MORNING.accent()
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
-    ) {
-        IconButton(onClick = { onShift(-1) }) {
-            Icon(Icons.Filled.ChevronLeft, contentDescription = "Previous day")
-        }
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = if (isToday) "Today" else date.format(HEADER_FORMAT),
-                style = MaterialTheme.typography.headlineLarge,
-            )
-            Text(
-                text = if (isToday) date.format(HEADER_FORMAT) else "$logged logged",
-                style = MaterialTheme.typography.bodyMedium,
-                color = mutedInkColor(),
-            )
-        }
-        if (!isToday) {
-            TextButton(onClick = onToday) { Text("Today") }
-        }
-        ProgressRing(
-            fraction = if (total == 0) 0f else logged.toFloat() / total,
-            accent = accent,
-            modifier = Modifier.size(54.dp),
+    Column(modifier = Modifier.fillMaxWidth()) {
+        ScreenHeader(
+            title = if (isToday) "Today" else date.format(DATE_FORMAT),
+            subtitle = "$logged of $total logged",
+            actions = actions,
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 4.dp),
         ) {
+            IconButton(onClick = { onShift(-1) }) {
+                Icon(Icons.Filled.ChevronLeft, contentDescription = "Previous day")
+            }
             Text(
-                text = "$logged",
+                text = date.format(DATE_FORMAT),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = if (isToday) accent else MaterialTheme.colorScheme.onBackground,
+                maxLines = 1,
             )
-        }
-        IconButton(onClick = { onShift(1) }, enabled = !isToday) {
-            Icon(Icons.Filled.ChevronRight, contentDescription = "Next day")
+            IconButton(onClick = { onShift(1) }, enabled = !isToday) {
+                Icon(Icons.Filled.ChevronRight, contentDescription = "Next day")
+            }
+            if (!isToday) {
+                TextButton(onClick = onToday) { Text("Today") }
+            }
+            Spacer(Modifier.weight(1f))
+            ProgressRing(
+                fraction = if (total == 0) 0f else logged.toFloat() / total,
+                accent = accent,
+                modifier = Modifier.size(46.dp),
+                strokeWidth = 6,
+            ) {
+                Text(
+                    text = "$logged",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
         }
     }
 }
+
+private fun sectionHint(section: DaySection): String = section.subtitle

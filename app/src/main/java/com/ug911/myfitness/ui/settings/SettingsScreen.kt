@@ -31,6 +31,7 @@ import androidx.health.connect.client.PermissionController
 import com.ug911.myfitness.health.HealthAvailability
 import com.ug911.myfitness.settings.AiProvider
 import com.ug911.myfitness.ui.common.PlainCard
+import com.ug911.myfitness.ui.common.ScreenHeader
 import com.ug911.myfitness.ui.common.SectionHeader
 import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.ui.theme.accent
@@ -43,7 +44,12 @@ private val SYNC_FORMAT = DateTimeFormatter.ofPattern("d MMM HH:mm")
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel, modifier: Modifier = Modifier) {
+fun SettingsScreen(
+    viewModel: SettingsViewModel,
+    onBack: () -> Unit = {},
+    onOpenChecklists: () -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
     val state by viewModel.state.collectAsState()
     var apiKeyDraft by remember(state.settings.apiKey) { mutableStateOf(state.settings.apiKey) }
     var modelDraft by remember(state.settings.model) { mutableStateOf(state.settings.model) }
@@ -57,6 +63,34 @@ fun SettingsScreen(viewModel: SettingsViewModel, modifier: Modifier = Modifier) 
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        item { ScreenHeader(title = "Settings", onBack = onBack) }
+
+        item {
+            SectionHeader(
+                title = "Food and checklists",
+                accent = DaySection.BREAKFAST.accent(),
+                subtitle = "Meals, exercises - anything you tick",
+            )
+        }
+        item {
+            PlainCard {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        "Add the things you actually eat at each meal, or the exercises you do, " +
+                            "and they show up as ticks on Today.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = mutedInkColor(),
+                    )
+                    Button(
+                        onClick = onOpenChecklists,
+                        shape = MaterialTheme.shapes.small,
+                    ) {
+                        Text("Edit lists")
+                    }
+                }
+            }
+        }
+
         item { SectionHeader(
                 title = "Health Connect",
                 accent = DaySection.BODY.accent(),

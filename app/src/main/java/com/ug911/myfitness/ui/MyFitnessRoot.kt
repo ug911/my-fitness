@@ -8,17 +8,15 @@ import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Tune
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -34,7 +32,9 @@ import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.di.AppContainer
 import com.ug911.myfitness.ui.theme.accent
 import com.ug911.myfitness.ui.theme.cardSurface
+import com.ug911.myfitness.ui.theme.mutedInkColor
 import com.ug911.myfitness.ui.theme.onAccentInk
+import com.ug911.myfitness.ui.checklists.ChecklistsScreen
 import com.ug911.myfitness.ui.history.HistoryScreen
 import com.ug911.myfitness.ui.history.HistoryViewModel
 import com.ug911.myfitness.ui.insights.InsightsScreen
@@ -65,34 +65,26 @@ private enum class Destination(
 private const val ROUTE_TRACKERS = "trackers"
 private const val ROUTE_SETTINGS = "settings"
 private const val ROUTE_TRACKER_EDITOR = "tracker-editor"
+private const val ROUTE_CHECKLISTS = "checklists"
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyFitnessRoot(container: AppContainer) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
+    /** The two chrome actions, rendered inside whichever screen header is showing. */
+    val headerActions: @Composable RowScope.() -> Unit = {
+        IconButton(onClick = { navController.navigate(ROUTE_TRACKERS) }) {
+            Icon(Icons.Filled.Tune, contentDescription = "Trackers", tint = mutedInkColor())
+        }
+        IconButton(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
+            Icon(Icons.Filled.Settings, contentDescription = "Settings", tint = mutedInkColor())
+        }
+    }
+
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = Destination.entries.firstOrNull { it.route == currentRoute }?.label ?: "My Fitness",
-                        style = MaterialTheme.typography.titleLarge,
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
-                actions = {
-                    IconButton(onClick = { navController.navigate(ROUTE_TRACKERS) }) {
-                        Icon(Icons.Filled.Tune, contentDescription = "Trackers")
-                    }
-                    IconButton(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
-                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
-                    }
-                },
-            )
-        },
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             NavigationBar(containerColor = cardSurface()) {
                 Destination.entries.forEach { destination ->
@@ -123,21 +115,34 @@ fun MyFitnessRoot(container: AppContainer) {
             modifier = Modifier.padding(padding),
         ) {
             composable(Destination.TODAY.route) {
-                TodayScreen(viewModel = viewModel(factory = TodayViewModel.factory(container)))
+                TodayScreen(
+                    viewModel = viewModel(factory = TodayViewModel.factory(container)),
+                    actions = headerActions,
+                )
             }
             composable(Destination.HISTORY.route) {
-                HistoryScreen(viewModel = viewModel(factory = HistoryViewModel.factory(container)))
+                HistoryScreen(
+                    viewModel = viewModel(factory = HistoryViewModel.factory(container)),
+                    actions = headerActions,
+                )
             }
             composable(Destination.INSIGHTS.route) {
-                InsightsScreen(viewModel = viewModel(factory = InsightsViewModel.factory(container)))
+                InsightsScreen(
+                    viewModel = viewModel(factory = InsightsViewModel.factory(container)),
+                    actions = headerActions,
+                )
             }
             composable(Destination.PLAN.route) {
-                PlanScreen(viewModel = viewModel(factory = PlanViewModel.factory(container)))
+                PlanScreen(
+                    viewModel = viewModel(factory = PlanViewModel.factory(container)),
+                    actions = headerActions,
+                )
             }
             composable(ROUTE_TRACKERS) {
                 TrackersScreen(
                     viewModel = viewModel(factory = TrackersViewModel.factory(container)),
                     onEdit = { id -> navController.navigate("$ROUTE_TRACKER_EDITOR/$id") },
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable(
@@ -150,8 +155,18 @@ fun MyFitnessRoot(container: AppContainer) {
                     onDone = { navController.popBackStack() },
                 )
             }
+            composable(ROUTE_CHECKLISTS) {
+                ChecklistsScreen(
+                    viewModel = viewModel(factory = TrackersViewModel.factory(container)),
+                    onBack = { navController.popBackStack() },
+                )
+            }
             composable(ROUTE_SETTINGS) {
-                SettingsScreen(viewModel = viewModel(factory = SettingsViewModel.factory(container)))
+                SettingsScreen(
+                    viewModel = viewModel(factory = SettingsViewModel.factory(container)),
+                    onBack = { navController.popBackStack() },
+                    onOpenChecklists = { navController.navigate(ROUTE_CHECKLISTS) },
+                )
             }
         }
     }

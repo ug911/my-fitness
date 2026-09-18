@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,8 +38,10 @@ import com.ug911.myfitness.analysis.TrackerStat
 import com.ug911.myfitness.data.model.DaySection
 import com.ug911.myfitness.ui.common.EmptyState
 import com.ug911.myfitness.ui.common.PlainCard
+import com.ug911.myfitness.ui.common.ScreenHeader
 import com.ug911.myfitness.ui.common.SectionHeader
 import com.ug911.myfitness.ui.common.StatTile
+import com.ug911.myfitness.ui.common.StatTileRow
 import com.ug911.myfitness.ui.common.TrendSparkline
 import com.ug911.myfitness.ui.icon
 import com.ug911.myfitness.ui.theme.accent
@@ -45,7 +49,11 @@ import com.ug911.myfitness.ui.theme.mutedInkColor
 import com.ug911.myfitness.ui.theme.onAccentInk
 
 @Composable
-fun InsightsScreen(viewModel: InsightsViewModel, modifier: Modifier = Modifier) {
+fun InsightsScreen(
+    viewModel: InsightsViewModel,
+    actions: @Composable RowScope.() -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
     val state by viewModel.state.collectAsState()
 
     state.snapshotPreview?.let { snapshot ->
@@ -68,10 +76,10 @@ fun InsightsScreen(viewModel: InsightsViewModel, modifier: Modifier = Modifier) 
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         item {
-            Text(
-                text = "Insights",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(start = 4.dp, top = 6.dp),
+            ScreenHeader(
+                title = "Insights",
+                subtitle = "Last ${state.window.label}",
+                actions = actions,
             )
         }
 
@@ -136,13 +144,13 @@ fun InsightsScreen(viewModel: InsightsViewModel, modifier: Modifier = Modifier) 
 
         if (state.headlines.isNotEmpty()) {
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                StatTileRow {
                     state.headlines.take(3).forEach { stat ->
                         StatTile(
                             label = stat.tracker.name,
                             value = stat.summary(),
                             accent = stat.tracker.section.accent(),
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
                         )
                     }
                 }

@@ -32,6 +32,21 @@ class TrackersViewModel(private val trackers: TrackerRepository) : ViewModel() {
         viewModelScope.launch { trackers.save(tracker) }
     }
 
+    /** Adds an option to a checklist, ignoring blanks and duplicates. */
+    fun addOption(tracker: Tracker, option: String) {
+        val trimmed = option.trim()
+        if (trimmed.isEmpty() || tracker.options.any { it.equals(trimmed, ignoreCase = true) }) return
+        viewModelScope.launch { trackers.save(tracker.copy(options = tracker.options + trimmed)) }
+    }
+
+    /**
+     * Takes an option off a checklist. Entries keep the text they were logged with, so
+     * removing an item never rewrites a day that had it.
+     */
+    fun removeOption(tracker: Tracker, option: String) {
+        viewModelScope.launch { trackers.save(tracker.copy(options = tracker.options - option)) }
+    }
+
     fun delete(tracker: Tracker) {
         viewModelScope.launch { trackers.delete(tracker) }
     }

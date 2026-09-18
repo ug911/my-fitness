@@ -1,7 +1,9 @@
 package com.ug911.myfitness.data.local
 
 import com.ug911.myfitness.data.model.DaySection
+import com.ug911.myfitness.data.model.Tracker
 import com.ug911.myfitness.data.model.TrackerType
+import com.ug911.myfitness.data.model.TrackerValue
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -40,6 +42,19 @@ class TrackerSeedMigrationTest {
         )
     """.trimIndent()
 
+    /** Just enough of the entries table to prove a rename reaches logged days. */
+    private val entriesSchema = """
+        CREATE TABLE entries (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            trackerId INTEGER NOT NULL,
+            date TEXT NOT NULL,
+            value TEXT NOT NULL,
+            notes TEXT,
+            source TEXT NOT NULL,
+            updatedAtMillis INTEGER NOT NULL
+        )
+    """.trimIndent()
+
     private val executor = TrackerSeed.Executor { sql, args ->
         connection.prepareStatement(sql).use { statement ->
             args.forEachIndexed { index, arg ->
@@ -63,6 +78,7 @@ class TrackerSeedMigrationTest {
     /** An old database, as it exists on a phone that installed the first release. */
     private fun createV1() {
         connection.createStatement().use { it.executeUpdate(v1Schema) }
+        connection.createStatement().use { it.executeUpdate(entriesSchema) }
     }
 
     /** What Room creates on a fresh install today. */
@@ -206,5 +222,159 @@ class TrackerSeedMigrationTest {
 
         val water = query("SELECT targetValue FROM trackers WHERE name = 'Water at office'").single()
         assertEquals(8.0, water["targetValue"]!!.toDouble(), 0.001)
+    }
+}
+
+/**
+ * Version 3: the corrections that came out of using the app - the breakfast item is
+ * Poha, the school run does not need its own times, and lunch and dinner get their own
+ * food lists.
+ */
+class SecondMigrationTest {
+
+    private lateinit var connection: Connection
+
+    private val executor = TrackerSeed.Executor { sql, args ->
+        connection.prepareStatement(sql).use { statement ->
+            args.forEachIndexed { index, arg ->
+                when (arg) {
+                    null -> statement.setNull(index + 1, java.sql.Types.NULL)
+                    is Int -> statement.setInt(index + 1, arg)
+                    is Long -> statement.setLong(index + 1, arg)
+                    is Double -> statement.setDouble(index + 1, arg)
+                    else -> statement.setString(index + 1, arg.toString())
+                }
+            }
+            statement.executeUpdate()
+        }
+    }
+
+    @Before
+    fun openDatabase() {
+        connection = DriverManager.getConnection("jdbc:sqlite::memory:")
+        connection.createStatement().use {
+            it.executeUpdate(
+                "CREATE TABLE trackers (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, " +
+                    "category TEXT NOT NULL, type TEXT NOT NULL, unit TEXT, active INTEGER NOT NULL, " +
+                    "sortOrder INTEGER NOT NULL, options TEXT NOT NULL, ratingMax INTEGER NOT NULL, " +
+                    "healthMetric TEXT, direction TEXT NOT NULL, aggregation TEXT NOT NULL, targetValue REAL)",
+            )
+        }
+        connection.createStatement().use {
+            it.executeUpdate(
+                "CREATE TABLE entries (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, trackerId INTEGER NOT NULL, " +
+                    "date TEXT NOT NULL, value TEXT NOT NULL, notes TEXT, source TEXT NOT NULL, " +
+                    "updatedAtMillis INTEGER NOT NULL)",
+            )
+        }
+        // A version 2 database: the day-shaped set, including the two school-run times.
+        TrackerSeed.upsert(
+            executor,
+            listOf(
+                Tracker(
+                    name = "Breakfast",
+                    section = DaySection.BREAKFAST,
+                    type = TrackerType.MULTI_SELECT,
+                    options = listOf("Chicken", "Eggs", "Dosa", "Bohara"),
+                ),
+                Tracker(name = "Left for school", section = DaySection.SCHOOL_RUN, type = TrackerType.TIME),
+                Tracker(name = "Back from school", section = DaySection.SCHOOL_RUN, type = TrackerType.TIME),
+                Tracker(name = "Dropped Vihaan at school", section = DaySection.SCHOOL_RUN, type = TrackerType.BOOLEAN),
+            ),
+        )
+    }
+
+    @After
+    fun closeDatabase() = connection.close()
+
+    private fun applyMigration() {
+        TrackerSeed.renameOption(executor, from = "Bohara", to = "Poha")
+        TrackerSeed.retire(executor, "Left for school")
+        TrackerSeed.retire(executor, "Back from school")
+        TrackerSeed.insertMissing(executor, PersonalDay.trackers())
+    }
+
+    private fun query(sql: String): List<Map<String, String?>> =
+        connection.createStatement().use { statement ->
+            statement.executeQuery(sql).use { rows ->
+                val columns = (1..rows.metaData.columnCount).map { rows.metaData.getColumnLabel(it) }
+                buildList {
+                    while (rows.next()) add(columns.associateWith { rows.getString(it) })
+                }
+            }
+        }
+
+    private fun logBreakfast(vararg items: String) {
+        val trackerId = query("SELECT id FROM trackers WHERE name = 'Breakfast'").single()["id"]!!.toLong()
+        connection.prepareStatement(
+            "INSERT INTO entries (trackerId, date, value, notes, source, updatedAtMillis) " +
+                "VALUES (?, '2026-09-16', ?, NULL, 'MANUAL', 0)",
+        ).use {
+            it.setLong(1, trackerId)
+            it.setString(2, TrackerValue.Choices(items.toList()).encode())
+            it.executeUpdate()
+        }
+    }
+
+    @Test
+    fun `the breakfast item becomes Poha`() {
+        applyMigration()
+
+        val options = Converters().stringToList(
+            query("SELECT options FROM trackers WHERE name = 'Breakfast'").single()["options"]!!,
+        )
+        assertTrue("Poha" in options)
+        assertFalse("Bohara" in options)
+        // The other items are untouched.
+        assertTrue("Dosa" in options)
+        assertEquals(4, options.size)
+    }
+
+    @Test
+    fun `a day already logged as Bohara reads back as Poha`() {
+        logBreakfast("Eggs", "Bohara")
+
+        applyMigration()
+
+        val stored = query("SELECT value FROM entries").single()["value"]!!
+        val decoded = TrackerValue.decode(TrackerType.MULTI_SELECT, stored) as TrackerValue.Choices
+        assertEquals(listOf("Eggs", "Poha"), decoded.selected)
+    }
+
+    @Test
+    fun `the school run keeps only the drop`() {
+        applyMigration()
+
+        val schoolRun = query("SELECT name, active FROM trackers WHERE category = 'SCHOOL_RUN'")
+        val active = schoolRun.filter { it["active"] == "1" }.mapNotNull { it["name"] }
+        assertEquals(listOf("Dropped Vihaan at school"), active)
+        // Retired, not deleted: three rows are still there.
+        assertEquals(3, schoolRun.size)
+    }
+
+    @Test
+    fun `lunch and dinner food lists arrive`() {
+        applyMigration()
+
+        val lunch = query("SELECT options, category FROM trackers WHERE name = 'Lunch'").single()
+        assertEquals(DaySection.OFFICE.name, lunch["category"])
+        assertTrue("Roti" in Converters().stringToList(lunch["options"]!!))
+
+        val dinner = query("SELECT category FROM trackers WHERE name = 'Dinner food'").single()
+        assertEquals(DaySection.EVENING.name, dinner["category"])
+    }
+
+    @Test
+    fun `adding trackers does not switch a retired one back on`() {
+        // Someone switched Dinner off by hand before upgrading.
+        connection.createStatement().use {
+            it.executeUpdate("INSERT INTO trackers (name, category, type, unit, active, sortOrder, options, " +
+                "ratingMax, healthMetric, direction, aggregation, targetValue) VALUES ('Dinner','EVENING'," +
+                "'BOOLEAN',NULL,0,1,'[]',5,NULL,'UP','DAYS_COMPLETED',NULL)")
+        }
+
+        applyMigration()
+
+        assertEquals("0", query("SELECT active FROM trackers WHERE name = 'Dinner'").single()["active"])
     }
 }
