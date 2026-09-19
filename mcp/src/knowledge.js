@@ -152,14 +152,6 @@ export function writeDoc(kind, doc) {
   return { path, created: !existed }
 }
 
-export function deleteDoc(kind, id) {
-  const path = join(dirFor(kind), `${id}.json`)
-  if (!existsSync(path)) return false
-  // Kept deliberately simple: the repo is the undo history.
-  writeFileSync(path, '')
-  return true
-}
-
 export function validateAll() {
   const problems = []
   for (const kind of kinds()) {

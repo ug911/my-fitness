@@ -21,6 +21,10 @@ cd mcp && npm install
 `validate`, `build` and `list` work without installing anything; only the MCP server
 itself needs the SDK.
 
+```bash
+npm test     # 14 tests, five of which drive the server over real JSON-RPC stdio
+```
+
 ## Tools
 
 | Tool | What it does |
