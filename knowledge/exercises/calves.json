@@ -1,0 +1,169 @@
+{
+  "id": "calves",
+  "name": "Calves",
+  "anchorExercise": "Standing calf raise",
+  "alternatives": [
+    "Seated calf raise (soleus)",
+    "Single-leg calf raise on a step",
+    "Leg press calf press"
+  ],
+  "pattern": "ankle_extension",
+  "equipment": "bodyweight, machine or dumbbell",
+  "difficulty": "beginner",
+  "primaryMuscles": [
+    "Gastrocnemius",
+    "Soleus"
+  ],
+  "secondaryMuscles": [
+    "Tibialis posterior"
+  ],
+  "setup": [
+    "Balls of the feet on a step, heels hanging free, knees straight for the gastroc.",
+    "Hold something for balance - this is not a balance exercise."
+  ],
+  "execution": [
+    "Drop the heels below the step until you feel a deep stretch.",
+    "Rise as high as the joint allows and hold the top for a second."
+  ],
+  "cues": [
+    "Pause a full second at the bottom - no bouncing.",
+    "Go all the way up onto the big toe, not the little toe.",
+    "Straight knee trains the calf; bent knee trains the soleus underneath it."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Bouncing out of the bottom",
+      "fix": "The Achilles springs you up and the muscle does nothing. Pause."
+    },
+    {
+      "mistake": "Half range at the top",
+      "fix": "Rise until the ankle cannot go further, then hold."
+    },
+    {
+      "mistake": "Only ever training straight-legged",
+      "fix": "Add a seated version - the soleus is most of the calf's size."
+    }
+  ],
+  "breathing": "Exhale rising, inhale lowering.",
+  "evidence": [
+    {
+      "claim": "Calves need full range and a pause to grow",
+      "detail": "The stretched position with the heel below the step is where the work happens; bouncing hands the job to the tendon.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Straight-leg and bent-leg work hit different muscles",
+      "detail": "Standing raises bias the gastrocnemius, seated raises the soleus - training both covers the whole calf.",
+      "confidence": "strong"
+    },
+    {
+      "claim": "Calves tolerate higher reps well",
+      "detail": "They handle frequent, higher-rep work, though the usual effort rule still applies.",
+      "confidence": "limited"
+    }
+  ],
+  "progressions": [
+    "Single leg",
+    "Add weight",
+    "Three-second pause at the bottom"
+  ],
+  "regressions": [
+    "Flat floor instead of a step",
+    "Both legs, bodyweight only"
+  ],
+  "repRange": {
+    "min": 8,
+    "max": 20
+  },
+  "restSeconds": 90,
+  "tempo": "2-1-1-1",
+  "demo": {
+    "view": "side",
+    "durationMillis": 1800,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.13
+          ],
+          "neck": [
+            0.5,
+            0.2
+          ],
+          "shoulder": [
+            0.5,
+            0.24
+          ],
+          "elbow": [
+            0.5,
+            0.38
+          ],
+          "wrist": [
+            0.5,
+            0.52
+          ],
+          "hip": [
+            0.5,
+            0.55
+          ],
+          "knee": [
+            0.5,
+            0.76
+          ],
+          "ankle": [
+            0.5,
+            0.95
+          ],
+          "foot": [
+            0.58,
+            0.97
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.08
+          ],
+          "neck": [
+            0.5,
+            0.15
+          ],
+          "shoulder": [
+            0.5,
+            0.19
+          ],
+          "elbow": [
+            0.5,
+            0.33
+          ],
+          "wrist": [
+            0.5,
+            0.47
+          ],
+          "hip": [
+            0.5,
+            0.5
+          ],
+          "knee": [
+            0.5,
+            0.71
+          ],
+          "ankle": [
+            0.5,
+            0.88
+          ],
+          "foot": [
+            0.58,
+            0.97
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,2332 @@
+{
+  "version": 1,
+  "builtAt": "2026-09-19T07:15:47.810Z",
+  "exercises": [
+    {
+      "id": "abs",
+      "name": "Abs",
+      "anchorExercise": "Dead bug",
+      "alternatives": [
+        "Plank",
+        "Hanging knee raise",
+        "Cable crunch",
+        "Pallof press"
+      ],
+      "pattern": "anti_extension",
+      "equipment": "bodyweight",
+      "difficulty": "beginner",
+      "primaryMuscles": [
+        "Rectus abdominis",
+        "Deep core"
+      ],
+      "secondaryMuscles": [
+        "Hip flexors",
+        "Obliques"
+      ],
+      "setup": [
+        "On your back, arms straight up, hips and knees at ninety degrees.",
+        "Press the lower back gently into the floor and keep it there."
+      ],
+      "execution": [
+        "Lower the opposite arm and leg towards the floor, slowly.",
+        "Stop the moment the lower back starts to lift, return, and swap sides."
+      ],
+      "cues": [
+        "The lower back staying flat is the whole exercise.",
+        "Breathe out slowly as the limbs move away.",
+        "Slower is harder - there is no need to add weight for a long time."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Lower back arching off the floor",
+          "fix": "Shorten the range; only go as far as the back stays down."
+        },
+        {
+          "mistake": "Rushing",
+          "fix": "Three seconds out, three back. Speed hides the work."
+        },
+        {
+          "mistake": "Holding the breath",
+          "fix": "Exhale on the way out - breathing under brace is the skill."
+        }
+      ],
+      "breathing": "Long exhale as the limbs extend, inhale coming back.",
+      "evidence": [
+        {
+          "claim": "Anti-movement core work transfers well",
+          "detail": "Bracing against motion - planks, dead bugs, Pallof presses - builds trunk stiffness that carries into squats and carries.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Loaded flexion does grow the abs",
+          "detail": "Cable crunches and hanging raises add size; they simply load the spine more than anti-extension work.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Visible abs are mostly a body-fat question",
+          "detail": "Training grows the muscle; whether it shows is decided in the kitchen.",
+          "confidence": "strong"
+        }
+      ],
+      "progressions": [
+        "Slow to a 5-second reach",
+        "Add a light dumbbell in the hands",
+        "Hanging knee raise"
+      ],
+      "regressions": [
+        "Move only the legs",
+        "Feet on the floor between reps"
+      ],
+      "repRange": {
+        "min": 6,
+        "max": 12
+      },
+      "restSeconds": 60,
+      "tempo": "3-0-3",
+      "demo": {
+        "view": "side",
+        "durationMillis": 3000,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.22,
+                0.62
+              ],
+              "neck": [
+                0.28,
+                0.62
+              ],
+              "shoulder": [
+                0.33,
+                0.62
+              ],
+              "elbow": [
+                0.33,
+                0.5
+              ],
+              "wrist": [
+                0.33,
+                0.38
+              ],
+              "hip": [
+                0.58,
+                0.62
+              ],
+              "knee": [
+                0.58,
+                0.44
+              ],
+              "ankle": [
+                0.72,
+                0.44
+              ],
+              "foot": [
+                0.78,
+                0.46
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "elbow": [
+                0.24,
+                0.54
+              ],
+              "wrist": [
+                0.14,
+                0.48
+              ],
+              "knee": [
+                0.7,
+                0.52
+              ],
+              "ankle": [
+                0.86,
+                0.56
+              ],
+              "foot": [
+                0.92,
+                0.58
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "back",
+      "name": "Back",
+      "anchorExercise": "Bent-over row",
+      "alternatives": [
+        "Chest-supported row",
+        "Seated cable row",
+        "Single-arm dumbbell row"
+      ],
+      "pattern": "horizontal_pull",
+      "equipment": "barbell or dumbbells",
+      "difficulty": "intermediate",
+      "primaryMuscles": [
+        "Mid-back",
+        "Lats",
+        "Rear delts"
+      ],
+      "secondaryMuscles": [
+        "Biceps",
+        "Spinal erectors"
+      ],
+      "setup": [
+        "Hinge at the hips until the torso is around 45 degrees, back flat.",
+        "Arms hanging straight, shoulder blades relaxed forward."
+      ],
+      "execution": [
+        "Pull the elbows back and slightly in, bringing the bar to the lower ribs.",
+        "Let the shoulder blades travel apart again at the bottom - do not just move the arms."
+      ],
+      "cues": [
+        "Lead with the elbows, not the hands.",
+        "Think of the arms as hooks; the back does the pulling.",
+        "Let the weight stretch you at the bottom."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Torso rising with every rep",
+          "fix": "The angle should stay put. If it does not, the weight is too heavy."
+        },
+        {
+          "mistake": "Pulling to the chest instead of the ribs",
+          "fix": "High pulls turn it into a rear-delt exercise - fine, but a different one."
+        },
+        {
+          "mistake": "No stretch at the bottom",
+          "fix": "Allow the shoulder blades to move; that is where the lats lengthen."
+        }
+      ],
+      "breathing": "Brace at the top of the rep, exhale as you finish the pull.",
+      "evidence": [
+        {
+          "claim": "Rowing and pulling down are not the same exercise",
+          "detail": "Horizontal and vertical pulls emphasise different parts of the back; a complete back needs both.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Chest support removes the lower-back limit",
+          "detail": "If the erectors fatigue before the back does, a supported row lets you train the target muscle harder.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Grip is often the first thing to fail",
+          "detail": "Straps let the back reach failure instead of the hands, which is the point of the set.",
+          "confidence": "limited"
+        }
+      ],
+      "progressions": [
+        "Add weight",
+        "Pause one second at the ribs",
+        "Single-arm for more range"
+      ],
+      "regressions": [
+        "Chest-supported row",
+        "Seated cable row",
+        "Lighter load, higher reps"
+      ],
+      "repRange": {
+        "min": 6,
+        "max": 12
+      },
+      "restSeconds": 150,
+      "tempo": "2-1-2",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2400,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.33,
+                0.3
+              ],
+              "neck": [
+                0.37,
+                0.35
+              ],
+              "shoulder": [
+                0.4,
+                0.38
+              ],
+              "elbow": [
+                0.42,
+                0.53
+              ],
+              "wrist": [
+                0.44,
+                0.68
+              ],
+              "hip": [
+                0.62,
+                0.55
+              ],
+              "knee": [
+                0.58,
+                0.76
+              ],
+              "ankle": [
+                0.56,
+                0.93
+              ],
+              "foot": [
+                0.63,
+                0.95
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "elbow": [
+                0.34,
+                0.42
+              ],
+              "wrist": [
+                0.45,
+                0.52
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "biceps",
+      "name": "Biceps",
+      "anchorExercise": "Dumbbell curl",
+      "alternatives": [
+        "Incline dumbbell curl (more stretch)",
+        "Cable curl",
+        "Hammer curl"
+      ],
+      "pattern": "elbow_flexion",
+      "equipment": "dumbbells",
+      "difficulty": "beginner",
+      "primaryMuscles": [
+        "Biceps brachii"
+      ],
+      "secondaryMuscles": [
+        "Brachialis",
+        "Forearms"
+      ],
+      "setup": [
+        "Stand tall, arms hanging, palms forward, elbows just in front of the ribs.",
+        "Shoulders back and down; the upper arm is going to stay still."
+      ],
+      "execution": [
+        "Curl by bending the elbow only, until the forearm is past vertical.",
+        "Lower all the way until the arm is straight - the bottom is not a rest stop."
+      ],
+      "cues": [
+        "Pin the elbow to your side like it is hinged there.",
+        "Lower for a count of three; the lowering is half the exercise.",
+        "Straighten the arm fully at the bottom before the next rep."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Swinging the torso to start the rep",
+          "fix": "Stand with your back against a wall for a set - if you cannot cheat, the weight is honest."
+        },
+        {
+          "mistake": "Elbows drifting forward",
+          "fix": "Keep the upper arm vertical so the biceps, not the front delt, does the work."
+        },
+        {
+          "mistake": "Cutting the bottom half",
+          "fix": "Let the arm straighten; the stretched position builds the most."
+        }
+      ],
+      "breathing": "Exhale curling up, inhale lowering.",
+      "evidence": [
+        {
+          "claim": "Training a muscle in its stretched position pays off",
+          "detail": "Work that loads the muscle long - incline curls for the biceps - tends to produce more growth than the same sets done short.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Full range beats partial range for growth",
+          "detail": "Moving through the whole range generally outgrows cutting the ends off, with the lengthened half doing most of the work.",
+          "confidence": "strong"
+        },
+        {
+          "claim": "Small muscles recover fast",
+          "detail": "Arms tolerate and often benefit from more frequent work than the big compound lifts.",
+          "confidence": "limited"
+        }
+      ],
+      "progressions": [
+        "Incline bench curl for a deeper stretch",
+        "Slow 4-second lowering",
+        "Add weight when 12 reps feel easy"
+      ],
+      "regressions": [
+        "Seated curl to stop the swing",
+        "Lighter weight, both arms together"
+      ],
+      "repRange": {
+        "min": 8,
+        "max": 15
+      },
+      "restSeconds": 90,
+      "tempo": "3-0-1",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2200,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.5,
+                0.13
+              ],
+              "neck": [
+                0.5,
+                0.2
+              ],
+              "shoulder": [
+                0.5,
+                0.24
+              ],
+              "elbow": [
+                0.5,
+                0.4
+              ],
+              "wrist": [
+                0.52,
+                0.56
+              ],
+              "hip": [
+                0.5,
+                0.55
+              ],
+              "knee": [
+                0.5,
+                0.76
+              ],
+              "ankle": [
+                0.5,
+                0.93
+              ],
+              "foot": [
+                0.56,
+                0.95
+              ]
+            }
+          },
+          {
+            "at": 0.55,
+            "joints": {
+              "wrist": [
+                0.62,
+                0.42
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "wrist": [
+                0.58,
+                0.28
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "calves",
+      "name": "Calves",
+      "anchorExercise": "Standing calf raise",
+      "alternatives": [
+        "Seated calf raise (soleus)",
+        "Single-leg calf raise on a step",
+        "Leg press calf press"
+      ],
+      "pattern": "ankle_extension",
+      "equipment": "bodyweight, machine or dumbbell",
+      "difficulty": "beginner",
+      "primaryMuscles": [
+        "Gastrocnemius",
+        "Soleus"
+      ],
+      "secondaryMuscles": [
+        "Tibialis posterior"
+      ],
+      "setup": [
+        "Balls of the feet on a step, heels hanging free, knees straight for the gastroc.",
+        "Hold something for balance - this is not a balance exercise."
+      ],
+      "execution": [
+        "Drop the heels below the step until you feel a deep stretch.",
+        "Rise as high as the joint allows and hold the top for a second."
+      ],
+      "cues": [
+        "Pause a full second at the bottom - no bouncing.",
+        "Go all the way up onto the big toe, not the little toe.",
+        "Straight knee trains the calf; bent knee trains the soleus underneath it."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Bouncing out of the bottom",
+          "fix": "The Achilles springs you up and the muscle does nothing. Pause."
+        },
+        {
+          "mistake": "Half range at the top",
+          "fix": "Rise until the ankle cannot go further, then hold."
+        },
+        {
+          "mistake": "Only ever training straight-legged",
+          "fix": "Add a seated version - the soleus is most of the calf's size."
+        }
+      ],
+      "breathing": "Exhale rising, inhale lowering.",
+      "evidence": [
+        {
+          "claim": "Calves need full range and a pause to grow",
+          "detail": "The stretched position with the heel below the step is where the work happens; bouncing hands the job to the tendon.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Straight-leg and bent-leg work hit different muscles",
+          "detail": "Standing raises bias the gastrocnemius, seated raises the soleus - training both covers the whole calf.",
+          "confidence": "strong"
+        },
+        {
+          "claim": "Calves tolerate higher reps well",
+          "detail": "They handle frequent, higher-rep work, though the usual effort rule still applies.",
+          "confidence": "limited"
+        }
+      ],
+      "progressions": [
+        "Single leg",
+        "Add weight",
+        "Three-second pause at the bottom"
+      ],
+      "regressions": [
+        "Flat floor instead of a step",
+        "Both legs, bodyweight only"
+      ],
+      "repRange": {
+        "min": 8,
+        "max": 20
+      },
+      "restSeconds": 90,
+      "tempo": "2-1-1-1",
+      "demo": {
+        "view": "side",
+        "durationMillis": 1800,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.5,
+                0.13
+              ],
+              "neck": [
+                0.5,
+                0.2
+              ],
+              "shoulder": [
+                0.5,
+                0.24
+              ],
+              "elbow": [
+                0.5,
+                0.38
+              ],
+              "wrist": [
+                0.5,
+                0.52
+              ],
+              "hip": [
+                0.5,
+                0.55
+              ],
+              "knee": [
+                0.5,
+                0.76
+              ],
+              "ankle": [
+                0.5,
+                0.95
+              ],
+              "foot": [
+                0.58,
+                0.97
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "head": [
+                0.5,
+                0.08
+              ],
+              "neck": [
+                0.5,
+                0.15
+              ],
+              "shoulder": [
+                0.5,
+                0.19
+              ],
+              "elbow": [
+                0.5,
+                0.33
+              ],
+              "wrist": [
+                0.5,
+                0.47
+              ],
+              "hip": [
+                0.5,
+                0.5
+              ],
+              "knee": [
+                0.5,
+                0.71
+              ],
+              "ankle": [
+                0.5,
+                0.88
+              ],
+              "foot": [
+                0.58,
+                0.97
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hamstrings",
+      "name": "Hamstrings",
+      "anchorExercise": "Romanian deadlift",
+      "alternatives": [
+        "Seated leg curl",
+        "Nordic curl",
+        "Single-leg RDL"
+      ],
+      "pattern": "hip_hinge",
+      "equipment": "barbell or dumbbells",
+      "difficulty": "intermediate",
+      "primaryMuscles": [
+        "Hamstrings",
+        "Glutes"
+      ],
+      "secondaryMuscles": [
+        "Spinal erectors",
+        "Lats"
+      ],
+      "setup": [
+        "Stand with the weight at the top of the thighs, feet hip width, knees softly bent.",
+        "Shoulders back, bar close, weight through the middle of the foot."
+      ],
+      "execution": [
+        "Push the hips back and let the torso fold forward, keeping the back flat.",
+        "Stop when you feel a strong stretch behind the thighs - usually mid-shin.",
+        "Drive the hips forward to stand, squeezing the glutes at the top."
+      ],
+      "cues": [
+        "Hips back, not down - this is a hinge, not a squat.",
+        "Drag the bar down your legs; it should stay in contact.",
+        "Stop where your hamstrings stop you, not where the floor is."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Rounding the lower back to reach further",
+          "fix": "Range comes from the hips. Stop at the point where the back would round."
+        },
+        {
+          "mistake": "Turning it into a squat",
+          "fix": "Keep the shin close to vertical; the knee angle barely changes."
+        },
+        {
+          "mistake": "Leaning back at the top",
+          "fix": "Finish standing tall with the glutes squeezed, not hyperextended."
+        }
+      ],
+      "breathing": "Big breath at the top, hold it through the rep, exhale after standing up.",
+      "evidence": [
+        {
+          "claim": "Hamstrings respond to both hip-hinge and knee-flexion work",
+          "detail": "The two halves of the muscle are trained differently - an RDL and a leg curl are not interchangeable, and doing both covers more.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Lengthened-position work is especially effective here",
+          "detail": "Exercises that load the hamstring long, like RDLs and Nordics, show strong growth and a protective effect against strains.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Eccentric-focused hamstring work reduces strain risk",
+          "detail": "Programmes built around slow lowering, notably Nordic curls, are among the better supported injury-prevention findings in sport.",
+          "confidence": "strong"
+        }
+      ],
+      "progressions": [
+        "Single-leg RDL",
+        "Pause two seconds in the stretch",
+        "Add load once form holds for 10 reps"
+      ],
+      "regressions": [
+        "Dumbbell RDL with a shorter range",
+        "Hip hinge to a box",
+        "Seated leg curl if the lower back complains"
+      ],
+      "repRange": {
+        "min": 6,
+        "max": 12
+      },
+      "restSeconds": 150,
+      "tempo": "3-1-1",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2800,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.5,
+                0.13
+              ],
+              "neck": [
+                0.5,
+                0.2
+              ],
+              "shoulder": [
+                0.5,
+                0.24
+              ],
+              "elbow": [
+                0.5,
+                0.4
+              ],
+              "wrist": [
+                0.5,
+                0.56
+              ],
+              "hip": [
+                0.5,
+                0.55
+              ],
+              "knee": [
+                0.5,
+                0.76
+              ],
+              "ankle": [
+                0.5,
+                0.93
+              ],
+              "foot": [
+                0.56,
+                0.95
+              ]
+            }
+          },
+          {
+            "at": 0.5,
+            "joints": {
+              "head": [
+                0.4,
+                0.24
+              ],
+              "neck": [
+                0.42,
+                0.3
+              ],
+              "shoulder": [
+                0.43,
+                0.33
+              ],
+              "elbow": [
+                0.45,
+                0.47
+              ],
+              "wrist": [
+                0.47,
+                0.6
+              ],
+              "hip": [
+                0.58,
+                0.55
+              ],
+              "knee": [
+                0.55,
+                0.76
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "head": [
+                0.32,
+                0.36
+              ],
+              "neck": [
+                0.35,
+                0.41
+              ],
+              "shoulder": [
+                0.37,
+                0.43
+              ],
+              "elbow": [
+                0.42,
+                0.56
+              ],
+              "wrist": [
+                0.45,
+                0.7
+              ],
+              "hip": [
+                0.62,
+                0.54
+              ],
+              "knee": [
+                0.56,
+                0.76
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "jumping_jacks",
+      "name": "Jumping jacks",
+      "anchorExercise": "Jumping jack",
+      "alternatives": [
+        "Step jack (no jump)",
+        "Skipping rope",
+        "Treadmill walk"
+      ],
+      "pattern": "conditioning",
+      "equipment": "bodyweight",
+      "difficulty": "beginner",
+      "primaryMuscles": [
+        "Whole body - conditioning"
+      ],
+      "secondaryMuscles": [
+        "Calves",
+        "Shoulders",
+        "Hip abductors"
+      ],
+      "setup": [
+        "Stand tall, feet together, arms at the sides.",
+        "Land softly - think quiet feet."
+      ],
+      "execution": [
+        "Jump the feet apart while the arms sweep overhead.",
+        "Jump back to the start. Keep a steady rhythm rather than a sprint."
+      ],
+      "cues": [
+        "Land on the middle of the foot, knees soft.",
+        "Arms all the way overhead, not to shoulder height.",
+        "Breathe in a rhythm you could hold for two minutes."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Landing stiff-legged",
+          "fix": "Let the knees and ankles absorb it - quiet feet."
+        },
+        {
+          "mistake": "Half-height arms",
+          "fix": "Full overhead makes it a warm-up for the shoulders too."
+        },
+        {
+          "mistake": "Going flat out for 20 seconds",
+          "fix": "This is a warm-up or a conditioning filler; pace it."
+        }
+      ],
+      "breathing": "Steady nose-in, mouth-out rhythm.",
+      "evidence": [
+        {
+          "claim": "A general warm-up raises muscle temperature and performance",
+          "detail": "A few minutes of easy whole-body movement before lifting improves force output and feels better than going in cold.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Easy cardio adds up without eating into recovery",
+          "detail": "Low-intensity work like this and walking builds a base with little interference with strength training.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Impact tolerance builds gradually",
+          "detail": "If knees or shins complain, step jacks give most of the benefit without the landing.",
+          "confidence": "limited"
+        }
+      ],
+      "progressions": [
+        "Longer intervals",
+        "Add a skipping rope",
+        "Combine with a treadmill block"
+      ],
+      "regressions": [
+        "Step jacks, one foot at a time",
+        "Arms to shoulder height only"
+      ],
+      "repRange": {
+        "min": 20,
+        "max": 60
+      },
+      "restSeconds": 45,
+      "tempo": "steady",
+      "demo": {
+        "view": "front",
+        "durationMillis": 1200,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.5,
+                0.13
+              ],
+              "neck": [
+                0.5,
+                0.2
+              ],
+              "shoulder": [
+                0.5,
+                0.24
+              ],
+              "elbow": [
+                0.44,
+                0.38
+              ],
+              "wrist": [
+                0.42,
+                0.52
+              ],
+              "hip": [
+                0.5,
+                0.55
+              ],
+              "knee": [
+                0.47,
+                0.76
+              ],
+              "ankle": [
+                0.46,
+                0.94
+              ],
+              "foot": [
+                0.46,
+                0.96
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "elbow": [
+                0.34,
+                0.22
+              ],
+              "wrist": [
+                0.38,
+                0.06
+              ],
+              "knee": [
+                0.38,
+                0.78
+              ],
+              "ankle": [
+                0.3,
+                0.94
+              ],
+              "foot": [
+                0.28,
+                0.96
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "lats",
+      "name": "Lats",
+      "anchorExercise": "Pull-up or lat pulldown",
+      "alternatives": [
+        "Lat pulldown",
+        "Assisted pull-up",
+        "Straight-arm pulldown"
+      ],
+      "pattern": "vertical_pull",
+      "equipment": "bar or cable",
+      "difficulty": "intermediate",
+      "primaryMuscles": [
+        "Lats"
+      ],
+      "secondaryMuscles": [
+        "Biceps",
+        "Mid-back",
+        "Core"
+      ],
+      "setup": [
+        "Grip a little wider than the shoulders, arms fully straight, ribs down.",
+        "Start from a dead hang - shoulders long, not shrugged into the ears."
+      ],
+      "execution": [
+        "Pull the elbows down and into the ribs until the chin clears the bar or the bar reaches the collarbone.",
+        "Lower all the way back to straight arms under control."
+      ],
+      "cues": [
+        "Pull your elbows into your back pockets.",
+        "Chest up to meet the bar.",
+        "Full hang at the bottom, every rep."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Half reps from the bottom",
+          "fix": "The stretch at the bottom is where the lats grow. Let the arms straighten."
+        },
+        {
+          "mistake": "Kipping to get the chin over",
+          "fix": "Use assistance or a pulldown and keep it strict."
+        },
+        {
+          "mistake": "Pulling with the arms only",
+          "fix": "Start the rep by pulling the shoulder blades down."
+        }
+      ],
+      "breathing": "Exhale pulling up, inhale on the way down.",
+      "evidence": [
+        {
+          "claim": "A full hang builds more lat than a short pull",
+          "detail": "The bottom of the movement loads the lats in their longest position, which is where most of the growth comes from.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Pulldowns and pull-ups build the same muscle",
+          "detail": "If strict pull-ups are out of reach, a pulldown taken close to failure does the job.",
+          "confidence": "strong"
+        },
+        {
+          "claim": "Wider is not automatically better",
+          "detail": "Grip width changes comfort more than it changes lat recruitment; use the width your shoulders like.",
+          "confidence": "limited"
+        }
+      ],
+      "progressions": [
+        "Weighted pull-up",
+        "Slow 4-second lowering",
+        "Pause at the top"
+      ],
+      "regressions": [
+        "Band-assisted pull-up",
+        "Lat pulldown",
+        "Negative-only reps"
+      ],
+      "repRange": {
+        "min": 5,
+        "max": 12
+      },
+      "restSeconds": 150,
+      "tempo": "2-1-3",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2600,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.5,
+                0.3
+              ],
+              "neck": [
+                0.5,
+                0.36
+              ],
+              "shoulder": [
+                0.5,
+                0.4
+              ],
+              "elbow": [
+                0.48,
+                0.26
+              ],
+              "wrist": [
+                0.47,
+                0.1
+              ],
+              "hip": [
+                0.5,
+                0.66
+              ],
+              "knee": [
+                0.52,
+                0.84
+              ],
+              "ankle": [
+                0.54,
+                0.96
+              ],
+              "foot": [
+                0.6,
+                0.97
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "head": [
+                0.5,
+                0.14
+              ],
+              "neck": [
+                0.5,
+                0.2
+              ],
+              "shoulder": [
+                0.5,
+                0.24
+              ],
+              "elbow": [
+                0.38,
+                0.3
+              ],
+              "wrist": [
+                0.47,
+                0.1
+              ],
+              "hip": [
+                0.5,
+                0.5
+              ],
+              "knee": [
+                0.54,
+                0.7
+              ],
+              "ankle": [
+                0.58,
+                0.84
+              ],
+              "foot": [
+                0.64,
+                0.86
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "push_ups",
+      "name": "Push-ups",
+      "anchorExercise": "Push-up",
+      "alternatives": [
+        "Incline push-up",
+        "Bench press",
+        "Deficit push-up"
+      ],
+      "pattern": "horizontal_push",
+      "equipment": "bodyweight",
+      "difficulty": "beginner",
+      "primaryMuscles": [
+        "Chest",
+        "Triceps",
+        "Front delts"
+      ],
+      "secondaryMuscles": [
+        "Core",
+        "Serratus"
+      ],
+      "setup": [
+        "Hands just wider than the shoulders, under the collarbones rather than the face.",
+        "Body in one line from ear to ankle, glutes and quads switched on."
+      ],
+      "execution": [
+        "Lower until the chest is about a fist off the floor, elbows at roughly 45 degrees.",
+        "Press back up and push the floor away at the top."
+      ],
+      "cues": [
+        "Squeeze the glutes - it turns the plank into a press.",
+        "Elbows at 45 degrees, not flared to the sides.",
+        "Push the floor away at the top and let the shoulder blades spread."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Hips sagging",
+          "fix": "Brace the ribs down and squeeze the glutes; raise the hands if the plank cannot hold."
+        },
+        {
+          "mistake": "Head reaching for the floor first",
+          "fix": "The chest should arrive first; keep the neck neutral."
+        },
+        {
+          "mistake": "Elbows flared to 90 degrees",
+          "fix": "Hard on the shoulder and weaker. Tuck to about 45."
+        }
+      ],
+      "breathing": "Inhale on the way down, exhale pressing up.",
+      "evidence": [
+        {
+          "claim": "Bodyweight pressing builds chest when taken near failure",
+          "detail": "With enough reps and proximity to failure, push-ups produce growth comparable to bench pressing at matched effort.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Load can be added without a gym",
+          "detail": "Elevating the feet, slowing the lowering or adding a pack keeps push-ups in a productive rep range as you get stronger.",
+          "confidence": "strong"
+        },
+        {
+          "claim": "Range matters as much here as anywhere",
+          "detail": "A chest-to-fist depth beats a half rep; deficit push-ups extend the range further.",
+          "confidence": "moderate"
+        }
+      ],
+      "progressions": [
+        "Feet elevated",
+        "Deficit push-up on handles",
+        "Weighted with a backpack",
+        "Slow 4-second lowering"
+      ],
+      "regressions": [
+        "Hands on a bench or wall",
+        "Knees down",
+        "Negative-only reps"
+      ],
+      "repRange": {
+        "min": 8,
+        "max": 25
+      },
+      "restSeconds": 90,
+      "tempo": "2-0-1",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2200,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.2,
+                0.46
+              ],
+              "neck": [
+                0.26,
+                0.48
+              ],
+              "shoulder": [
+                0.32,
+                0.5
+              ],
+              "elbow": [
+                0.32,
+                0.62
+              ],
+              "wrist": [
+                0.32,
+                0.76
+              ],
+              "hip": [
+                0.58,
+                0.56
+              ],
+              "knee": [
+                0.72,
+                0.64
+              ],
+              "ankle": [
+                0.86,
+                0.72
+              ],
+              "foot": [
+                0.9,
+                0.78
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "head": [
+                0.2,
+                0.62
+              ],
+              "neck": [
+                0.26,
+                0.64
+              ],
+              "shoulder": [
+                0.32,
+                0.66
+              ],
+              "elbow": [
+                0.24,
+                0.72
+              ],
+              "wrist": [
+                0.32,
+                0.76
+              ],
+              "hip": [
+                0.58,
+                0.7
+              ],
+              "knee": [
+                0.72,
+                0.74
+              ],
+              "ankle": [
+                0.86,
+                0.78
+              ],
+              "foot": [
+                0.9,
+                0.82
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "quads",
+      "name": "Quads",
+      "anchorExercise": "Squat",
+      "alternatives": [
+        "Goblet squat",
+        "Leg press",
+        "Bulgarian split squat",
+        "Leg extension"
+      ],
+      "pattern": "squat",
+      "equipment": "barbell, dumbbell or machine",
+      "difficulty": "intermediate",
+      "primaryMuscles": [
+        "Quadriceps",
+        "Glutes"
+      ],
+      "secondaryMuscles": [
+        "Adductors",
+        "Spinal erectors",
+        "Core"
+      ],
+      "setup": [
+        "Feet between hip and shoulder width, toes slightly out.",
+        "Brace as if about to be pushed, whole foot planted."
+      ],
+      "execution": [
+        "Sit down and slightly back, letting the knees travel forward over the toes.",
+        "Descend until the hip crease is at least level with the knee, if your hips allow it.",
+        "Drive up through the whole foot, keeping the chest angle the same."
+      ],
+      "cues": [
+        "Knees out over the middle toes, not collapsing in.",
+        "Spread the floor with your feet on the way up.",
+        "Keep the bar over the middle of the foot the whole way."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Heels lifting",
+          "fix": "Ankle mobility or a too-wide stance. Try shoes with a heel, or squat to a slightly higher depth."
+        },
+        {
+          "mistake": "Hips shooting up first",
+          "fix": "The chest and hips should rise together; lighten the load until they do."
+        },
+        {
+          "mistake": "Quarter reps",
+          "fix": "Depth is where the quads earn it - go as deep as you can with a flat back."
+        }
+      ],
+      "breathing": "Breath in and brace at the top, hold through the rep, exhale at the top.",
+      "evidence": [
+        {
+          "claim": "Deeper squats build more quad and glute than shallow ones",
+          "detail": "At matched load, greater depth produces more growth in the thigh - quarter squats mostly build the ability to do quarter squats.",
+          "confidence": "strong"
+        },
+        {
+          "claim": "Three minutes of rest beats one on the big lifts",
+          "detail": "Longer rests preserve reps across sets, and total hard reps is what drives the adaptation.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Machines and free weights both work",
+          "detail": "If a leg press or split squat lets you train hard with less fatigue or discomfort, it is not a downgrade.",
+          "confidence": "moderate"
+        }
+      ],
+      "progressions": [
+        "Add load in small jumps",
+        "Pause squat at the bottom",
+        "Tempo squat, 4 seconds down"
+      ],
+      "regressions": [
+        "Goblet squat",
+        "Box squat to a comfortable depth",
+        "Leg press"
+      ],
+      "repRange": {
+        "min": 5,
+        "max": 10
+      },
+      "restSeconds": 180,
+      "tempo": "3-1-1",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2800,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.5,
+                0.13
+              ],
+              "neck": [
+                0.5,
+                0.2
+              ],
+              "shoulder": [
+                0.5,
+                0.24
+              ],
+              "elbow": [
+                0.44,
+                0.3
+              ],
+              "wrist": [
+                0.46,
+                0.24
+              ],
+              "hip": [
+                0.5,
+                0.55
+              ],
+              "knee": [
+                0.5,
+                0.76
+              ],
+              "ankle": [
+                0.5,
+                0.93
+              ],
+              "foot": [
+                0.56,
+                0.95
+              ]
+            }
+          },
+          {
+            "at": 0.5,
+            "joints": {
+              "head": [
+                0.47,
+                0.25
+              ],
+              "neck": [
+                0.47,
+                0.32
+              ],
+              "shoulder": [
+                0.47,
+                0.36
+              ],
+              "elbow": [
+                0.41,
+                0.42
+              ],
+              "wrist": [
+                0.43,
+                0.36
+              ],
+              "hip": [
+                0.55,
+                0.64
+              ],
+              "knee": [
+                0.47,
+                0.8
+              ],
+              "ankle": [
+                0.5,
+                0.93
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "head": [
+                0.44,
+                0.38
+              ],
+              "neck": [
+                0.45,
+                0.45
+              ],
+              "shoulder": [
+                0.45,
+                0.49
+              ],
+              "elbow": [
+                0.39,
+                0.55
+              ],
+              "wrist": [
+                0.41,
+                0.49
+              ],
+              "hip": [
+                0.58,
+                0.77
+              ],
+              "knee": [
+                0.44,
+                0.83
+              ],
+              "ankle": [
+                0.5,
+                0.93
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "shoulders",
+      "name": "Shoulders",
+      "anchorExercise": "Dumbbell shoulder press",
+      "alternatives": [
+        "Seated dumbbell press",
+        "Machine shoulder press",
+        "Lateral raise (side delts)"
+      ],
+      "pattern": "vertical_push",
+      "equipment": "dumbbells",
+      "difficulty": "beginner",
+      "primaryMuscles": [
+        "Front delts",
+        "Side delts"
+      ],
+      "secondaryMuscles": [
+        "Triceps",
+        "Upper chest",
+        "Core"
+      ],
+      "setup": [
+        "Sit or stand tall, dumbbells at shoulder height, palms facing forward or slightly in.",
+        "Ribs down, glutes and core braced so the lower back does not arch."
+      ],
+      "execution": [
+        "Press the weights up and slightly back until the arms are straight overhead.",
+        "Lower under control until the elbows are level with, or just below, the shoulders."
+      ],
+      "cues": [
+        "Press the dumbbells around your head, not in front of it.",
+        "Squeeze the glutes - it stops the lower back from taking the load.",
+        "Finish with the biceps beside the ears, not in front of the face."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Lower back arching to help the press",
+          "fix": "Lighten the load and brace the ribs down; sit with back support if it keeps happening."
+        },
+        {
+          "mistake": "Stopping halfway down",
+          "fix": "Lower until the elbow is at shoulder height - the stretched position is where most of the growth comes from."
+        },
+        {
+          "mistake": "Shrugging the weight up",
+          "fix": "Let the shoulder blades rotate naturally but keep the traps from doing the work."
+        }
+      ],
+      "breathing": "Inhale at the top or on the way down, brace, exhale as you press through the hard part.",
+      "evidence": [
+        {
+          "claim": "Effort matters more than the exact rep number",
+          "detail": "Sets taken within a few reps of failure grow muscle across a wide rep range - roughly 5 to 30 reps - so pick a weight you can control and stop 1-3 reps short.",
+          "confidence": "strong"
+        },
+        {
+          "claim": "Around 10-20 hard sets per muscle per week is the usual sweet spot",
+          "detail": "Dose-response work on weekly set volume shows more sets keep helping up to a point, after which returns flatten and fatigue costs rise.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "Two sessions a week beats one at the same total volume",
+          "detail": "Spreading the same number of sets over two days tends to edge out cramming them into one.",
+          "confidence": "moderate"
+        }
+      ],
+      "progressions": [
+        "Add 2.5 kg once you hit the top of the rep range with two reps in reserve",
+        "Standing press",
+        "Single-arm press for more core demand"
+      ],
+      "regressions": [
+        "Seated with back support",
+        "Lighter dumbbells, slower lowering",
+        "Landmine press if overhead is uncomfortable"
+      ],
+      "repRange": {
+        "min": 6,
+        "max": 12
+      },
+      "restSeconds": 120,
+      "tempo": "2-0-1",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2400,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.5,
+                0.13
+              ],
+              "neck": [
+                0.5,
+                0.2
+              ],
+              "shoulder": [
+                0.5,
+                0.24
+              ],
+              "elbow": [
+                0.4,
+                0.34
+              ],
+              "wrist": [
+                0.42,
+                0.22
+              ],
+              "hip": [
+                0.5,
+                0.55
+              ],
+              "knee": [
+                0.5,
+                0.76
+              ],
+              "ankle": [
+                0.5,
+                0.93
+              ],
+              "foot": [
+                0.56,
+                0.95
+              ]
+            }
+          },
+          {
+            "at": 0.5,
+            "joints": {
+              "elbow": [
+                0.45,
+                0.26
+              ],
+              "wrist": [
+                0.48,
+                0.12
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "elbow": [
+                0.49,
+                0.2
+              ],
+              "wrist": [
+                0.5,
+                0.04
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit_ups",
+      "name": "Sit-ups",
+      "anchorExercise": "Sit-up",
+      "alternatives": [
+        "Crunch",
+        "Cable crunch",
+        "Dead bug (if the back complains)"
+      ],
+      "pattern": "spinal_flexion",
+      "equipment": "bodyweight",
+      "difficulty": "beginner",
+      "primaryMuscles": [
+        "Rectus abdominis"
+      ],
+      "secondaryMuscles": [
+        "Hip flexors",
+        "Obliques"
+      ],
+      "setup": [
+        "Knees bent, feet flat, hands across the chest rather than behind the head.",
+        "Chin lightly tucked."
+      ],
+      "execution": [
+        "Curl the spine up one vertebra at a time until the torso is off the floor.",
+        "Lower with the same control - do not drop back."
+      ],
+      "cues": [
+        "Roll up, do not hinge up in one plank-like piece.",
+        "Hands on the chest; pulling on the neck is just cheating.",
+        "Lower slower than you rise."
+      ],
+      "mistakes": [
+        {
+          "mistake": "Yanking the head forward",
+          "fix": "Cross the arms over the chest instead."
+        },
+        {
+          "mistake": "Hip flexors doing the work",
+          "fix": "If the lower back arches or the feet lift, switch to crunches or dead bugs."
+        },
+        {
+          "mistake": "Bouncing off the floor",
+          "fix": "Pause a beat at the bottom."
+        }
+      ],
+      "breathing": "Exhale curling up, inhale lowering.",
+      "evidence": [
+        {
+          "claim": "Sit-ups do train the abs, and they also load the spine",
+          "detail": "Repeated loaded flexion is a known contributor to disc stress; if your back objects, crunches or anti-extension work get the same muscle with less of it.",
+          "confidence": "moderate"
+        },
+        {
+          "claim": "There is no such thing as spot reduction",
+          "detail": "Abdominal training does not preferentially burn abdominal fat.",
+          "confidence": "strong"
+        },
+        {
+          "claim": "Adding load beats adding reps forever",
+          "detail": "Once you can do 25 clean reps, a cable crunch or a held plate progresses the muscle better than doubling the count.",
+          "confidence": "moderate"
+        }
+      ],
+      "progressions": [
+        "Hold a plate on the chest",
+        "Decline bench",
+        "Slow 4-second lowering"
+      ],
+      "regressions": [
+        "Crunch, shoulder blades only",
+        "Dead bug",
+        "Feet anchored"
+      ],
+      "repRange": {
+        "min": 10,
+        "max": 25
+      },
+      "restSeconds": 60,
+      "tempo": "2-0-2",
+      "demo": {
+        "view": "side",
+        "durationMillis": 2400,
+        "loop": "pingpong",
+        "frames": [
+          {
+            "at": 0,
+            "joints": {
+              "head": [
+                0.18,
+                0.6
+              ],
+              "neck": [
+                0.24,
+                0.6
+              ],
+              "shoulder": [
+                0.3,
+                0.6
+              ],
+              "elbow": [
+                0.34,
+                0.66
+              ],
+              "wrist": [
+                0.4,
+                0.62
+              ],
+              "hip": [
+                0.56,
+                0.62
+              ],
+              "knee": [
+                0.72,
+                0.5
+              ],
+              "ankle": [
+                0.84,
+                0.66
+              ],
+              "foot": [
+                0.9,
+                0.68
+              ]
+            }
+          },
+          {
+            "at": 1,
+            "joints": {
+              "head": [
+                0.44,
+                0.34
+              ],
+              "neck": [
+                0.46,
+                0.42
+              ],
+              "shoulder": [
+                0.48,
+                0.48
+              ],
+              "elbow": [
+                0.46,
+                0.56
+              ],
+              "wrist": [
+                0.5,
+                0.52
+              ],
+              "hip": [
+                0.56,
+                0.62
+              ],
+              "knee": [
+                0.72,
+                0.5
+              ],
+              "ankle": [
+                0.84,
+                0.66
+              ],
+              "foot": [
+                0.9,
+                0.68
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "id": "chicken",
+      "name": "Chicken",
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 serving",
+        "grams": 150
+      },
+      "per": {
+        "kcal": 250,
+        "protein": 30,
+        "carbs": 4,
+        "fat": 13,
+        "fibre": 0
+      },
+      "note": "Home-style curry or grilled, about a palm and a half.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "coffee_cold",
+      "name": "Coffee (cold)",
+      "meals": [
+        "breakfast"
+      ],
+      "portion": {
+        "label": "1 glass",
+        "grams": 250
+      },
+      "per": {
+        "kcal": 180,
+        "protein": 5,
+        "carbs": 25,
+        "fat": 6,
+        "fibre": 0
+      },
+      "note": "Blended with milk and sugar; cafe versions with ice cream are far higher.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "coffee_hot",
+      "name": "Coffee (hot)",
+      "meals": [
+        "breakfast"
+      ],
+      "portion": {
+        "label": "1 cup",
+        "grams": 150
+      },
+      "per": {
+        "kcal": 60,
+        "protein": 2,
+        "carbs": 8,
+        "fat": 2,
+        "fibre": 0
+      },
+      "note": "With milk and a teaspoon of sugar. Black is about 5.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "curd",
+      "name": "Curd",
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 katori",
+        "grams": 150
+      },
+      "per": {
+        "kcal": 90,
+        "protein": 5,
+        "carbs": 7,
+        "fat": 5,
+        "fibre": 0
+      },
+      "note": "Plain full-fat dahi.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "dal",
+      "name": "Dal",
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 katori",
+        "grams": 150
+      },
+      "per": {
+        "kcal": 150,
+        "protein": 8,
+        "carbs": 20,
+        "fat": 4,
+        "fibre": 5
+      },
+      "note": "Everyday tempered dal.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "dosa",
+      "name": "Dosa",
+      "meals": [
+        "breakfast",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 dosa",
+        "grams": 80
+      },
+      "per": {
+        "kcal": 135,
+        "protein": 3,
+        "carbs": 20,
+        "fat": 4,
+        "fibre": 1
+      },
+      "note": "Plain, home tawa. A masala dosa with potato is closer to 250.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "eggs",
+      "name": "Eggs",
+      "meals": [
+        "breakfast"
+      ],
+      "portion": {
+        "label": "2 eggs",
+        "grams": 100
+      },
+      "per": {
+        "kcal": 155,
+        "protein": 13,
+        "carbs": 1,
+        "fat": 11,
+        "fibre": 0
+      },
+      "note": "Boiled or a plain omelette; add about 40 kcal if fried in extra oil.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "fruit",
+      "name": "Fruit",
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 serving",
+        "grams": 150
+      },
+      "per": {
+        "kcal": 80,
+        "protein": 1,
+        "carbs": 20,
+        "fat": 0,
+        "fibre": 3
+      },
+      "note": "A banana, an apple or a bowl of papaya.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "milk",
+      "name": "Milk",
+      "meals": [
+        "breakfast"
+      ],
+      "portion": {
+        "label": "1 glass",
+        "grams": 200
+      },
+      "per": {
+        "kcal": 120,
+        "protein": 6,
+        "carbs": 10,
+        "fat": 7,
+        "fibre": 0
+      },
+      "note": "Full-fat toned milk.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "paneer",
+      "name": "Paneer",
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "100 g",
+        "grams": 100
+      },
+      "per": {
+        "kcal": 290,
+        "protein": 18,
+        "carbs": 4,
+        "fat": 22,
+        "fibre": 0
+      },
+      "note": "Full-fat paneer. A good protein source but a dense one.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "poha",
+      "name": "Poha",
+      "meals": [
+        "breakfast"
+      ],
+      "portion": {
+        "label": "1 plate",
+        "grams": 200
+      },
+      "per": {
+        "kcal": 270,
+        "protein": 6,
+        "carbs": 48,
+        "fat": 6,
+        "fibre": 3
+      },
+      "note": "Home-style with peanuts and a little oil.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "protein_shake",
+      "name": "Protein shake",
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 scoop",
+        "grams": 30
+      },
+      "per": {
+        "kcal": 120,
+        "protein": 24,
+        "carbs": 3,
+        "fat": 2,
+        "fibre": 0
+      },
+      "note": "Whey in water. Check your tub - brands vary.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "rice",
+      "name": "Rice",
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 katori",
+        "grams": 150
+      },
+      "per": {
+        "kcal": 200,
+        "protein": 4,
+        "carbs": 44,
+        "fat": 1,
+        "fibre": 1
+      },
+      "note": "Cooked white rice, one standard katori.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "roti",
+      "name": "Roti",
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 roti",
+        "grams": 40
+      },
+      "per": {
+        "kcal": 120,
+        "protein": 3,
+        "carbs": 22,
+        "fat": 3,
+        "fibre": 2
+      },
+      "note": "Whole wheat, no ghee on top. Add about 25 kcal if buttered.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "sabzi",
+      "name": "Sabzi",
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 katori",
+        "grams": 150
+      },
+      "per": {
+        "kcal": 130,
+        "protein": 3,
+        "carbs": 12,
+        "fat": 8,
+        "fibre": 4
+      },
+      "note": "Mixed vegetable, home oil levels. A dry sabzi is lower, a gravy one higher.",
+      "confidence": "estimate"
+    },
+    {
+      "id": "salad",
+      "name": "Salad",
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "portion": {
+        "label": "1 bowl",
+        "grams": 100
+      },
+      "per": {
+        "kcal": 40,
+        "protein": 2,
+        "carbs": 7,
+        "fat": 0,
+        "fibre": 2
+      },
+      "note": "Cucumber, onion, tomato, lemon. No dressing.",
+      "confidence": "estimate"
+    }
+  ],
+  "plans": [
+    {
+      "id": "week_default",
+      "name": "Five mornings, whole body",
+      "summary": "Built around the eleven things you tick in the gym. Five short sessions, each muscle trained twice a week, treadmill as the warm-up and the filler.",
+      "notes": [
+        "Every set stops one to three reps short of failure. That is the dial that matters.",
+        "Add a little weight, or a rep, whenever you hit the top of the rep range twice in a row.",
+        "If you get four sessions in instead of five, drop Friday, not Monday."
+      ],
+      "days": [
+        {
+          "day": "MONDAY",
+          "title": "Push",
+          "warmup": "Treadmill 8 min, then jumping jacks x 30",
+          "items": [
+            {
+              "exercise": "shoulders",
+              "sets": 4,
+              "reps": "6-10"
+            },
+            {
+              "exercise": "push_ups",
+              "sets": 3,
+              "reps": "10-20"
+            },
+            {
+              "exercise": "abs",
+              "sets": 3,
+              "reps": "8-12"
+            }
+          ]
+        },
+        {
+          "day": "TUESDAY",
+          "title": "Pull",
+          "warmup": "Treadmill 8 min",
+          "items": [
+            {
+              "exercise": "lats",
+              "sets": 4,
+              "reps": "5-10"
+            },
+            {
+              "exercise": "back",
+              "sets": 4,
+              "reps": "8-12"
+            },
+            {
+              "exercise": "biceps",
+              "sets": 3,
+              "reps": "8-15"
+            }
+          ]
+        },
+        {
+          "day": "WEDNESDAY",
+          "title": "Legs",
+          "warmup": "Treadmill 10 min, easy",
+          "items": [
+            {
+              "exercise": "quads",
+              "sets": 4,
+              "reps": "5-10"
+            },
+            {
+              "exercise": "hamstrings",
+              "sets": 3,
+              "reps": "8-12"
+            },
+            {
+              "exercise": "calves",
+              "sets": 4,
+              "reps": "10-20"
+            }
+          ]
+        },
+        {
+          "day": "THURSDAY",
+          "title": "Conditioning and core",
+          "warmup": "Jumping jacks x 40",
+          "items": [
+            {
+              "exercise": "jumping_jacks",
+              "sets": 4,
+              "reps": "40"
+            },
+            {
+              "exercise": "sit_ups",
+              "sets": 3,
+              "reps": "15-25"
+            },
+            {
+              "exercise": "abs",
+              "sets": 3,
+              "reps": "8-12"
+            }
+          ]
+        },
+        {
+          "day": "FRIDAY",
+          "title": "Whole body",
+          "warmup": "Treadmill 8 min",
+          "items": [
+            {
+              "exercise": "quads",
+              "sets": 3,
+              "reps": "6-10"
+            },
+            {
+              "exercise": "lats",
+              "sets": 3,
+              "reps": "6-10"
+            },
+            {
+              "exercise": "shoulders",
+              "sets": 3,
+              "reps": "8-12"
+            },
+            {
+              "exercise": "calves",
+              "sets": 3,
+              "reps": "10-20"
+            }
+          ]
+        },
+        {
+          "day": "SATURDAY",
+          "title": "Walk",
+          "warmup": "",
+          "items": []
+        },
+        {
+          "day": "SUNDAY",
+          "title": "Rest",
+          "warmup": "",
+          "items": []
+        }
+      ],
+      "targets": {
+        "proteinGramsPerDay": 130,
+        "kcalPerDay": 2200,
+        "waterGlassesPerDay": 8,
+        "note": "Protein target is roughly 1.6 g per kg for a 80 kg body - the range the literature settles on for building muscle. Calories are a starting point: adjust by how the weight trend moves over a fortnight, not day to day."
+      }
+    }
+  ]
+}

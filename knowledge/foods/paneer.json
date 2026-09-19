@@ -1,0 +1,21 @@
+{
+  "id": "paneer",
+  "name": "Paneer",
+  "meals": [
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "100 g",
+    "grams": 100
+  },
+  "per": {
+    "kcal": 290,
+    "protein": 18,
+    "carbs": 4,
+    "fat": 22,
+    "fibre": 0
+  },
+  "note": "Full-fat paneer. A good protein source but a dense one.",
+  "confidence": "estimate"
+}

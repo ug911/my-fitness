@@ -1,0 +1,22 @@
+{
+  "id": "fruit",
+  "name": "Fruit",
+  "meals": [
+    "breakfast",
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 serving",
+    "grams": 150
+  },
+  "per": {
+    "kcal": 80,
+    "protein": 1,
+    "carbs": 20,
+    "fat": 0,
+    "fibre": 3
+  },
+  "note": "A banana, an apple or a bowl of papaya.",
+  "confidence": "estimate"
+}

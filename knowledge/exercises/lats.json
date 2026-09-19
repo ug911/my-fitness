@@ -1,0 +1,171 @@
+{
+  "id": "lats",
+  "name": "Lats",
+  "anchorExercise": "Pull-up or lat pulldown",
+  "alternatives": [
+    "Lat pulldown",
+    "Assisted pull-up",
+    "Straight-arm pulldown"
+  ],
+  "pattern": "vertical_pull",
+  "equipment": "bar or cable",
+  "difficulty": "intermediate",
+  "primaryMuscles": [
+    "Lats"
+  ],
+  "secondaryMuscles": [
+    "Biceps",
+    "Mid-back",
+    "Core"
+  ],
+  "setup": [
+    "Grip a little wider than the shoulders, arms fully straight, ribs down.",
+    "Start from a dead hang - shoulders long, not shrugged into the ears."
+  ],
+  "execution": [
+    "Pull the elbows down and into the ribs until the chin clears the bar or the bar reaches the collarbone.",
+    "Lower all the way back to straight arms under control."
+  ],
+  "cues": [
+    "Pull your elbows into your back pockets.",
+    "Chest up to meet the bar.",
+    "Full hang at the bottom, every rep."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Half reps from the bottom",
+      "fix": "The stretch at the bottom is where the lats grow. Let the arms straighten."
+    },
+    {
+      "mistake": "Kipping to get the chin over",
+      "fix": "Use assistance or a pulldown and keep it strict."
+    },
+    {
+      "mistake": "Pulling with the arms only",
+      "fix": "Start the rep by pulling the shoulder blades down."
+    }
+  ],
+  "breathing": "Exhale pulling up, inhale on the way down.",
+  "evidence": [
+    {
+      "claim": "A full hang builds more lat than a short pull",
+      "detail": "The bottom of the movement loads the lats in their longest position, which is where most of the growth comes from.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Pulldowns and pull-ups build the same muscle",
+      "detail": "If strict pull-ups are out of reach, a pulldown taken close to failure does the job.",
+      "confidence": "strong"
+    },
+    {
+      "claim": "Wider is not automatically better",
+      "detail": "Grip width changes comfort more than it changes lat recruitment; use the width your shoulders like.",
+      "confidence": "limited"
+    }
+  ],
+  "progressions": [
+    "Weighted pull-up",
+    "Slow 4-second lowering",
+    "Pause at the top"
+  ],
+  "regressions": [
+    "Band-assisted pull-up",
+    "Lat pulldown",
+    "Negative-only reps"
+  ],
+  "repRange": {
+    "min": 5,
+    "max": 12
+  },
+  "restSeconds": 150,
+  "tempo": "2-1-3",
+  "demo": {
+    "view": "side",
+    "durationMillis": 2600,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.3
+          ],
+          "neck": [
+            0.5,
+            0.36
+          ],
+          "shoulder": [
+            0.5,
+            0.4
+          ],
+          "elbow": [
+            0.48,
+            0.26
+          ],
+          "wrist": [
+            0.47,
+            0.1
+          ],
+          "hip": [
+            0.5,
+            0.66
+          ],
+          "knee": [
+            0.52,
+            0.84
+          ],
+          "ankle": [
+            0.54,
+            0.96
+          ],
+          "foot": [
+            0.6,
+            0.97
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.14
+          ],
+          "neck": [
+            0.5,
+            0.2
+          ],
+          "shoulder": [
+            0.5,
+            0.24
+          ],
+          "elbow": [
+            0.38,
+            0.3
+          ],
+          "wrist": [
+            0.47,
+            0.1
+          ],
+          "hip": [
+            0.5,
+            0.5
+          ],
+          "knee": [
+            0.54,
+            0.7
+          ],
+          "ankle": [
+            0.58,
+            0.84
+          ],
+          "foot": [
+            0.64,
+            0.86
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "id": "jumping_jacks",
+  "name": "Jumping jacks",
+  "anchorExercise": "Jumping jack",
+  "alternatives": [
+    "Step jack (no jump)",
+    "Skipping rope",
+    "Treadmill walk"
+  ],
+  "pattern": "conditioning",
+  "equipment": "bodyweight",
+  "difficulty": "beginner",
+  "primaryMuscles": [
+    "Whole body - conditioning"
+  ],
+  "secondaryMuscles": [
+    "Calves",
+    "Shoulders",
+    "Hip abductors"
+  ],
+  "setup": [
+    "Stand tall, feet together, arms at the sides.",
+    "Land softly - think quiet feet."
+  ],
+  "execution": [
+    "Jump the feet apart while the arms sweep overhead.",
+    "Jump back to the start. Keep a steady rhythm rather than a sprint."
+  ],
+  "cues": [
+    "Land on the middle of the foot, knees soft.",
+    "Arms all the way overhead, not to shoulder height.",
+    "Breathe in a rhythm you could hold for two minutes."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Landing stiff-legged",
+      "fix": "Let the knees and ankles absorb it - quiet feet."
+    },
+    {
+      "mistake": "Half-height arms",
+      "fix": "Full overhead makes it a warm-up for the shoulders too."
+    },
+    {
+      "mistake": "Going flat out for 20 seconds",
+      "fix": "This is a warm-up or a conditioning filler; pace it."
+    }
+  ],
+  "breathing": "Steady nose-in, mouth-out rhythm.",
+  "evidence": [
+    {
+      "claim": "A general warm-up raises muscle temperature and performance",
+      "detail": "A few minutes of easy whole-body movement before lifting improves force output and feels better than going in cold.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Easy cardio adds up without eating into recovery",
+      "detail": "Low-intensity work like this and walking builds a base with little interference with strength training.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Impact tolerance builds gradually",
+      "detail": "If knees or shins complain, step jacks give most of the benefit without the landing.",
+      "confidence": "limited"
+    }
+  ],
+  "progressions": [
+    "Longer intervals",
+    "Add a skipping rope",
+    "Combine with a treadmill block"
+  ],
+  "regressions": [
+    "Step jacks, one foot at a time",
+    "Arms to shoulder height only"
+  ],
+  "repRange": {
+    "min": 20,
+    "max": 60
+  },
+  "restSeconds": 45,
+  "tempo": "steady",
+  "demo": {
+    "view": "front",
+    "durationMillis": 1200,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.13
+          ],
+          "neck": [
+            0.5,
+            0.2
+          ],
+          "shoulder": [
+            0.5,
+            0.24
+          ],
+          "elbow": [
+            0.44,
+            0.38
+          ],
+          "wrist": [
+            0.42,
+            0.52
+          ],
+          "hip": [
+            0.5,
+            0.55
+          ],
+          "knee": [
+            0.47,
+            0.76
+          ],
+          "ankle": [
+            0.46,
+            0.94
+          ],
+          "foot": [
+            0.46,
+            0.96
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "elbow": [
+            0.34,
+            0.22
+          ],
+          "wrist": [
+            0.38,
+            0.06
+          ],
+          "knee": [
+            0.38,
+            0.78
+          ],
+          "ankle": [
+            0.3,
+            0.94
+          ],
+          "foot": [
+            0.28,
+            0.96
+          ]
+        }
+      }
+    ]
+  }
+}

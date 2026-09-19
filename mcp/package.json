@@ -1,0 +1,17 @@
+{
+  "name": "my-fitness-knowledge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP server and CLI for publishing into the My Fitness knowledge base",
+  "bin": { "myfitness-kb": "src/cli.js" },
+  "scripts": {
+    "build": "node src/cli.js build",
+    "validate": "node src/cli.js validate",
+    "serve": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  }
+}

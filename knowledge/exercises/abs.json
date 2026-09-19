@@ -1,0 +1,155 @@
+{
+  "id": "abs",
+  "name": "Abs",
+  "anchorExercise": "Dead bug",
+  "alternatives": [
+    "Plank",
+    "Hanging knee raise",
+    "Cable crunch",
+    "Pallof press"
+  ],
+  "pattern": "anti_extension",
+  "equipment": "bodyweight",
+  "difficulty": "beginner",
+  "primaryMuscles": [
+    "Rectus abdominis",
+    "Deep core"
+  ],
+  "secondaryMuscles": [
+    "Hip flexors",
+    "Obliques"
+  ],
+  "setup": [
+    "On your back, arms straight up, hips and knees at ninety degrees.",
+    "Press the lower back gently into the floor and keep it there."
+  ],
+  "execution": [
+    "Lower the opposite arm and leg towards the floor, slowly.",
+    "Stop the moment the lower back starts to lift, return, and swap sides."
+  ],
+  "cues": [
+    "The lower back staying flat is the whole exercise.",
+    "Breathe out slowly as the limbs move away.",
+    "Slower is harder - there is no need to add weight for a long time."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Lower back arching off the floor",
+      "fix": "Shorten the range; only go as far as the back stays down."
+    },
+    {
+      "mistake": "Rushing",
+      "fix": "Three seconds out, three back. Speed hides the work."
+    },
+    {
+      "mistake": "Holding the breath",
+      "fix": "Exhale on the way out - breathing under brace is the skill."
+    }
+  ],
+  "breathing": "Long exhale as the limbs extend, inhale coming back.",
+  "evidence": [
+    {
+      "claim": "Anti-movement core work transfers well",
+      "detail": "Bracing against motion - planks, dead bugs, Pallof presses - builds trunk stiffness that carries into squats and carries.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Loaded flexion does grow the abs",
+      "detail": "Cable crunches and hanging raises add size; they simply load the spine more than anti-extension work.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Visible abs are mostly a body-fat question",
+      "detail": "Training grows the muscle; whether it shows is decided in the kitchen.",
+      "confidence": "strong"
+    }
+  ],
+  "progressions": [
+    "Slow to a 5-second reach",
+    "Add a light dumbbell in the hands",
+    "Hanging knee raise"
+  ],
+  "regressions": [
+    "Move only the legs",
+    "Feet on the floor between reps"
+  ],
+  "repRange": {
+    "min": 6,
+    "max": 12
+  },
+  "restSeconds": 60,
+  "tempo": "3-0-3",
+  "demo": {
+    "view": "side",
+    "durationMillis": 3000,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.22,
+            0.62
+          ],
+          "neck": [
+            0.28,
+            0.62
+          ],
+          "shoulder": [
+            0.33,
+            0.62
+          ],
+          "elbow": [
+            0.33,
+            0.5
+          ],
+          "wrist": [
+            0.33,
+            0.38
+          ],
+          "hip": [
+            0.58,
+            0.62
+          ],
+          "knee": [
+            0.58,
+            0.44
+          ],
+          "ankle": [
+            0.72,
+            0.44
+          ],
+          "foot": [
+            0.78,
+            0.46
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "elbow": [
+            0.24,
+            0.54
+          ],
+          "wrist": [
+            0.14,
+            0.48
+          ],
+          "knee": [
+            0.7,
+            0.52
+          ],
+          "ankle": [
+            0.86,
+            0.56
+          ],
+          "foot": [
+            0.92,
+            0.58
+          ]
+        }
+      }
+    ]
+  }
+}

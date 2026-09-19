@@ -1,0 +1,197 @@
+{
+  "id": "hamstrings",
+  "name": "Hamstrings",
+  "anchorExercise": "Romanian deadlift",
+  "alternatives": [
+    "Seated leg curl",
+    "Nordic curl",
+    "Single-leg RDL"
+  ],
+  "pattern": "hip_hinge",
+  "equipment": "barbell or dumbbells",
+  "difficulty": "intermediate",
+  "primaryMuscles": [
+    "Hamstrings",
+    "Glutes"
+  ],
+  "secondaryMuscles": [
+    "Spinal erectors",
+    "Lats"
+  ],
+  "setup": [
+    "Stand with the weight at the top of the thighs, feet hip width, knees softly bent.",
+    "Shoulders back, bar close, weight through the middle of the foot."
+  ],
+  "execution": [
+    "Push the hips back and let the torso fold forward, keeping the back flat.",
+    "Stop when you feel a strong stretch behind the thighs - usually mid-shin.",
+    "Drive the hips forward to stand, squeezing the glutes at the top."
+  ],
+  "cues": [
+    "Hips back, not down - this is a hinge, not a squat.",
+    "Drag the bar down your legs; it should stay in contact.",
+    "Stop where your hamstrings stop you, not where the floor is."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Rounding the lower back to reach further",
+      "fix": "Range comes from the hips. Stop at the point where the back would round."
+    },
+    {
+      "mistake": "Turning it into a squat",
+      "fix": "Keep the shin close to vertical; the knee angle barely changes."
+    },
+    {
+      "mistake": "Leaning back at the top",
+      "fix": "Finish standing tall with the glutes squeezed, not hyperextended."
+    }
+  ],
+  "breathing": "Big breath at the top, hold it through the rep, exhale after standing up.",
+  "evidence": [
+    {
+      "claim": "Hamstrings respond to both hip-hinge and knee-flexion work",
+      "detail": "The two halves of the muscle are trained differently - an RDL and a leg curl are not interchangeable, and doing both covers more.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Lengthened-position work is especially effective here",
+      "detail": "Exercises that load the hamstring long, like RDLs and Nordics, show strong growth and a protective effect against strains.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Eccentric-focused hamstring work reduces strain risk",
+      "detail": "Programmes built around slow lowering, notably Nordic curls, are among the better supported injury-prevention findings in sport.",
+      "confidence": "strong"
+    }
+  ],
+  "progressions": [
+    "Single-leg RDL",
+    "Pause two seconds in the stretch",
+    "Add load once form holds for 10 reps"
+  ],
+  "regressions": [
+    "Dumbbell RDL with a shorter range",
+    "Hip hinge to a box",
+    "Seated leg curl if the lower back complains"
+  ],
+  "repRange": {
+    "min": 6,
+    "max": 12
+  },
+  "restSeconds": 150,
+  "tempo": "3-1-1",
+  "demo": {
+    "view": "side",
+    "durationMillis": 2800,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.13
+          ],
+          "neck": [
+            0.5,
+            0.2
+          ],
+          "shoulder": [
+            0.5,
+            0.24
+          ],
+          "elbow": [
+            0.5,
+            0.4
+          ],
+          "wrist": [
+            0.5,
+            0.56
+          ],
+          "hip": [
+            0.5,
+            0.55
+          ],
+          "knee": [
+            0.5,
+            0.76
+          ],
+          "ankle": [
+            0.5,
+            0.93
+          ],
+          "foot": [
+            0.56,
+            0.95
+          ]
+        }
+      },
+      {
+        "at": 0.5,
+        "joints": {
+          "head": [
+            0.4,
+            0.24
+          ],
+          "neck": [
+            0.42,
+            0.3
+          ],
+          "shoulder": [
+            0.43,
+            0.33
+          ],
+          "elbow": [
+            0.45,
+            0.47
+          ],
+          "wrist": [
+            0.47,
+            0.6
+          ],
+          "hip": [
+            0.58,
+            0.55
+          ],
+          "knee": [
+            0.55,
+            0.76
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "head": [
+            0.32,
+            0.36
+          ],
+          "neck": [
+            0.35,
+            0.41
+          ],
+          "shoulder": [
+            0.37,
+            0.43
+          ],
+          "elbow": [
+            0.42,
+            0.56
+          ],
+          "wrist": [
+            0.45,
+            0.7
+          ],
+          "hip": [
+            0.62,
+            0.54
+          ],
+          "knee": [
+            0.56,
+            0.76
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "coffee_hot",
+  "name": "Coffee (hot)",
+  "meals": [
+    "breakfast"
+  ],
+  "portion": {
+    "label": "1 cup",
+    "grams": 150
+  },
+  "per": {
+    "kcal": 60,
+    "protein": 2,
+    "carbs": 8,
+    "fat": 2,
+    "fibre": 0
+  },
+  "note": "With milk and a teaspoon of sugar. Black is about 5.",
+  "confidence": "estimate"
+}

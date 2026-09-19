@@ -1,0 +1,173 @@
+{
+  "id": "push_ups",
+  "name": "Push-ups",
+  "anchorExercise": "Push-up",
+  "alternatives": [
+    "Incline push-up",
+    "Bench press",
+    "Deficit push-up"
+  ],
+  "pattern": "horizontal_push",
+  "equipment": "bodyweight",
+  "difficulty": "beginner",
+  "primaryMuscles": [
+    "Chest",
+    "Triceps",
+    "Front delts"
+  ],
+  "secondaryMuscles": [
+    "Core",
+    "Serratus"
+  ],
+  "setup": [
+    "Hands just wider than the shoulders, under the collarbones rather than the face.",
+    "Body in one line from ear to ankle, glutes and quads switched on."
+  ],
+  "execution": [
+    "Lower until the chest is about a fist off the floor, elbows at roughly 45 degrees.",
+    "Press back up and push the floor away at the top."
+  ],
+  "cues": [
+    "Squeeze the glutes - it turns the plank into a press.",
+    "Elbows at 45 degrees, not flared to the sides.",
+    "Push the floor away at the top and let the shoulder blades spread."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Hips sagging",
+      "fix": "Brace the ribs down and squeeze the glutes; raise the hands if the plank cannot hold."
+    },
+    {
+      "mistake": "Head reaching for the floor first",
+      "fix": "The chest should arrive first; keep the neck neutral."
+    },
+    {
+      "mistake": "Elbows flared to 90 degrees",
+      "fix": "Hard on the shoulder and weaker. Tuck to about 45."
+    }
+  ],
+  "breathing": "Inhale on the way down, exhale pressing up.",
+  "evidence": [
+    {
+      "claim": "Bodyweight pressing builds chest when taken near failure",
+      "detail": "With enough reps and proximity to failure, push-ups produce growth comparable to bench pressing at matched effort.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Load can be added without a gym",
+      "detail": "Elevating the feet, slowing the lowering or adding a pack keeps push-ups in a productive rep range as you get stronger.",
+      "confidence": "strong"
+    },
+    {
+      "claim": "Range matters as much here as anywhere",
+      "detail": "A chest-to-fist depth beats a half rep; deficit push-ups extend the range further.",
+      "confidence": "moderate"
+    }
+  ],
+  "progressions": [
+    "Feet elevated",
+    "Deficit push-up on handles",
+    "Weighted with a backpack",
+    "Slow 4-second lowering"
+  ],
+  "regressions": [
+    "Hands on a bench or wall",
+    "Knees down",
+    "Negative-only reps"
+  ],
+  "repRange": {
+    "min": 8,
+    "max": 25
+  },
+  "restSeconds": 90,
+  "tempo": "2-0-1",
+  "demo": {
+    "view": "side",
+    "durationMillis": 2200,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.2,
+            0.46
+          ],
+          "neck": [
+            0.26,
+            0.48
+          ],
+          "shoulder": [
+            0.32,
+            0.5
+          ],
+          "elbow": [
+            0.32,
+            0.62
+          ],
+          "wrist": [
+            0.32,
+            0.76
+          ],
+          "hip": [
+            0.58,
+            0.56
+          ],
+          "knee": [
+            0.72,
+            0.64
+          ],
+          "ankle": [
+            0.86,
+            0.72
+          ],
+          "foot": [
+            0.9,
+            0.78
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "head": [
+            0.2,
+            0.62
+          ],
+          "neck": [
+            0.26,
+            0.64
+          ],
+          "shoulder": [
+            0.32,
+            0.66
+          ],
+          "elbow": [
+            0.24,
+            0.72
+          ],
+          "wrist": [
+            0.32,
+            0.76
+          ],
+          "hip": [
+            0.58,
+            0.7
+          ],
+          "knee": [
+            0.72,
+            0.74
+          ],
+          "ankle": [
+            0.86,
+            0.78
+          ],
+          "foot": [
+            0.9,
+            0.82
+          ]
+        }
+      }
+    ]
+  }
+}

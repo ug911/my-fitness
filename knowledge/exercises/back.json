@@ -1,0 +1,144 @@
+{
+  "id": "back",
+  "name": "Back",
+  "anchorExercise": "Bent-over row",
+  "alternatives": [
+    "Chest-supported row",
+    "Seated cable row",
+    "Single-arm dumbbell row"
+  ],
+  "pattern": "horizontal_pull",
+  "equipment": "barbell or dumbbells",
+  "difficulty": "intermediate",
+  "primaryMuscles": [
+    "Mid-back",
+    "Lats",
+    "Rear delts"
+  ],
+  "secondaryMuscles": [
+    "Biceps",
+    "Spinal erectors"
+  ],
+  "setup": [
+    "Hinge at the hips until the torso is around 45 degrees, back flat.",
+    "Arms hanging straight, shoulder blades relaxed forward."
+  ],
+  "execution": [
+    "Pull the elbows back and slightly in, bringing the bar to the lower ribs.",
+    "Let the shoulder blades travel apart again at the bottom - do not just move the arms."
+  ],
+  "cues": [
+    "Lead with the elbows, not the hands.",
+    "Think of the arms as hooks; the back does the pulling.",
+    "Let the weight stretch you at the bottom."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Torso rising with every rep",
+      "fix": "The angle should stay put. If it does not, the weight is too heavy."
+    },
+    {
+      "mistake": "Pulling to the chest instead of the ribs",
+      "fix": "High pulls turn it into a rear-delt exercise - fine, but a different one."
+    },
+    {
+      "mistake": "No stretch at the bottom",
+      "fix": "Allow the shoulder blades to move; that is where the lats lengthen."
+    }
+  ],
+  "breathing": "Brace at the top of the rep, exhale as you finish the pull.",
+  "evidence": [
+    {
+      "claim": "Rowing and pulling down are not the same exercise",
+      "detail": "Horizontal and vertical pulls emphasise different parts of the back; a complete back needs both.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Chest support removes the lower-back limit",
+      "detail": "If the erectors fatigue before the back does, a supported row lets you train the target muscle harder.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Grip is often the first thing to fail",
+      "detail": "Straps let the back reach failure instead of the hands, which is the point of the set.",
+      "confidence": "limited"
+    }
+  ],
+  "progressions": [
+    "Add weight",
+    "Pause one second at the ribs",
+    "Single-arm for more range"
+  ],
+  "regressions": [
+    "Chest-supported row",
+    "Seated cable row",
+    "Lighter load, higher reps"
+  ],
+  "repRange": {
+    "min": 6,
+    "max": 12
+  },
+  "restSeconds": 150,
+  "tempo": "2-1-2",
+  "demo": {
+    "view": "side",
+    "durationMillis": 2400,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.33,
+            0.3
+          ],
+          "neck": [
+            0.37,
+            0.35
+          ],
+          "shoulder": [
+            0.4,
+            0.38
+          ],
+          "elbow": [
+            0.42,
+            0.53
+          ],
+          "wrist": [
+            0.44,
+            0.68
+          ],
+          "hip": [
+            0.62,
+            0.55
+          ],
+          "knee": [
+            0.58,
+            0.76
+          ],
+          "ankle": [
+            0.56,
+            0.93
+          ],
+          "foot": [
+            0.63,
+            0.95
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "elbow": [
+            0.34,
+            0.42
+          ],
+          "wrist": [
+            0.45,
+            0.52
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "protein_shake",
+  "name": "Protein shake",
+  "meals": [
+    "breakfast",
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 scoop",
+    "grams": 30
+  },
+  "per": {
+    "kcal": 120,
+    "protein": 24,
+    "carbs": 3,
+    "fat": 2,
+    "fibre": 0
+  },
+  "note": "Whey in water. Check your tub - brands vary.",
+  "confidence": "estimate"
+}

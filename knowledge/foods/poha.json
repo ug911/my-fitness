@@ -1,0 +1,20 @@
+{
+  "id": "poha",
+  "name": "Poha",
+  "meals": [
+    "breakfast"
+  ],
+  "portion": {
+    "label": "1 plate",
+    "grams": 200
+  },
+  "per": {
+    "kcal": 270,
+    "protein": 6,
+    "carbs": 48,
+    "fat": 6,
+    "fibre": 3
+  },
+  "note": "Home-style with peanuts and a little oil.",
+  "confidence": "estimate"
+}

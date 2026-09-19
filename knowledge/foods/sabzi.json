@@ -1,0 +1,21 @@
+{
+  "id": "sabzi",
+  "name": "Sabzi",
+  "meals": [
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 katori",
+    "grams": 150
+  },
+  "per": {
+    "kcal": 130,
+    "protein": 3,
+    "carbs": 12,
+    "fat": 8,
+    "fibre": 4
+  },
+  "note": "Mixed vegetable, home oil levels. A dry sabzi is lower, a gravy one higher.",
+  "confidence": "estimate"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "milk",
+  "name": "Milk",
+  "meals": [
+    "breakfast"
+  ],
+  "portion": {
+    "label": "1 glass",
+    "grams": 200
+  },
+  "per": {
+    "kcal": 120,
+    "protein": 6,
+    "carbs": 10,
+    "fat": 7,
+    "fibre": 0
+  },
+  "note": "Full-fat toned milk.",
+  "confidence": "estimate"
+}

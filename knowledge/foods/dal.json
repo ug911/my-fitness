@@ -1,0 +1,21 @@
+{
+  "id": "dal",
+  "name": "Dal",
+  "meals": [
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 katori",
+    "grams": 150
+  },
+  "per": {
+    "kcal": 150,
+    "protein": 8,
+    "carbs": 20,
+    "fat": 4,
+    "fibre": 5
+  },
+  "note": "Everyday tempered dal.",
+  "confidence": "estimate"
+}

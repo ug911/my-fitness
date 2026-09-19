@@ -1,0 +1,21 @@
+{
+  "id": "dosa",
+  "name": "Dosa",
+  "meals": [
+    "breakfast",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 dosa",
+    "grams": 80
+  },
+  "per": {
+    "kcal": 135,
+    "protein": 3,
+    "carbs": 20,
+    "fat": 4,
+    "fibre": 1
+  },
+  "note": "Plain, home tawa. A masala dosa with potato is closer to 250.",
+  "confidence": "estimate"
+}

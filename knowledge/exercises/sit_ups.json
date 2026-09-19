@@ -1,0 +1,170 @@
+{
+  "id": "sit_ups",
+  "name": "Sit-ups",
+  "anchorExercise": "Sit-up",
+  "alternatives": [
+    "Crunch",
+    "Cable crunch",
+    "Dead bug (if the back complains)"
+  ],
+  "pattern": "spinal_flexion",
+  "equipment": "bodyweight",
+  "difficulty": "beginner",
+  "primaryMuscles": [
+    "Rectus abdominis"
+  ],
+  "secondaryMuscles": [
+    "Hip flexors",
+    "Obliques"
+  ],
+  "setup": [
+    "Knees bent, feet flat, hands across the chest rather than behind the head.",
+    "Chin lightly tucked."
+  ],
+  "execution": [
+    "Curl the spine up one vertebra at a time until the torso is off the floor.",
+    "Lower with the same control - do not drop back."
+  ],
+  "cues": [
+    "Roll up, do not hinge up in one plank-like piece.",
+    "Hands on the chest; pulling on the neck is just cheating.",
+    "Lower slower than you rise."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Yanking the head forward",
+      "fix": "Cross the arms over the chest instead."
+    },
+    {
+      "mistake": "Hip flexors doing the work",
+      "fix": "If the lower back arches or the feet lift, switch to crunches or dead bugs."
+    },
+    {
+      "mistake": "Bouncing off the floor",
+      "fix": "Pause a beat at the bottom."
+    }
+  ],
+  "breathing": "Exhale curling up, inhale lowering.",
+  "evidence": [
+    {
+      "claim": "Sit-ups do train the abs, and they also load the spine",
+      "detail": "Repeated loaded flexion is a known contributor to disc stress; if your back objects, crunches or anti-extension work get the same muscle with less of it.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "There is no such thing as spot reduction",
+      "detail": "Abdominal training does not preferentially burn abdominal fat.",
+      "confidence": "strong"
+    },
+    {
+      "claim": "Adding load beats adding reps forever",
+      "detail": "Once you can do 25 clean reps, a cable crunch or a held plate progresses the muscle better than doubling the count.",
+      "confidence": "moderate"
+    }
+  ],
+  "progressions": [
+    "Hold a plate on the chest",
+    "Decline bench",
+    "Slow 4-second lowering"
+  ],
+  "regressions": [
+    "Crunch, shoulder blades only",
+    "Dead bug",
+    "Feet anchored"
+  ],
+  "repRange": {
+    "min": 10,
+    "max": 25
+  },
+  "restSeconds": 60,
+  "tempo": "2-0-2",
+  "demo": {
+    "view": "side",
+    "durationMillis": 2400,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.18,
+            0.6
+          ],
+          "neck": [
+            0.24,
+            0.6
+          ],
+          "shoulder": [
+            0.3,
+            0.6
+          ],
+          "elbow": [
+            0.34,
+            0.66
+          ],
+          "wrist": [
+            0.4,
+            0.62
+          ],
+          "hip": [
+            0.56,
+            0.62
+          ],
+          "knee": [
+            0.72,
+            0.5
+          ],
+          "ankle": [
+            0.84,
+            0.66
+          ],
+          "foot": [
+            0.9,
+            0.68
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "head": [
+            0.44,
+            0.34
+          ],
+          "neck": [
+            0.46,
+            0.42
+          ],
+          "shoulder": [
+            0.48,
+            0.48
+          ],
+          "elbow": [
+            0.46,
+            0.56
+          ],
+          "wrist": [
+            0.5,
+            0.52
+          ],
+          "hip": [
+            0.56,
+            0.62
+          ],
+          "knee": [
+            0.72,
+            0.5
+          ],
+          "ankle": [
+            0.84,
+            0.66
+          ],
+          "foot": [
+            0.9,
+            0.68
+          ]
+        }
+      }
+    ]
+  }
+}

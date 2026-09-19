@@ -1,0 +1,22 @@
+{
+  "id": "chicken",
+  "name": "Chicken",
+  "meals": [
+    "breakfast",
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 serving",
+    "grams": 150
+  },
+  "per": {
+    "kcal": 250,
+    "protein": 30,
+    "carbs": 4,
+    "fat": 13,
+    "fibre": 0
+  },
+  "note": "Home-style curry or grilled, about a palm and a half.",
+  "confidence": "estimate"
+}

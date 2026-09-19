@@ -1,0 +1,207 @@
+{
+  "id": "quads",
+  "name": "Quads",
+  "anchorExercise": "Squat",
+  "alternatives": [
+    "Goblet squat",
+    "Leg press",
+    "Bulgarian split squat",
+    "Leg extension"
+  ],
+  "pattern": "squat",
+  "equipment": "barbell, dumbbell or machine",
+  "difficulty": "intermediate",
+  "primaryMuscles": [
+    "Quadriceps",
+    "Glutes"
+  ],
+  "secondaryMuscles": [
+    "Adductors",
+    "Spinal erectors",
+    "Core"
+  ],
+  "setup": [
+    "Feet between hip and shoulder width, toes slightly out.",
+    "Brace as if about to be pushed, whole foot planted."
+  ],
+  "execution": [
+    "Sit down and slightly back, letting the knees travel forward over the toes.",
+    "Descend until the hip crease is at least level with the knee, if your hips allow it.",
+    "Drive up through the whole foot, keeping the chest angle the same."
+  ],
+  "cues": [
+    "Knees out over the middle toes, not collapsing in.",
+    "Spread the floor with your feet on the way up.",
+    "Keep the bar over the middle of the foot the whole way."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Heels lifting",
+      "fix": "Ankle mobility or a too-wide stance. Try shoes with a heel, or squat to a slightly higher depth."
+    },
+    {
+      "mistake": "Hips shooting up first",
+      "fix": "The chest and hips should rise together; lighten the load until they do."
+    },
+    {
+      "mistake": "Quarter reps",
+      "fix": "Depth is where the quads earn it - go as deep as you can with a flat back."
+    }
+  ],
+  "breathing": "Breath in and brace at the top, hold through the rep, exhale at the top.",
+  "evidence": [
+    {
+      "claim": "Deeper squats build more quad and glute than shallow ones",
+      "detail": "At matched load, greater depth produces more growth in the thigh - quarter squats mostly build the ability to do quarter squats.",
+      "confidence": "strong"
+    },
+    {
+      "claim": "Three minutes of rest beats one on the big lifts",
+      "detail": "Longer rests preserve reps across sets, and total hard reps is what drives the adaptation.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Machines and free weights both work",
+      "detail": "If a leg press or split squat lets you train hard with less fatigue or discomfort, it is not a downgrade.",
+      "confidence": "moderate"
+    }
+  ],
+  "progressions": [
+    "Add load in small jumps",
+    "Pause squat at the bottom",
+    "Tempo squat, 4 seconds down"
+  ],
+  "regressions": [
+    "Goblet squat",
+    "Box squat to a comfortable depth",
+    "Leg press"
+  ],
+  "repRange": {
+    "min": 5,
+    "max": 10
+  },
+  "restSeconds": 180,
+  "tempo": "3-1-1",
+  "demo": {
+    "view": "side",
+    "durationMillis": 2800,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.13
+          ],
+          "neck": [
+            0.5,
+            0.2
+          ],
+          "shoulder": [
+            0.5,
+            0.24
+          ],
+          "elbow": [
+            0.44,
+            0.3
+          ],
+          "wrist": [
+            0.46,
+            0.24
+          ],
+          "hip": [
+            0.5,
+            0.55
+          ],
+          "knee": [
+            0.5,
+            0.76
+          ],
+          "ankle": [
+            0.5,
+            0.93
+          ],
+          "foot": [
+            0.56,
+            0.95
+          ]
+        }
+      },
+      {
+        "at": 0.5,
+        "joints": {
+          "head": [
+            0.47,
+            0.25
+          ],
+          "neck": [
+            0.47,
+            0.32
+          ],
+          "shoulder": [
+            0.47,
+            0.36
+          ],
+          "elbow": [
+            0.41,
+            0.42
+          ],
+          "wrist": [
+            0.43,
+            0.36
+          ],
+          "hip": [
+            0.55,
+            0.64
+          ],
+          "knee": [
+            0.47,
+            0.8
+          ],
+          "ankle": [
+            0.5,
+            0.93
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "head": [
+            0.44,
+            0.38
+          ],
+          "neck": [
+            0.45,
+            0.45
+          ],
+          "shoulder": [
+            0.45,
+            0.49
+          ],
+          "elbow": [
+            0.39,
+            0.55
+          ],
+          "wrist": [
+            0.41,
+            0.49
+          ],
+          "hip": [
+            0.58,
+            0.77
+          ],
+          "knee": [
+            0.44,
+            0.83
+          ],
+          "ankle": [
+            0.5,
+            0.93
+          ]
+        }
+      }
+    ]
+  }
+}

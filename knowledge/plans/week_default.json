@@ -1,0 +1,145 @@
+{
+  "id": "week_default",
+  "name": "Five mornings, whole body",
+  "summary": "Built around the eleven things you tick in the gym. Five short sessions, each muscle trained twice a week, treadmill as the warm-up and the filler.",
+  "notes": [
+    "Every set stops one to three reps short of failure. That is the dial that matters.",
+    "Add a little weight, or a rep, whenever you hit the top of the rep range twice in a row.",
+    "If you get four sessions in instead of five, drop Friday, not Monday."
+  ],
+  "days": [
+    {
+      "day": "MONDAY",
+      "title": "Push",
+      "warmup": "Treadmill 8 min, then jumping jacks x 30",
+      "items": [
+        {
+          "exercise": "shoulders",
+          "sets": 4,
+          "reps": "6-10"
+        },
+        {
+          "exercise": "push_ups",
+          "sets": 3,
+          "reps": "10-20"
+        },
+        {
+          "exercise": "abs",
+          "sets": 3,
+          "reps": "8-12"
+        }
+      ]
+    },
+    {
+      "day": "TUESDAY",
+      "title": "Pull",
+      "warmup": "Treadmill 8 min",
+      "items": [
+        {
+          "exercise": "lats",
+          "sets": 4,
+          "reps": "5-10"
+        },
+        {
+          "exercise": "back",
+          "sets": 4,
+          "reps": "8-12"
+        },
+        {
+          "exercise": "biceps",
+          "sets": 3,
+          "reps": "8-15"
+        }
+      ]
+    },
+    {
+      "day": "WEDNESDAY",
+      "title": "Legs",
+      "warmup": "Treadmill 10 min, easy",
+      "items": [
+        {
+          "exercise": "quads",
+          "sets": 4,
+          "reps": "5-10"
+        },
+        {
+          "exercise": "hamstrings",
+          "sets": 3,
+          "reps": "8-12"
+        },
+        {
+          "exercise": "calves",
+          "sets": 4,
+          "reps": "10-20"
+        }
+      ]
+    },
+    {
+      "day": "THURSDAY",
+      "title": "Conditioning and core",
+      "warmup": "Jumping jacks x 40",
+      "items": [
+        {
+          "exercise": "jumping_jacks",
+          "sets": 4,
+          "reps": "40"
+        },
+        {
+          "exercise": "sit_ups",
+          "sets": 3,
+          "reps": "15-25"
+        },
+        {
+          "exercise": "abs",
+          "sets": 3,
+          "reps": "8-12"
+        }
+      ]
+    },
+    {
+      "day": "FRIDAY",
+      "title": "Whole body",
+      "warmup": "Treadmill 8 min",
+      "items": [
+        {
+          "exercise": "quads",
+          "sets": 3,
+          "reps": "6-10"
+        },
+        {
+          "exercise": "lats",
+          "sets": 3,
+          "reps": "6-10"
+        },
+        {
+          "exercise": "shoulders",
+          "sets": 3,
+          "reps": "8-12"
+        },
+        {
+          "exercise": "calves",
+          "sets": 3,
+          "reps": "10-20"
+        }
+      ]
+    },
+    {
+      "day": "SATURDAY",
+      "title": "Walk",
+      "warmup": "",
+      "items": []
+    },
+    {
+      "day": "SUNDAY",
+      "title": "Rest",
+      "warmup": "",
+      "items": []
+    }
+  ],
+  "targets": {
+    "proteinGramsPerDay": 130,
+    "kcalPerDay": 2200,
+    "waterGlassesPerDay": 8,
+    "note": "Protein target is roughly 1.6 g per kg for a 80 kg body - the range the literature settles on for building muscle. Calories are a starting point: adjust by how the weight trend moves over a fortnight, not day to day."
+  }
+}

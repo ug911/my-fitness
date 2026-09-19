@@ -1,0 +1,21 @@
+{
+  "id": "salad",
+  "name": "Salad",
+  "meals": [
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 bowl",
+    "grams": 100
+  },
+  "per": {
+    "kcal": 40,
+    "protein": 2,
+    "carbs": 7,
+    "fat": 0,
+    "fibre": 2
+  },
+  "note": "Cucumber, onion, tomato, lemon. No dressing.",
+  "confidence": "estimate"
+}

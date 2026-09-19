@@ -1,0 +1,20 @@
+{
+  "id": "coffee_cold",
+  "name": "Coffee (cold)",
+  "meals": [
+    "breakfast"
+  ],
+  "portion": {
+    "label": "1 glass",
+    "grams": 250
+  },
+  "per": {
+    "kcal": 180,
+    "protein": 5,
+    "carbs": 25,
+    "fat": 6,
+    "fibre": 0
+  },
+  "note": "Blended with milk and sugar; cafe versions with ice cream are far higher.",
+  "confidence": "estimate"
+}

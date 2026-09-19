@@ -1,0 +1,21 @@
+{
+  "id": "roti",
+  "name": "Roti",
+  "meals": [
+    "lunch",
+    "dinner"
+  ],
+  "portion": {
+    "label": "1 roti",
+    "grams": 40
+  },
+  "per": {
+    "kcal": 120,
+    "protein": 3,
+    "carbs": 22,
+    "fat": 3,
+    "fibre": 2
+  },
+  "note": "Whole wheat, no ghee on top. Add about 25 kcal if buttered.",
+  "confidence": "estimate"
+}

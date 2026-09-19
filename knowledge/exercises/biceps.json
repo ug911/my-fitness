@@ -1,0 +1,146 @@
+{
+  "id": "biceps",
+  "name": "Biceps",
+  "anchorExercise": "Dumbbell curl",
+  "alternatives": [
+    "Incline dumbbell curl (more stretch)",
+    "Cable curl",
+    "Hammer curl"
+  ],
+  "pattern": "elbow_flexion",
+  "equipment": "dumbbells",
+  "difficulty": "beginner",
+  "primaryMuscles": [
+    "Biceps brachii"
+  ],
+  "secondaryMuscles": [
+    "Brachialis",
+    "Forearms"
+  ],
+  "setup": [
+    "Stand tall, arms hanging, palms forward, elbows just in front of the ribs.",
+    "Shoulders back and down; the upper arm is going to stay still."
+  ],
+  "execution": [
+    "Curl by bending the elbow only, until the forearm is past vertical.",
+    "Lower all the way until the arm is straight - the bottom is not a rest stop."
+  ],
+  "cues": [
+    "Pin the elbow to your side like it is hinged there.",
+    "Lower for a count of three; the lowering is half the exercise.",
+    "Straighten the arm fully at the bottom before the next rep."
+  ],
+  "mistakes": [
+    {
+      "mistake": "Swinging the torso to start the rep",
+      "fix": "Stand with your back against a wall for a set - if you cannot cheat, the weight is honest."
+    },
+    {
+      "mistake": "Elbows drifting forward",
+      "fix": "Keep the upper arm vertical so the biceps, not the front delt, does the work."
+    },
+    {
+      "mistake": "Cutting the bottom half",
+      "fix": "Let the arm straighten; the stretched position builds the most."
+    }
+  ],
+  "breathing": "Exhale curling up, inhale lowering.",
+  "evidence": [
+    {
+      "claim": "Training a muscle in its stretched position pays off",
+      "detail": "Work that loads the muscle long - incline curls for the biceps - tends to produce more growth than the same sets done short.",
+      "confidence": "moderate"
+    },
+    {
+      "claim": "Full range beats partial range for growth",
+      "detail": "Moving through the whole range generally outgrows cutting the ends off, with the lengthened half doing most of the work.",
+      "confidence": "strong"
+    },
+    {
+      "claim": "Small muscles recover fast",
+      "detail": "Arms tolerate and often benefit from more frequent work than the big compound lifts.",
+      "confidence": "limited"
+    }
+  ],
+  "progressions": [
+    "Incline bench curl for a deeper stretch",
+    "Slow 4-second lowering",
+    "Add weight when 12 reps feel easy"
+  ],
+  "regressions": [
+    "Seated curl to stop the swing",
+    "Lighter weight, both arms together"
+  ],
+  "repRange": {
+    "min": 8,
+    "max": 15
+  },
+  "restSeconds": 90,
+  "tempo": "3-0-1",
+  "demo": {
+    "view": "side",
+    "durationMillis": 2200,
+    "loop": "pingpong",
+    "frames": [
+      {
+        "at": 0.0,
+        "joints": {
+          "head": [
+            0.5,
+            0.13
+          ],
+          "neck": [
+            0.5,
+            0.2
+          ],
+          "shoulder": [
+            0.5,
+            0.24
+          ],
+          "elbow": [
+            0.5,
+            0.4
+          ],
+          "wrist": [
+            0.52,
+            0.56
+          ],
+          "hip": [
+            0.5,
+            0.55
+          ],
+          "knee": [
+            0.5,
+            0.76
+          ],
+          "ankle": [
+            0.5,
+            0.93
+          ],
+          "foot": [
+            0.56,
+            0.95
+          ]
+        }
+      },
+      {
+        "at": 0.55,
+        "joints": {
+          "wrist": [
+            0.62,
+            0.42
+          ]
+        }
+      },
+      {
+        "at": 1.0,
+        "joints": {
+          "wrist": [
+            0.58,
+            0.28
+          ]
+        }
+      }
+    ]
+  }
+}
