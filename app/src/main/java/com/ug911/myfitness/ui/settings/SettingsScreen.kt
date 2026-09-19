@@ -53,6 +53,7 @@ fun SettingsScreen(
     val state by viewModel.state.collectAsState()
     var apiKeyDraft by remember(state.settings.apiKey) { mutableStateOf(state.settings.apiKey) }
     var modelDraft by remember(state.settings.model) { mutableStateOf(state.settings.model) }
+    var knowledgeDraft by remember(state.settings.knowledgeUrl) { mutableStateOf(state.settings.knowledgeUrl) }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = PermissionController.createRequestPermissionResultContract(),
@@ -86,6 +87,50 @@ fun SettingsScreen(
                         shape = MaterialTheme.shapes.small,
                     ) {
                         Text("Edit lists")
+                    }
+                }
+            }
+        }
+
+        item {
+            SectionHeader(
+                title = "Knowledge base",
+                accent = DaySection.SCHOOL_RUN.accent(),
+                subtitle = "The coach and the food table",
+            )
+        }
+        item {
+            PlainCard {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Text(
+                        "Exercise coaching and food macros come from a bundle you can publish to " +
+                            "from Claude or ChatGPT. Leave the URL empty to use the copy shipped " +
+                            "with the app.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = mutedInkColor(),
+                    )
+                    OutlinedTextField(
+                        value = knowledgeDraft,
+                        onValueChange = { knowledgeDraft = it },
+                        label = { Text("Bundle URL") },
+                        singleLine = true,
+                        shape = MaterialTheme.shapes.small,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    state.knowledgeMessage?.let {
+                        Text(it, style = MaterialTheme.typography.bodySmall)
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(
+                            onClick = {
+                                viewModel.setKnowledgeUrl(knowledgeDraft)
+                                viewModel.syncKnowledge()
+                            },
+                            shape = MaterialTheme.shapes.small,
+                        ) {
+                            Text("Sync now")
+                        }
+                        TextButton(onClick = { onOpenChecklists() }) { Text("Edit lists") }
                     }
                 }
             }

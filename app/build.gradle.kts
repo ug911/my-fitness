@@ -38,8 +38,8 @@ android {
         applicationId = "com.ug911.myfitness"
         minSdk = 28
         targetSdk = 35
-        versionCode = 3
-        versionName = "0.3.0"
+        versionCode = 4
+        versionName = "0.4.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -76,6 +76,18 @@ android {
         unitTests.isReturnDefaultValues = true
     }
 }
+
+/**
+ * The knowledge base ships inside the app so a fresh install has the coach and the food
+ * table before it has ever seen the network. Copying it at build time keeps the asset
+ * from drifting away from knowledge/.
+ */
+val syncKnowledgeBundle by tasks.registering(Copy::class) {
+    from(rootProject.file("knowledge/knowledge-base.json"))
+    into(layout.projectDirectory.dir("src/main/assets"))
+}
+
+tasks.named("preBuild") { dependsOn(syncKnowledgeBundle) }
 
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")

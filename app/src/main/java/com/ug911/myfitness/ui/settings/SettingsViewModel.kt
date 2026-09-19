@@ -10,6 +10,8 @@ import com.ug911.myfitness.health.HealthAvailability
 import com.ug911.myfitness.health.HealthConnectManager
 import com.ug911.myfitness.health.HealthSyncCoordinator
 import com.ug911.myfitness.health.SyncResult
+import com.ug911.myfitness.knowledge.KnowledgeSync
+import com.ug911.myfitness.knowledge.SyncOutcome
 import com.ug911.myfitness.settings.AiProvider
 import com.ug911.myfitness.settings.AppSettings
 import com.ug911.myfitness.settings.SettingsStore
@@ -25,9 +27,11 @@ class SettingsViewModel(
     private val settings: SettingsStore,
     private val health: HealthConnectManager,
     private val healthSync: HealthSyncCoordinator,
+    private val knowledgeSync: KnowledgeSync,
 ) : ViewModel() {
 
     private val syncMessage = MutableStateFlow<String?>(null)
+    private val knowledgeMessage = MutableStateFlow<String?>(null)
     private val permissionsGranted = MutableStateFlow(false)
 
     val permissions: Set<String> get() = health.permissions
@@ -36,12 +40,14 @@ class SettingsViewModel(
         settings.settings,
         syncMessage,
         permissionsGranted,
-    ) { appSettings, message, granted ->
+        knowledgeMessage,
+    ) { appSettings, message, granted, knowledge ->
         SettingsUiState(
             settings = appSettings,
             healthAvailability = health.availability(),
             healthPermissionsGranted = granted,
             syncMessage = message,
+            knowledgeMessage = knowledge,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SettingsUiState())
 
@@ -58,6 +64,22 @@ class SettingsViewModel(
     fun setApiKey(key: String) = viewModelScope.launch { settings.setApiKey(key) }
 
     fun setModel(model: String) = viewModelScope.launch { settings.setModel(model) }
+
+    fun setKnowledgeUrl(url: String) = viewModelScope.launch { settings.setKnowledgeUrl(url) }
+
+    /** Pulls a freshly published bundle, or reloads the copy shipped with the app. */
+    fun syncKnowledge() {
+        viewModelScope.launch {
+            knowledgeMessage.value = "Fetching..."
+            val url = settings.current().knowledgeUrl
+            val outcome = if (url.isBlank()) knowledgeSync.loadBundled() else knowledgeSync.syncFrom(url)
+            knowledgeMessage.value = when (outcome) {
+                is SyncOutcome.Loaded -> "Loaded ${outcome.summary}"
+                is SyncOutcome.Failed -> outcome.message
+                SyncOutcome.AlreadyPresent -> "Already up to date"
+            }
+        }
+    }
 
     fun setHealthSync(enabled: Boolean) = viewModelScope.launch { settings.setHealthSyncEnabled(enabled) }
 
@@ -78,7 +100,14 @@ class SettingsViewModel(
 
     companion object {
         fun factory(container: AppContainer): ViewModelProvider.Factory = viewModelFactory {
-            initializer { SettingsViewModel(container.settings, container.health, container.healthSync) }
+            initializer {
+                SettingsViewModel(
+                    container.settings,
+                    container.health,
+                    container.healthSync,
+                    container.knowledgeSync,
+                )
+            }
         }
     }
 }
@@ -88,4 +117,5 @@ data class SettingsUiState(
     val healthAvailability: HealthAvailability = HealthAvailability.UNAVAILABLE,
     val healthPermissionsGranted: Boolean = false,
     val syncMessage: String? = null,
+    val knowledgeMessage: String? = null,
 )

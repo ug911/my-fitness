@@ -26,6 +26,7 @@ class SettingsStore(private val context: Context) {
         val API_KEY = stringPreferencesKey("ai_api_key")
         val MODEL = stringPreferencesKey("ai_model")
         val HEALTH_SYNC = booleanPreferencesKey("health_sync_enabled")
+        val KNOWLEDGE_URL = stringPreferencesKey("knowledge_url")
         val LAST_SYNC = longPreferencesKey("last_sync_millis")
     }
 
@@ -38,6 +39,7 @@ class SettingsStore(private val context: Context) {
             apiKey = prefs[Keys.API_KEY].orEmpty(),
             model = prefs[Keys.MODEL]?.takeIf { it.isNotBlank() } ?: provider.defaultModel,
             healthSyncEnabled = prefs[Keys.HEALTH_SYNC] ?: true,
+            knowledgeUrl = prefs[Keys.KNOWLEDGE_URL].orEmpty(),
             lastSyncMillis = prefs[Keys.LAST_SYNC] ?: 0L,
         )
     }
@@ -58,6 +60,9 @@ class SettingsStore(private val context: Context) {
     suspend fun setHealthSyncEnabled(enabled: Boolean) =
         context.dataStore.edit { it[Keys.HEALTH_SYNC] = enabled }
 
+    suspend fun setKnowledgeUrl(url: String) =
+        context.dataStore.edit { it[Keys.KNOWLEDGE_URL] = url.trim() }
+
     suspend fun setLastSyncMillis(millis: Long) = context.dataStore.edit { it[Keys.LAST_SYNC] = millis }
 }
 
@@ -67,6 +72,8 @@ data class AppSettings(
     val model: String,
     val healthSyncEnabled: Boolean,
     val lastSyncMillis: Long,
+    /** Where a freshly published knowledge bundle can be fetched from. */
+    val knowledgeUrl: String = "",
 ) {
     val hasApiKey: Boolean get() = apiKey.isNotBlank()
 }

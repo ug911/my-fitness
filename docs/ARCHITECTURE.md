@@ -152,10 +152,64 @@ JVM unit tests only, aimed at the logic that would be expensive to get wrong:
 Room DAO behaviour (`upsertKeepingManual`, `approve`) and Compose screens are not covered;
 those want instrumented tests on a device and are the obvious next thing to add.
 
+## The knowledge layer
+
+Three things arrive from outside the phone and none of them are the person's own data:
+exercise coaching, food macros, and the training week. They live in `knowledge/` as JSON,
+are built into a single bundle, and reach the app two ways - shipped as an asset so a
+fresh install works offline, and fetched from a URL when a newer one is published.
+
+```
+knowledge/*.json ──build──▶ knowledge-base.json ──▶ app/src/main/assets  (offline default)
+       ▲                            │
+       │ MCP                        └─▶ any URL ──▶ Settings ▸ Knowledge base ▸ Sync
+   Claude / ChatGPT
+```
+
+Documents are stored in `knowledge_docs` **as the JSON they arrived as**, with only `kind`,
+`id` and `name` pulled out for indexing. A new field in a published document therefore
+needs no migration: the app either understands it or ignores it (`ignoreUnknownKeys`).
+That is what makes an assistant publishing into the base safe to do without shipping an
+app update.
+
+Corrections live apart from the thing they correct. `food_overrides` holds your edits to
+a food's numbers and is re-applied on read, so a rebuild of the bundle never silently
+overwrites the calories you fixed by hand. The same rule as everywhere else in this app:
+published data and personal data never share a row.
+
+`extractKnowledgeJson` accepts a page as well as a file, because a wiki publishes JSON
+wrapped in HTML. It is a pure function with its own tests rather than a regex buried in a
+network call.
+
+## Training and eating
+
+`workout_sets` and `food_log` are historical records in the same sense as `entries`:
+written by the person, never by the AI layer. A set carries its weight, reps and index
+within the session; `WorkoutDao.addSet` allocates the next index inside a transaction so
+two quick taps cannot produce two set threes.
+
+The gym screen's one real idea is that the logger opens pre-filled with the last session's
+numbers (`GymRow.suggestedWeight/suggestedReps`), falling back to the bottom of the
+planned rep range on a first attempt. Progression is then a decision rather than a
+memory exercise.
+
+Nutrition is deliberately not a food database. Sixteen documents cover what this person
+eats, priced in portions rather than grams, and `totalMacros` folds a day's log against
+them. A food the bundle no longer carries is skipped rather than counted as zero.
+
+## Motion
+
+Animation is in `ui/common/Motion.kt` and `ui/common/ExerciseDemo.kt`, and follows one
+rule: movement explains a change, it never decorates one. Numbers count rather than jump
+so a change is noticed; progress settles with a spring because it is physical; cards
+arrive in sequence so the eye gets an order to read them in. The exercise demo interpolates
+between keyframes with a smoothstep inside each segment, and ping-pongs by default because
+a lift is a there-and-back movement.
+
 ## Deliberately not built yet
 
-Cloud sync (Cloud Run + Firestore), per-gram macros, meal photos, Whoop or other
-non-Health-Connect sources, planned-exercise write-back to Health Connect, widgets and
-notifications. The sketch in the original design keeps working: sync would sit behind the
+Cloud sync (Cloud Run + Firestore), a general food database, meal photos, Whoop or other
+non-Health-Connect sources, planned-exercise write-back to Health Connect, widgets,
+notifications, and a rest timer between sets. The sketch in the original design keeps working: sync would sit behind the
 repositories, and additional sources become more `HealthMetric`-style mappings feeding the
 same daily entries.

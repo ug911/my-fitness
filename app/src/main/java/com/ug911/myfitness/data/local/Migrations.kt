@@ -31,3 +31,35 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
         TrackerSeed.insertMissing(executor, PersonalDay.trackers())
     }
 }
+
+/**
+ * Version 4 adds the coach and the nutrition calculator: a table for published
+ * knowledge documents, one for the corrections you make to a food's numbers, and the
+ * two historical records - the sets you lifted and the food you logged. Nothing
+ * existing is touched.
+ */
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        MIGRATION_3_4_SQL.forEach(db::execSQL)
+    }
+}
+
+/** Kept separate so the statements can be run against a plain SQLite engine in a test. */
+val MIGRATION_3_4_SQL = listOf(
+    "CREATE TABLE IF NOT EXISTS `knowledge_docs` (`key` TEXT NOT NULL, `kind` TEXT NOT NULL, " +
+        "`docId` TEXT NOT NULL, `name` TEXT NOT NULL, `json` TEXT NOT NULL, " +
+        "`updatedAtMillis` INTEGER NOT NULL, PRIMARY KEY(`key`))",
+    "CREATE INDEX IF NOT EXISTS `index_knowledge_docs_kind` ON `knowledge_docs` (`kind`)",
+    "CREATE TABLE IF NOT EXISTS `food_overrides` (`foodId` TEXT NOT NULL, `portionLabel` TEXT, " +
+        "`kcal` REAL, `protein` REAL, `carbs` REAL, `fat` REAL, `updatedAtMillis` INTEGER NOT NULL, " +
+        "PRIMARY KEY(`foodId`))",
+    "CREATE TABLE IF NOT EXISTS `workout_sets` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+        "`date` TEXT NOT NULL, `exerciseId` TEXT NOT NULL, `setIndex` INTEGER NOT NULL, " +
+        "`weightKg` REAL, `reps` INTEGER NOT NULL, `note` TEXT, `doneAtMillis` INTEGER NOT NULL)",
+    "CREATE INDEX IF NOT EXISTS `index_workout_sets_date` ON `workout_sets` (`date`)",
+    "CREATE INDEX IF NOT EXISTS `index_workout_sets_exerciseId_date` ON `workout_sets` (`exerciseId`, `date`)",
+    "CREATE TABLE IF NOT EXISTS `food_log` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+        "`date` TEXT NOT NULL, `foodId` TEXT NOT NULL, `meal` TEXT NOT NULL, `portions` REAL NOT NULL)",
+    "CREATE INDEX IF NOT EXISTS `index_food_log_date` ON `food_log` (`date`)",
+    "CREATE INDEX IF NOT EXISTS `index_food_log_date_meal` ON `food_log` (`date`, `meal`)",
+)

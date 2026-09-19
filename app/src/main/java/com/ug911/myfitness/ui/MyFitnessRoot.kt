@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Insights
+import androidx.compose.material.icons.filled.LocalDining
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Tune
@@ -35,6 +37,12 @@ import com.ug911.myfitness.ui.theme.cardSurface
 import com.ug911.myfitness.ui.theme.mutedInkColor
 import com.ug911.myfitness.ui.theme.onAccentInk
 import com.ug911.myfitness.ui.checklists.ChecklistsScreen
+import com.ug911.myfitness.ui.exercise.ExerciseGuideScreen
+import com.ug911.myfitness.ui.exercise.ExerciseGuideViewModel
+import com.ug911.myfitness.ui.gym.GymScreen
+import com.ug911.myfitness.ui.gym.GymViewModel
+import com.ug911.myfitness.ui.nutrition.NutritionScreen
+import com.ug911.myfitness.ui.nutrition.NutritionViewModel
 import com.ug911.myfitness.ui.history.HistoryScreen
 import com.ug911.myfitness.ui.history.HistoryViewModel
 import com.ug911.myfitness.ui.insights.InsightsScreen
@@ -57,15 +65,18 @@ private enum class Destination(
     val section: DaySection,
 ) {
     TODAY("today", "Today", Icons.Filled.CheckCircle, DaySection.MORNING),
+    GYM("gym", "Gym", Icons.Filled.FitnessCenter, DaySection.MORNING),
+    FOOD("nutrition", "Food", Icons.Filled.LocalDining, DaySection.BREAKFAST),
     HISTORY("history", "History", Icons.Filled.CalendarMonth, DaySection.NIGHT),
     INSIGHTS("insights", "Insights", Icons.Filled.Insights, DaySection.EVENING),
-    PLAN("plan", "Plan", Icons.Filled.Flag, DaySection.OFFICE),
 }
 
 private const val ROUTE_TRACKERS = "trackers"
 private const val ROUTE_SETTINGS = "settings"
 private const val ROUTE_TRACKER_EDITOR = "tracker-editor"
 private const val ROUTE_CHECKLISTS = "checklists"
+private const val ROUTE_EXERCISE = "exercise"
+private const val ROUTE_PLAN = "plan"
 
 @Composable
 fun MyFitnessRoot(container: AppContainer) {
@@ -75,6 +86,9 @@ fun MyFitnessRoot(container: AppContainer) {
 
     /** The two chrome actions, rendered inside whichever screen header is showing. */
     val headerActions: @Composable RowScope.() -> Unit = {
+        IconButton(onClick = { navController.navigate(ROUTE_PLAN) }) {
+            Icon(Icons.Filled.Flag, contentDescription = "Plan", tint = mutedInkColor())
+        }
         IconButton(onClick = { navController.navigate(ROUTE_TRACKERS) }) {
             Icon(Icons.Filled.Tune, contentDescription = "Trackers", tint = mutedInkColor())
         }
@@ -118,6 +132,31 @@ fun MyFitnessRoot(container: AppContainer) {
                 TodayScreen(
                     viewModel = viewModel(factory = TodayViewModel.factory(container)),
                     actions = headerActions,
+                    onOpenGym = { navController.navigate(Destination.GYM.route) },
+                    onOpenFood = { navController.navigate(Destination.FOOD.route) },
+                )
+            }
+            composable(Destination.GYM.route) {
+                GymScreen(
+                    viewModel = viewModel(factory = GymViewModel.factory(container)),
+                    onOpenExercise = { id -> navController.navigate("$ROUTE_EXERCISE/$id") },
+                    actions = headerActions,
+                )
+            }
+            composable(Destination.FOOD.route) {
+                NutritionScreen(
+                    viewModel = viewModel(factory = NutritionViewModel.factory(container)),
+                    actions = headerActions,
+                )
+            }
+            composable(
+                route = "$ROUTE_EXERCISE/{exerciseId}",
+                arguments = listOf(navArgument("exerciseId") { type = NavType.StringType }),
+            ) { entry ->
+                val id = entry.arguments?.getString("exerciseId").orEmpty()
+                ExerciseGuideScreen(
+                    viewModel = viewModel(factory = ExerciseGuideViewModel.factory(container, id)),
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable(Destination.HISTORY.route) {
@@ -132,7 +171,7 @@ fun MyFitnessRoot(container: AppContainer) {
                     actions = headerActions,
                 )
             }
-            composable(Destination.PLAN.route) {
+            composable(ROUTE_PLAN) {
                 PlanScreen(
                     viewModel = viewModel(factory = PlanViewModel.factory(container)),
                     actions = headerActions,

@@ -9,7 +9,13 @@ import com.ug911.myfitness.data.model.DayLog
 import com.ug911.myfitness.data.model.PlanWithTargets
 import com.ug911.myfitness.data.model.Tracker
 import com.ug911.myfitness.data.model.TrackerValue
+import com.ug911.myfitness.data.model.Macros
+import com.ug911.myfitness.data.model.PlanTargets
+import com.ug911.myfitness.data.repository.KnowledgeRepository
 import com.ug911.myfitness.data.repository.LogRepository
+import com.ug911.myfitness.data.repository.NutritionRepository
+import com.ug911.myfitness.data.repository.WorkoutRepository
+import com.ug911.myfitness.data.repository.totalMacros
 import com.ug911.myfitness.data.repository.PlanRepository
 import com.ug911.myfitness.data.repository.TrackerRepository
 import com.ug911.myfitness.di.AppContainer
@@ -28,21 +34,45 @@ class TodayViewModel(
     private val trackers: TrackerRepository,
     private val logs: LogRepository,
     plans: PlanRepository,
+    knowledge: KnowledgeRepository,
+    workouts: WorkoutRepository,
+    nutrition: NutritionRepository,
 ) : ViewModel() {
 
     private val selectedDate = MutableStateFlow(LocalDate.now())
+
+    /** The gym and the kitchen, summarised for the top of the day. */
+    private val summary = combine(
+        selectedDate,
+        knowledge.observePlan(),
+        knowledge.observeFoods(),
+        selectedDate.flatMapLatest { workouts.observeDay(it) },
+        selectedDate.flatMapLatest { nutrition.observeDay(it) },
+    ) { date, trainingPlan, foods, sets, food ->
+        val day = trainingPlan?.dayFor(date.dayOfWeek)
+        DaySummary(
+            sessionTitle = day?.title.orEmpty().ifBlank { if (day == null) "" else "Training" },
+            isRestDay = day?.isRestDay ?: false,
+            setsDone = sets.values.sumOf { log -> log.sets.size },
+            setsPlanned = day?.items.orEmpty().sumOf { it.sets },
+            macros = totalMacros(food, foods),
+            targets = trainingPlan?.targets ?: PlanTargets(),
+        )
+    }
 
     val state: StateFlow<TodayUiState> = combine(
         selectedDate,
         trackers.observeActive(),
         selectedDate.flatMapLatest { logs.observeDay(it) },
         selectedDate.flatMapLatest { plans.observeActive(it) },
-    ) { date, activeTrackers, dayLog, plan ->
+        summary,
+    ) { date, activeTrackers, dayLog, plan, daySummary ->
         TodayUiState(
             date = date,
             trackers = activeTrackers,
             dayLog = dayLog,
             activePlan = plan,
+            summary = daySummary,
             loading = false,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TodayUiState())
@@ -83,7 +113,16 @@ class TodayViewModel(
 
     companion object {
         fun factory(container: AppContainer): ViewModelProvider.Factory = viewModelFactory {
-            initializer { TodayViewModel(container.trackers, container.logs, container.plans) }
+            initializer {
+                TodayViewModel(
+                    container.trackers,
+                    container.logs,
+                    container.plans,
+                    container.knowledge,
+                    container.workouts,
+                    container.nutrition,
+                )
+            }
         }
     }
 }
@@ -93,9 +132,30 @@ data class TodayUiState(
     val trackers: List<Tracker> = emptyList(),
     val dayLog: DayLog? = null,
     val activePlan: PlanWithTargets? = null,
+    val summary: DaySummary = DaySummary(),
     val loading: Boolean = true,
 ) {
     val isToday: Boolean get() = date == LocalDate.now()
 
     val loggedCount: Int get() = dayLog?.entries?.size ?: 0
+}
+
+/** What the gym and the kitchen look like today, for the strip at the top of Today. */
+data class DaySummary(
+    val sessionTitle: String = "",
+    val isRestDay: Boolean = false,
+    val setsDone: Int = 0,
+    val setsPlanned: Int = 0,
+    val macros: Macros = Macros.EMPTY,
+    val targets: PlanTargets = PlanTargets(),
+) {
+    val hasTraining: Boolean get() = sessionTitle.isNotBlank()
+
+    val proteinFraction: Float
+        get() = if (targets.proteinGrams <= 0) 0f else {
+            (macros.protein / targets.proteinGrams).toFloat().coerceIn(0f, 1f)
+        }
+
+    val setsFraction: Float
+        get() = if (setsPlanned <= 0) 0f else (setsDone.toFloat() / setsPlanned).coerceIn(0f, 1f)
 }

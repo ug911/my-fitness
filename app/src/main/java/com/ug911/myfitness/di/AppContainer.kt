@@ -8,6 +8,10 @@ import com.ug911.myfitness.ai.OpenAiClient
 import com.ug911.myfitness.ai.WeeklyReviewService
 import com.ug911.myfitness.data.local.MyFitnessDatabase
 import com.ug911.myfitness.data.repository.AnalysisRepository
+import com.ug911.myfitness.data.repository.KnowledgeRepository
+import com.ug911.myfitness.data.repository.NutritionRepository
+import com.ug911.myfitness.data.repository.WorkoutRepository
+import com.ug911.myfitness.knowledge.KnowledgeSync
 import com.ug911.myfitness.data.repository.LogRepository
 import com.ug911.myfitness.data.repository.PlanRepository
 import com.ug911.myfitness.data.repository.ProposalOnlyPlanSink
@@ -31,6 +35,10 @@ class AppContainer(context: Context) {
     val logs = LogRepository(database.entryDao(), database.journalDao(), database.trackerDao())
     val plans = PlanRepository(database.planDao())
     val analyses = AnalysisRepository(database.aiAnalysisDao())
+    val knowledge = KnowledgeRepository(database.knowledgeDao())
+    val workouts = WorkoutRepository(database.workoutDao())
+    val nutrition = NutritionRepository(database.foodLogDao())
+    val knowledgeSync = KnowledgeSync(context, knowledge)
 
     val settings = SettingsStore(context)
     val health = HealthConnectManager(context)

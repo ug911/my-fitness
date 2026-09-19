@@ -23,10 +23,60 @@ The home screen is the day in the order it happens, not a set of abstract catego
 
 | Screen | What it is for |
 | --- | --- |
-| **Today** | Every section on one scroll. Habits are one tap, times are one tap on a suggested chip, the gym list is a tap per exercise. |
+| **Today** | Every section on one scroll, with the gym and the kitchen summarised at the top. Habits are one tap, times are one tap on a suggested chip, the gym list is a tap per exercise. |
+| **Gym** | Today's session from the training plan. Each exercise expands into a set logger that already knows what you lifted last time. |
+| **Food** | Calories and protein for the foods you actually eat, counted in katoris and plates. |
 | **History** | Calendar heatmap of the last 18 weeks with a streak, plus any day broken down by section. |
 | **Insights** | 7 / 30 / 90-day trends per section, local "when I do X, what happens to Y?" splits, and **Review my week**. |
 | **Plan** | This week's approved targets with progress, and any AI-proposed plan waiting for approval. |
+
+## The coach
+
+Tap **How to** on any exercise and you get the knowledge base's page for it: an animated
+demo, the setup and execution, coaching cues, the mistakes that actually happen and their
+fixes, what the training literature supports (with an honest confidence level on each
+claim, and no invented citations), and the ladder of progressions and regressions.
+
+The demos are drawn, not filmed - a stick figure moving between keyframes stored in the
+exercise document. That is the honest trade: it shows the movement pattern, the joint
+angles and the tempo rather than what a real body looks like doing it, and in exchange it
+is a few hundred bytes that an assistant can publish through the MCP server.
+
+Nothing on that screen is medical advice, and the app says so.
+
+## Logging a session
+
+The Gym tab reads the training week from the knowledge base and shows today's session.
+Each exercise expands into a logger pre-filled with **what you did last time** - the one
+number that makes progression visible. Accept it, or nudge the weight and reps, and tap
+Log set. Sets appear as chips; tap one to remove it.
+
+## Nutrition, only for what you eat
+
+Sixteen foods, priced the way you actually eat them: one katori of dal, two eggs, a plate
+of poha. Add a food to a meal, adjust portions in halves, and the day totals against the
+protein and calorie targets in your plan.
+
+Every number is a household estimate rather than a lab value, and the app labels it as
+one. Tap a food to correct it - your numbers outrank the published ones and survive the
+next knowledge sync.
+
+## The knowledge base, and publishing to it from Claude or ChatGPT
+
+Everything the coach knows - exercises, foods, the training week - lives in
+[`knowledge/`](knowledge/README.md) as plain JSON, and ships inside the app so a fresh
+install works offline.
+
+[`mcp/`](mcp/README.md) is an MCP server that lets Claude or ChatGPT publish into it:
+
+> Add an incline dumbbell curl to my knowledge base - cues, the usual mistakes, what the
+> evidence says about stretch-position training, and a demo animation. Then build the bundle.
+
+The schema is enforced on the way in, so a food whose calories contradict its macros, a
+demo missing a joint, or a plan pointing at an exercise that does not exist is refused
+rather than shipped to the phone. Point **Settings ▸ Knowledge base** at the published
+bundle - a raw file in this repository, or a wiki page holding the JSON - and the app
+pulls it in.
 
 Two of the times fill themselves in: if anything writes sleep to Health Connect, the
 start and end of the night become "Slept at" and "Woke up". A value you type always
